@@ -1,16 +1,31 @@
 package com.andorid.fudbox.model;
 
-import lombok.Builder;
-import lombok.Getter;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 
-@Getter
-@Builder
+
 public class Order implements Serializable {
-    private Restaurant restaurant;
-    private ArrayList<DishQuantity> dishes;
+    private final Restaurant restaurant;
+    private final ArrayList<DishQuantity> dishes;
+
+    public Order(Restaurant restaurant, ArrayList<DishQuantity> dishes) {
+        this.restaurant = restaurant;
+        this.dishes = dishes;
+    }
+
+    public Order(Restaurant restaurant) {
+        this.restaurant = restaurant;
+        this.dishes = new ArrayList<>();
+    }
+
+    public Restaurant getRestaurant() {
+        return restaurant;
+    }
+
+    public ArrayList<DishQuantity> getDishes() {
+        return dishes;
+    }
 
     public float getTotalPrice() {
         float totalPrice = 0.0f;
@@ -22,10 +37,7 @@ public class Order implements Serializable {
     }
 
     public void addDish(Dish dish, int num) {
-        DishQuantity dishesToAdd = DishQuantity.builder()
-                .dish(dish)
-                .quantity(num)
-                .build();
+        DishQuantity dishesToAdd = new DishQuantity(dish, num);
         this.dishes.add(dishesToAdd);
     }
 
@@ -42,10 +54,7 @@ public class Order implements Serializable {
         }
         // Dish is not in the order, must be added
         if (quantity > 0) {
-            DishQuantity newDishQuantity = DishQuantity.builder()
-                    .dish(dish)
-                    .quantity(quantity)
-                    .build();
+            DishQuantity newDishQuantity = new DishQuantity(dish, quantity);
             dishes.add(newDishQuantity);
         }
     }
