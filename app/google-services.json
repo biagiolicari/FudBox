@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "72441777682",
-    "project_id": "fudbox-a9280",
-    "storage_bucket": "fudbox-a9280.appspot.com"
+    "project_number": "965733063299",
+    "project_id": "fudbox-39063",
+    "storage_bucket": "fudbox-39063.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:72441777682:android:5b979756dea2a0066dd2cb",
+        "mobilesdk_app_id": "1:965733063299:android:35d1c805a7183ab0c499b6",
         "android_client_info": {
-          "package_name": "com.mobile.fudbox"
+          "package_name": "com.andorid.fudbox"
         }
       },
       "oauth_client": [
         {
-          "client_id": "72441777682-61nbcljo5fs30fpprna4k4qb5k7u2k6v.apps.googleusercontent.com",
+          "client_id": "965733063299-6a00457b03bteidvf24bqtmukhtusqq0.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyA7EdhSoyAYntAVZzm-q8yfIc-Uhju_dCc"
+          "current_key": "AIzaSyCH7-gyH0xYtFpbINCcGFzVgikK76D_7wM"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "72441777682-61nbcljo5fs30fpprna4k4qb5k7u2k6v.apps.googleusercontent.com",
+              "client_id": "965733063299-6a00457b03bteidvf24bqtmukhtusqq0.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

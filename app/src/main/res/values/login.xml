@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="email">E-Mail</string>
+    <string name="password">Password</string>
+    <string name="email_hint">Insert your email</string>
+    <string name="password_hint"> Insert your password</string>
+    <string name="username"> Username</string>
+    <string name="username_hint">Insert a username</string>
+    <string name="login">Login</string>
+    <string name="register">or Sign Up</string>
+    <string name="logout">Logout</string>
+</resources>

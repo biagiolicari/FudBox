@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             tools:context=".view.loginView.LoginRegisterFragment">
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        <ImageView
+                android:src="@drawable/logo"
+                android:layout_width="385dp"
+                android:layout_height="204dp" android:id="@+id/logo"
+                app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="13dp"
+                app:layout_constraintTop_toTopOf="parent" android:layout_marginTop="8dp"
+                android:layout_marginEnd="13dp" app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" android:layout_marginBottom="481dp"
+                android:cropToPadding="true" android:allowClickWhenDisabled="false" android:adjustViewBounds="false"
+                app:layout_constraintHorizontal_bias="1.0" app:layout_constraintVertical_bias="0.0"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="325dp"
+                android:layout_height="57dp"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:hint="@string/email"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="1dp"
+                android:layout_marginEnd="1dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginBottom="365dp" android:id="@+id/fragment_loginregister_email"
+                app:layout_constraintTop_toBottomOf="@+id/logo"
+                app:layout_constraintVertical_bias="0.0" android:layout_marginTop="20dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+            />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="326dp"
+                android:layout_height="62dp"
+                app:layout_constraintTop_toBottomOf="@+id/fragment_loginregister_email"
+                app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="1dp"
+                app:layout_constraintEnd_toEndOf="parent" app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginBottom="253dp" android:layout_marginEnd="1dp"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:hint="@string/password" android:id="@+id/fragment_loginregister_password"
+                app:endIconMode="password_toggle" app:layout_constraintVertical_bias="0.0"
+                android:layout_marginTop="20dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPassword"
+                    android:maxLength="25"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+        <Button
+                android:text="@string/login"
+                android:layout_width="173dp"
+                android:layout_height="55dp" android:id="@+id/fragment_loginregister_login"
+                style="@style/Widget.MaterialComponents.Button" android:layout_marginTop="38dp"
+                app:layout_constraintTop_toBottomOf="@+id/fragment_loginregister_password"
+                app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="119dp"
+                android:layout_marginEnd="119dp" app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" android:layout_marginBottom="171dp"
+                app:layout_constraintVertical_bias="0.0"/>
+        <Button
+                android:text="@string/register"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:id="@+id/fragment_loginregister_register"
+                app:layout_constraintTop_toBottomOf="@+id/fragment_loginregister_login" app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="145dp" android:layout_marginEnd="146dp"
+                app:layout_constraintEnd_toEndOf="parent" app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginBottom="116dp"
+                style="@style/Widget.MaterialComponents.Button.TextButton" app:layout_constraintVertical_bias="0.0"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>
