@@ -3,6 +3,7 @@ package com.andorid.fudbox.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class Order implements Serializable {
@@ -23,7 +24,7 @@ public class Order implements Serializable {
         return restaurant;
     }
 
-    public ArrayList<DishQuantity> getDishes() {
+    public List<DishQuantity> getDishes() {
         return dishes;
     }
 

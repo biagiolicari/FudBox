@@ -1,6 +1,8 @@
 package com.andorid.fudbox.model;
 
-public class Restaurant {
+import java.io.Serializable;
+
+public class Restaurant implements Serializable {
     private final String name;
     private final String address;
     private final String city;

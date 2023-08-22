@@ -1,6 +1,8 @@
 package com.andorid.fudbox.model;
 
-public class DishQuantity {
+import java.io.Serializable;
+
+public class DishQuantity implements Serializable {
     public DishQuantity(Dish dish) {
         this.dish = dish;
         this.quantity = 0;
