@@ -1,4 +1,4 @@
-package com.andorid.fudbox.view.home;
+package com.andorid.fudbox.view.mainscreen.user;
 
 import android.content.Intent;
 import android.os.Bundle;

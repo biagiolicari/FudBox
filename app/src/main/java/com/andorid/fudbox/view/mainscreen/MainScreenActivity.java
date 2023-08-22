@@ -1,4 +1,4 @@
-package com.andorid.fudbox.view.home;
+package com.andorid.fudbox.view.mainscreen;
 
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -8,7 +8,7 @@ import androidx.navigation.ui.NavigationUI;
 import com.andorid.fudbox.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class HomeActivity extends AppCompatActivity {
+public class MainScreenActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

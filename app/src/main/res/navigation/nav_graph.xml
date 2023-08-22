@@ -21,7 +21,7 @@
                 app:destination="@id/loginRegisterFragment" />
     </fragment>
 
-    <activity android:id="@+id/homeActivity" android:name="com.andorid.fudbox.view.home.HomeActivity"
+    <activity android:id="@+id/homeActivity" android:name="com.andorid.fudbox.view.mainscreen.MainScreenActivity"
               android:label="activity_home" tools:layout="@layout/activity_home"/>
 
     <action
