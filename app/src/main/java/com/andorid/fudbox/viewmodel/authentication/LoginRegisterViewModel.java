@@ -4,16 +4,16 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
-import com.andorid.fudbox.repository.loginRepo.LoginRepository;
+import com.andorid.fudbox.repository.authentication.AuthenticationRepo;
 import com.google.firebase.auth.FirebaseUser;
 
 public class LoginRegisterViewModel extends AndroidViewModel {
-    private final LoginRepository authRepository;
+    private final AuthenticationRepo authRepository;
     private final MutableLiveData<FirebaseUser> userLiveData;
 
     public LoginRegisterViewModel(@NonNull Application application) {
         super(application);
-        authRepository = new LoginRepository(application);
+        authRepository = new AuthenticationRepo(application);
         userLiveData = authRepository.getUserLiveData();
     }
 

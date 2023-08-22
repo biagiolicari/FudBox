@@ -1,4 +1,4 @@
-package com.andorid.fudbox.repository.loginRepo;
+package com.andorid.fudbox.repository.authentication;
 
 import android.app.Application;
 import android.widget.Toast;
@@ -6,7 +6,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-public class LoginRepository {
+public class AuthenticationRepo {
 
     private FirebaseAuth firebaseAuth;
 
@@ -14,7 +14,7 @@ public class LoginRepository {
     private MutableLiveData<FirebaseUser> userLiveData;
     private MutableLiveData<Boolean> loggedOutLiveData;
 
-    public LoginRepository(Application application){
+    public AuthenticationRepo(Application application){
         this.application = application;
         this.firebaseAuth = FirebaseAuth.getInstance();
         this.userLiveData = new MutableLiveData<>();
