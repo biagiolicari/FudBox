@@ -1,4 +1,4 @@
-package com.andorid.fudbox.viewmodel.loginViemModel;
+package com.andorid.fudbox.viewmodel.authentication;
 
 import android.app.Application;
 import androidx.annotation.NonNull;

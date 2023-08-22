@@ -13,7 +13,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import com.andorid.fudbox.R;
-import com.andorid.fudbox.viewmodel.loginViemModel.LoginRegisterViewModel;
+import com.andorid.fudbox.viewmodel.authentication.LoginRegisterViewModel;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseUser;
 import com.rejowan.cutetoast.CuteToast;
