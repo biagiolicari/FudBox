@@ -2,7 +2,9 @@ package com.andorid.fudbox.model;
 
 import org.jetbrains.annotations.NotNull;
 
-public class Dish {
+import java.io.Serializable;
+
+public class Dish implements Serializable {
     private final String name;
     private final float price;
     private final DishType type;
