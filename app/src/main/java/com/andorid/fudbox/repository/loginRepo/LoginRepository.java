@@ -3,7 +3,6 @@ package com.andorid.fudbox.repository.loginRepo;
 import android.app.Application;
 import android.widget.Toast;
 import androidx.lifecycle.MutableLiveData;
-import com.andorid.fudbox.model.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 

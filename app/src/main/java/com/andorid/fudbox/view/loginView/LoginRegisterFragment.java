@@ -2,20 +2,18 @@ package com.andorid.fudbox.view.loginView;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Button;
-import android.widget.Toast;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import com.andorid.fudbox.R;
 import com.andorid.fudbox.viewmodel.loginViemModel.LoginRegisterViewModel;
-import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseUser;
 import com.rejowan.cutetoast.CuteToast;
@@ -37,17 +35,30 @@ public class LoginRegisterFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         loginRegisterViewModel = new ViewModelProvider(this).get(LoginRegisterViewModel.class);
+    }
 
-        loginRegisterViewModel.getUserLiveData().observe(this, new Observer<FirebaseUser>() {
-            @Override
-            public void onChanged(FirebaseUser firebaseUser) {
-                if (firebaseUser != null) {
-                    Navigation.findNavController(getView()).navigate(R.id.action_loginRegisterFragment_to_loggedInFragment);
+    private void navigateToHomeActivity(){
+        Navigation.findNavController(requireView()).navigate(R.id.action_to_home_activity);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        Log.i("SONO IN START", "EGOLO");
+        if(loginRegisterViewModel.getUserLiveData().getValue() == null){
+            Log.i("USER", "NULLLLLLL");
+        } else {
+            Log.i("USERLIVE", loginRegisterViewModel.getUserLiveData().getValue().toString());
+        }
+            loginRegisterViewModel.getUserLiveData().observe(this, new Observer<FirebaseUser>() {
+                @Override
+                public void onChanged(FirebaseUser firebaseUser) {
+                    if (firebaseUser != null) {
+                        navigateToHomeActivity();
+                    }
                 }
-            }
-        });
+            });
     }
 
     @Nullable
@@ -89,4 +100,6 @@ public class LoginRegisterFragment extends Fragment {
 
         return view;
     }
+
+
 }
