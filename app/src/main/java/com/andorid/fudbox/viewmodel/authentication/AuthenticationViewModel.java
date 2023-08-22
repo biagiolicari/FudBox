@@ -7,11 +7,11 @@ import androidx.lifecycle.MutableLiveData;
 import com.andorid.fudbox.repository.authentication.AuthenticationRepo;
 import com.google.firebase.auth.FirebaseUser;
 
-public class LoginRegisterViewModel extends AndroidViewModel {
+public class AuthenticationViewModel extends AndroidViewModel {
     private final AuthenticationRepo authRepository;
     private final MutableLiveData<FirebaseUser> userLiveData;
 
-    public LoginRegisterViewModel(@NonNull Application application) {
+    public AuthenticationViewModel(@NonNull Application application) {
         super(application);
         authRepository = new AuthenticationRepo(application);
         userLiveData = authRepository.getUserLiveData();

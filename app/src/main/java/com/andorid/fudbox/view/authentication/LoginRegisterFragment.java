@@ -13,7 +13,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import com.andorid.fudbox.R;
-import com.andorid.fudbox.viewmodel.authentication.LoginRegisterViewModel;
+import com.andorid.fudbox.viewmodel.authentication.AuthenticationViewModel;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseUser;
 import com.rejowan.cutetoast.CuteToast;
@@ -26,7 +26,7 @@ public class LoginRegisterFragment extends Fragment {
     private Button signUpButton;
     private TextInputLayout emailInputText;
     private TextInputLayout passwordInputText;
-    private LoginRegisterViewModel loginRegisterViewModel;
+    private AuthenticationViewModel authenticationViewModel;
 
     public LoginRegisterFragment() {
         // Required empty public constructor
@@ -35,7 +35,7 @@ public class LoginRegisterFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        loginRegisterViewModel = new ViewModelProvider(this).get(LoginRegisterViewModel.class);
+        authenticationViewModel = new ViewModelProvider(this).get(AuthenticationViewModel.class);
     }
 
     private void navigateToHomeActivity(){
@@ -46,12 +46,12 @@ public class LoginRegisterFragment extends Fragment {
     public void onStart() {
         super.onStart();
         Log.i("SONO IN START", "EGOLO");
-        if(loginRegisterViewModel.getUserLiveData().getValue() == null){
+        if(authenticationViewModel.getUserLiveData().getValue() == null){
             Log.i("USER", "NULLLLLLL");
         } else {
-            Log.i("USERLIVE", loginRegisterViewModel.getUserLiveData().getValue().toString());
+            Log.i("USERLIVE", authenticationViewModel.getUserLiveData().getValue().toString());
         }
-            loginRegisterViewModel.getUserLiveData().observe(this, new Observer<FirebaseUser>() {
+            authenticationViewModel.getUserLiveData().observe(this, new Observer<FirebaseUser>() {
                 @Override
                 public void onChanged(FirebaseUser firebaseUser) {
                     if (firebaseUser != null) {
@@ -77,7 +77,7 @@ public class LoginRegisterFragment extends Fragment {
             Log.i("EMAIL: ", emailInputText.getEditText().getText().toString());
 
             if (email.length() > 0 && password.length() > 0) {
-                loginRegisterViewModel.login(email, password);
+                authenticationViewModel.login(email, password);
             } else {
                 //Toast.makeText(getContext(), "Email Address and Password Must Be Entered", Toast.LENGTH_SHORT).show();
                 CuteToast.ct(getContext(), "Email Address and Password Must Be Entered", CuteToast.LENGTH_SHORT, CuteToast.ERROR, true).show();
@@ -90,7 +90,7 @@ public class LoginRegisterFragment extends Fragment {
             String password = passwordInputText.getEditText().getText().toString();
 
             if (email.length() > 0 && password.length() > 0) {
-                loginRegisterViewModel.register(email, password);
+                authenticationViewModel.register(email, password);
             } else {
                 //Toast.makeText(getContext(), "Email Address and Password Must Be Entered", Toast.LENGTH_SHORT).show();
                 CuteToast.ct(getContext(), "Email Address and Password Must Be Entered", CuteToast.LENGTH_SHORT, CuteToast.ERROR, true).show();
