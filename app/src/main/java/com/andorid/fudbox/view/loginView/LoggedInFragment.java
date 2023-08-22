@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -15,8 +14,6 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import com.andorid.fudbox.R;
 import com.andorid.fudbox.viewmodel.loginViemModel.LoggedInViewModel;
-import com.andorid.fudbox.viewmodel.loginViemModel.LoginRegisterViewModel;
-import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseUser;
 import com.rejowan.cutetoast.CuteToast;
 

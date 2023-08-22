@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/nav_graph"
+            xmlns:tools="http://schemas.android.com/tools" android:id="@+id/nav_graph"
             app:startDestination="@id/loginRegisterFragment">
 
     <fragment
@@ -10,7 +10,7 @@
             android:label="LoginRegisterFragment" >
         <action
                 android:id="@+id/action_loginRegisterFragment_to_loggedInFragment"
-                app:destination="@id/loggedInFragment" />
+                app:destination="@+id/loggedInFragment" />
     </fragment>
     <fragment
             android:id="@+id/loggedInFragment"
@@ -20,5 +20,12 @@
                 android:id="@+id/action_loggedInFragment_to_loginRegisterFragment"
                 app:destination="@id/loginRegisterFragment" />
     </fragment>
+
+    <activity android:id="@+id/homeActivity" android:name="com.andorid.fudbox.view.homeView.HomeActivity"
+              android:label="activity_home" tools:layout="@layout/activity_home"/>
+
+    <action
+        android:id="@+id/action_to_home_activity"
+        app:destination="@id/homeActivity"/>
 
 </navigation>
