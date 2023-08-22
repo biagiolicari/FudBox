@@ -6,7 +6,7 @@
 
     <fragment
             android:id="@+id/loginRegisterFragment"
-            android:name="com.andorid.fudbox.view.loginView.LoginRegisterFragment"
+            android:name="com.andorid.fudbox.view.authentication.LoginRegisterFragment"
             android:label="LoginRegisterFragment" >
         <action
                 android:id="@+id/action_loginRegisterFragment_to_loggedInFragment"
@@ -14,14 +14,14 @@
     </fragment>
     <fragment
             android:id="@+id/loggedInFragment"
-            android:name="com.andorid.fudbox.view.loginView.LoggedInFragment"
+            android:name="com.andorid.fudbox.view.authentication.LoggedInFragment"
             android:label="LoggedInFragment" >
         <action
                 android:id="@+id/action_loggedInFragment_to_loginRegisterFragment"
                 app:destination="@id/loginRegisterFragment" />
     </fragment>
 
-    <activity android:id="@+id/homeActivity" android:name="com.andorid.fudbox.view.homeView.HomeActivity"
+    <activity android:id="@+id/homeActivity" android:name="com.andorid.fudbox.view.home.HomeActivity"
               android:label="activity_home" tools:layout="@layout/activity_home"/>
 
     <action

@@ -1,4 +1,4 @@
-package com.andorid.fudbox.view.homeView;
+package com.andorid.fudbox.view.home;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

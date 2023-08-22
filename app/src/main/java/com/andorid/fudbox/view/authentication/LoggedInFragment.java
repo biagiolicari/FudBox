@@ -1,4 +1,4 @@
-package com.andorid.fudbox.view.loginView;
+package com.andorid.fudbox.view.authentication;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
