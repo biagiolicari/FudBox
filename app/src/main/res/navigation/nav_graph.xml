@@ -21,11 +21,11 @@
                 app:destination="@id/loginRegisterFragment" />
     </fragment>
 
-    <activity android:id="@+id/homeActivity" android:name="com.andorid.fudbox.view.mainscreen.MainScreenActivity"
-              android:label="activity_home" tools:layout="@layout/activity_home"/>
+    <activity android:id="@+id/placeActivity" android:name="com.andorid.fudbox.view.place.PlaceActivity"
+              android:label="activity_place" tools:layout="@layout/activity_place"/>
 
     <action
         android:id="@+id/action_to_home_activity"
-        app:destination="@id/homeActivity"/>
+        app:destination="@id/placeActivity"/>
 
 </navigation>
