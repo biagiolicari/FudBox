@@ -3,38 +3,23 @@
     <!-- Hint for the autocomplete form's first address line field. -->
     <string name="autocomplete_address1_hint" translatable="false">Enter the address</string>
 
-    <!-- Label for the autocomplete form's heading. -->
-    <string name="autocomplete_address_heading_label" translatable="false">Delivery Address</string>
-
     <!-- Label for the address form's first address line field. -->
-    <string name="autocomplete_address1_label" translatable="false">Address Line 1</string>
-
-    <!-- Label for the address form's second address line field. -->
-    <string name="autocomplete_address2_label" translatable="false">Apartment, unit, suite, or floor #</string>
-
-    <!-- Label for the address form's city field. -->
-    <string name="autocomplete_city_label" translatable="false">City</string>
+    <string name="autocomplete_address1_label" translatable="false">Address</string>
 
     <!-- Label for the address form's state field. -->
-    <string name="autocomplete_state_label" translatable="false">State/Province</string>
 
     <!-- Label for the address form's postal code field. -->
-    <string name="autocomplete_postal_label" translatable="false">Postal code</string>
 
     <!-- Label for the address form's country field. -->
-    <string name="autocomplete_country_label" translatable="false">Country/Region</string>
 
     <!-- Label for the address form's proximity check setting. -->
-    <string name="autocomplete_proximity_check" translatable="false">Check device proximity</string>
+    <string name="geolocalization" translatable="false">..Or use my position</string>
 
     <!-- Label for the address form's confirmation map. -->
     <string name="autocomplete_map_label" translatable="false">Map view of the selected address</string>
 
     <!-- Text for the address form submit button. -->
-    <string name="autocomplete_save_button" translatable="false">Submit address</string>
-
-    <!-- Text for the address form reset button. -->
-    <string name="autocomplete_reset_button" translatable="false">Clear form</string>
+    <string name="autocomplete_save_button" translatable="false">Set address</string>
 
     <!-- Text for the toast message for permissions denied. -->
     <string name="autocomplete_denied_message" translatable="false">User denied location permission. Cannot check proximity to entered address.</string>
