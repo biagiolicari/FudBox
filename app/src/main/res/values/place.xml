@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Hint for the autocomplete form's first address line field. -->
+    <string name="autocomplete_address1_hint" translatable="false">Enter the address</string>
+
+    <!-- Label for the address form's first address line field. -->
+    <string name="autocomplete_address1_label" translatable="false">Address</string>
+
+    <!-- Label for the address form's state field. -->
+
+    <!-- Label for the address form's postal code field. -->
+
+    <!-- Label for the address form's country field. -->
+
+    <!-- Label for the address form's proximity check setting. -->
+    <string name="geolocalization" translatable="false">..Or use my position</string>
+
+    <!-- Label for the address form's confirmation map. -->
+    <string name="autocomplete_map_label" translatable="false">Map view of the selected address</string>
+
+    <!-- Text for the address form submit button. -->
+    <string name="autocomplete_save_button" translatable="false">Set address</string>
+
+    <!-- Text for the toast message for permissions denied. -->
+    <string name="autocomplete_denied_message" translatable="false">User denied location permission. Cannot check proximity to entered address.</string>
+
+    <!-- Text for the toast message for proximity match in progress. -->
+    <string name="autocomplete_progress_message" translatable="false">Checking proximity</string>
+
+    <!-- Text for the toast message for a successful proximity match. -->
+    <string name="autocomplete_match_message" translatable="false">Device location matches entered address</string>
+
+    <!-- Text for the toast message for a failed proximity match. -->
+    <string name="autocomplete_nomatch_message" translatable="false">Device location does not match entered address</string>
+
+    <!-- Text for the toast message for a skilled proximity match. -->
+    <string name="autocomplete_skipped_message" translatable="false">Address accepted without checking proximity</string>
+
+    <string name="google_key">AIzaSyA9lAgWMIKYTYuwE0_N8q3W5AYAZnZPHNk</string>
+
+</resources>
