@@ -1,27 +1,29 @@
 package com.andorid.fudbox.model;
 
 
+import com.andorid.fudbox.model.restaurant.RestaurantFeature;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 
 public class Order implements Serializable {
-    private final Restaurant_old restaurantOldTodelete;
+    private final RestaurantFeature restaurantFeature;
     private final ArrayList<DishQuantity> dishes;
 
-    public Order(Restaurant_old restaurantOldTodelete, ArrayList<DishQuantity> dishes) {
-        this.restaurantOldTodelete = restaurantOldTodelete;
+    public Order(RestaurantFeature restaurantFeature, ArrayList<DishQuantity> dishes) {
+        this.restaurantFeature = restaurantFeature;
         this.dishes = dishes;
     }
 
-    public Order(Restaurant_old restaurantOldTodelete) {
-        this.restaurantOldTodelete = restaurantOldTodelete;
+    public Order(RestaurantFeature restaurantFeature) {
+        this.restaurantFeature = restaurantFeature;
         this.dishes = new ArrayList<>();
     }
 
-    public Restaurant_old getRestaurant() {
-        return restaurantOldTodelete;
+    public RestaurantFeature getRestaurant() {
+        return restaurantFeature;
     }
 
     public List<DishQuantity> getDishes() {
