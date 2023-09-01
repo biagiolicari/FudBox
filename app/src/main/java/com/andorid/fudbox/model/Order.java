@@ -7,21 +7,21 @@ import java.util.List;
 
 
 public class Order implements Serializable {
-    private final Restaurant restaurant;
+    private final Restaurant_old restaurantOldTodelete;
     private final ArrayList<DishQuantity> dishes;
 
-    public Order(Restaurant restaurant, ArrayList<DishQuantity> dishes) {
-        this.restaurant = restaurant;
+    public Order(Restaurant_old restaurantOldTodelete, ArrayList<DishQuantity> dishes) {
+        this.restaurantOldTodelete = restaurantOldTodelete;
         this.dishes = dishes;
     }
 
-    public Order(Restaurant restaurant) {
-        this.restaurant = restaurant;
+    public Order(Restaurant_old restaurantOldTodelete) {
+        this.restaurantOldTodelete = restaurantOldTodelete;
         this.dishes = new ArrayList<>();
     }
 
-    public Restaurant getRestaurant() {
-        return restaurant;
+    public Restaurant_old getRestaurant() {
+        return restaurantOldTodelete;
     }
 
     public List<DishQuantity> getDishes() {
