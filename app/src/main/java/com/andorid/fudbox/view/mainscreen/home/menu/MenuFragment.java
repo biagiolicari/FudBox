@@ -23,6 +23,7 @@ import com.rejowan.cutetoast.CuteToast;
 import java.util.List;
 
 public class MenuFragment extends Fragment {
+    private final static String RESTAURANT_ARG = "restaurant";
     private RecyclerView recyclerView;
     private MenuAdapter menuAdapter;
     private MenuViewModel menuViewModel;
@@ -39,6 +40,8 @@ public class MenuFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         FragmentMenuBinding binding = FragmentMenuBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
+
+        binding.restaurantNameTextView.setText(getArguments().getString(RESTAURANT_ARG));
 
         recyclerView = binding.menuRecyclerView;
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
