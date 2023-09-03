@@ -10,33 +10,33 @@ import java.util.List;
 
 public class DishQuantityRepository {
 
-    private List<DishQuantity> cartItems;
-    private MutableLiveData<List<DishQuantity>> dishesQtyLiveData;
+    private final List<DishQuantity> dishQuantities;
+    private MutableLiveData<List<DishQuantity>> dishQuantitiesLiveData;
 
     public DishQuantityRepository() {
-        this.dishesQtyLiveData = new MutableLiveData<>();
-        this.cartItems = new ArrayList<>();
+        this.dishQuantitiesLiveData = new MutableLiveData<>();
+        this.dishQuantities = new ArrayList<>();
     }
 
-    public MutableLiveData<List<DishQuantity>> getDishesQtyLiveData() {
-        return dishesQtyLiveData;
+    public MutableLiveData<List<DishQuantity>> getDishQuantitiesLiveData() {
+        return dishQuantitiesLiveData;
     }
 
-    public void setDishesQtyLiveData(MutableLiveData<List<DishQuantity>> dishesQtyLiveData) {
-        this.dishesQtyLiveData = dishesQtyLiveData;
+    public void setDishQuantitiesLiveData(MutableLiveData<List<DishQuantity>> dishQuantitiesLiveData) {
+        this.dishQuantitiesLiveData = dishQuantitiesLiveData;
     }
 
     public void addToCart(Dish dish, int quantity) {
         // Check if the dish is already in the cart
-        for (DishQuantity cartItem : cartItems) {
+        for (DishQuantity cartItem : dishQuantities) {
             if (cartItem.getDish().equals(dish)) {
                 // If the dish is already in the cart, update its quantity
                 cartItem.setQuantity(cartItem.getQuantity() + quantity);
-                dishesQtyLiveData.setValue(cartItems);
+                dishQuantitiesLiveData.setValue(dishQuantities);
             }
             // If the dish is not in the cart, add it as a new item
-            cartItems.add(new DishQuantity(dish, quantity));
-            dishesQtyLiveData.setValue(cartItems);
+            dishQuantities.add(new DishQuantity(dish, quantity));
+            dishQuantitiesLiveData.setValue(dishQuantities);
         }
     }
 

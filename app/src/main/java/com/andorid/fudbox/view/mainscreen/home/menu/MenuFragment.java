@@ -15,11 +15,10 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.andorid.fudbox.R;
-import com.andorid.fudbox.databinding.FragmentHomePageBinding;
 import com.andorid.fudbox.databinding.FragmentMenuBinding;
 import com.andorid.fudbox.model.Dish;
 import com.andorid.fudbox.viewmodel.mainscreen.home.menu.MenuViewModel;
+import com.rejowan.cutetoast.CuteToast;
 
 import java.util.List;
 
@@ -49,8 +48,16 @@ public class MenuFragment extends Fragment {
 
         // Create a list of menu items (you can fetch this from a data source)
         dishesLiveData = menuViewModel.getDishes();
+
         menuViewModel.getDishes().observe(getViewLifecycleOwner(), dishes -> {
             menuAdapter.setMenuItems(dishes);
+        });
+
+        menuViewModel.getErrorLiveData().observe(getViewLifecycleOwner(), errorMessage -> {
+            if (errorMessage != null) {
+                CuteToast.ct(requireContext(), errorMessage, CuteToast.LENGTH_SHORT, CuteToast.CONFUSE, true).show();
+                menuViewModel.clearErrorMessage(); // Optionally clear the error message in the ViewModel
+            }
         });
         return view;
     }
@@ -58,7 +65,7 @@ public class MenuFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        // Imposta il comportamento del pulsante indietro
+        //Imposta il comportamento del pulsante indietro
         requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {

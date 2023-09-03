@@ -5,12 +5,11 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
 
 import com.andorid.fudbox.model.Dish;
-import com.andorid.fudbox.model.DishQuantity;
 import com.andorid.fudbox.model.DishType;
-import com.andorid.fudbox.repository.mainscreen.home.menu.DishQuantityRepository;
 import com.andorid.fudbox.repository.mainscreen.home.menu.DishRepository;
 
 import java.util.ArrayList;
@@ -19,16 +18,23 @@ import java.util.List;
 public class MenuViewModel extends AndroidViewModel {
     private DishRepository dishRepository;
     private LiveData<List<Dish>> dishesLiveData;
+    private MutableLiveData<String> errorLiveData;
+
     public MenuViewModel(@NonNull Application application) {
         super(application);
     }
 
-    public void init(){
-        dishRepository = new DishRepository();
-        dishesLiveData = dishRepository.getAllDishes();
+    public LiveData<String> getErrorLiveData() {
+        return errorLiveData;
     }
 
-    public LiveData<List<Dish>> getDishes(){
+    public void init() {
+        dishRepository = new DishRepository();
+        dishesLiveData = dishRepository.getAllDishes();
+        errorLiveData = dishRepository.getErrorLiveData();
+    }
+
+    public LiveData<List<Dish>> getDishes() {
         return dishesLiveData;
     }
 
@@ -44,5 +50,9 @@ public class MenuViewModel extends AndroidViewModel {
             }
         }
         return filteredDishes;
+    }
+
+    public void clearErrorMessage(){
+        this.errorLiveData.setValue(null);
     }
 }

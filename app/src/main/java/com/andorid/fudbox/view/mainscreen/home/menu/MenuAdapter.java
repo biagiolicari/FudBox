@@ -4,12 +4,10 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.andorid.fudbox.R;
 import com.andorid.fudbox.databinding.ItemMenuBinding;
 import com.andorid.fudbox.model.Dish;
 
@@ -20,6 +18,7 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MenuHolder> {
 
     private final LayoutInflater inflater;
     private List<Dish> menuItems = new ArrayList<>();
+
     public MenuAdapter(Context context) {
         inflater = LayoutInflater.from(context);
     }
@@ -52,17 +51,18 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MenuHolder> {
     }
 
     public class MenuHolder extends RecyclerView.ViewHolder {
-        private ItemMenuBinding binding;
+        private static final String EURO_SYMBOL = "€";
+        private final ItemMenuBinding binding;
 
         public MenuHolder(@NonNull ItemMenuBinding binding) {
-           super(binding.getRoot());
-           this.binding = binding;
+            super(binding.getRoot());
+            this.binding = binding;
         }
 
         public void bind(Dish menuItem) {
             binding.itemNameTextView.setText(menuItem.getName());
             binding.itemDescriptionTextView.setText(menuItem.getDescription());
-            binding.itemPriceTextView.setText("$" + menuItem.getPrice());
+            binding.itemPriceTextView.setText(EURO_SYMBOL + " " + menuItem.getPrice());
         }
     }
 }
