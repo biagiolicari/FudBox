@@ -1,7 +1,9 @@
 package com.andorid.fudbox.view.mainscreen;
 
+import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
@@ -66,4 +68,5 @@ public class MainScreenActivity extends AppCompatActivity {
         args.putDouble("longitude", latLng.longitude);   // Replace with actual longitude
         navController.navigate(R.id.nav_home, args);
     }
+
 }

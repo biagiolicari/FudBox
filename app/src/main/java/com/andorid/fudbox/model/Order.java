@@ -30,10 +30,10 @@ public class Order implements Serializable {
         return dishes;
     }
 
-    public float getTotalPrice() {
-        float totalPrice = 0.0f;
+    public Double getTotalPrice() {
+        Double totalPrice = 0.0;
         for (DishQuantity dq : dishes) {
-            float dishPrice = dq.getDish().getPrice() * dq.getQuantity();
+            Double dishPrice = dq.getDish().getPrice() * dq.getQuantity();
             totalPrice += dishPrice;
         }
         return totalPrice;

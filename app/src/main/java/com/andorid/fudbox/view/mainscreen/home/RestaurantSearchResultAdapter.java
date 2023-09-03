@@ -21,10 +21,18 @@ public class RestaurantSearchResultAdapter extends RecyclerView.Adapter<Restaura
     private List<RestaurantFeature> restaurantFeatureList = new ArrayList<>();
     private LatLng position;
 
+    private OnItemClickListener itemClickListener;
 
-    public RestaurantSearchResultAdapter(Context context, LatLng position) {
+    public interface OnItemClickListener {
+        void onItemClick(RestaurantFeature restaurantFeature);
+    }
+
+
+
+    public RestaurantSearchResultAdapter(Context context, OnItemClickListener listener, LatLng position) {
         inflater = LayoutInflater.from(context);
         this.position = position;
+        this.itemClickListener = listener;
     }
 
     public void setRestaurantFeatureList(List<RestaurantFeature> restaurantFeatureList) {
@@ -43,6 +51,11 @@ public class RestaurantSearchResultAdapter extends RecyclerView.Adapter<Restaura
     public void onBindViewHolder(@NonNull RestaurantSearchResultHolder holder, int position) {
         RestaurantFeature restaurantFeature = restaurantFeatureList.get(position);
         holder.bind(restaurantFeature);
+        holder.itemView.setOnClickListener(v -> {
+            if (itemClickListener != null) {
+                itemClickListener.onItemClick(restaurantFeature);
+            }
+        });
     }
 
     @Override
