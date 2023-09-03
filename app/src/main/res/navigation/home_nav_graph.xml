@@ -19,6 +19,13 @@
               android:label="fragment_user" tools:layout="@layout/fragment_user">
     </fragment>
 
+    <fragment android:id="@+id/menuFragment" android:name="com.andorid.fudbox.view.mainscreen.home.menu.MenuFragment"
+        android:label="fragment_menu" tools:layout="@layout/fragment_menu"/>
+
+    <action
+        android:id="@+id/action_restaurantFragment_to_menuFragment"
+        app:destination="@id/menuFragment" />
+
 
 
 </navigation>
