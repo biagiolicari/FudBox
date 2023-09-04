@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
+import com.andorid.fudbox.model.Restaurant;
 import com.andorid.fudbox.model.restaurant.RestaurantFeature;
 import com.andorid.fudbox.repository.mainscreen.home.restaurant.RestaurantRepository;
 import com.google.android.gms.maps.model.LatLng;
@@ -20,13 +21,13 @@ public class RestaurantViewModel extends AndroidViewModel {
 
     private static final String CIRCLE = "circle:";
     private RestaurantRepository restaurantRepository;
-    private LiveData<List<RestaurantFeature>> restaurantsLiveData;
+    private LiveData<List<Restaurant>> restaurantsLiveData;
 
     public RestaurantViewModel(@NonNull Application application) {
         super(application);
     }
 
-    public LiveData<List<RestaurantFeature>> getRestaurantsLiveData() {
+    public LiveData<List<Restaurant>> getRestaurantsLiveData() {
         return restaurantsLiveData;
     }
 

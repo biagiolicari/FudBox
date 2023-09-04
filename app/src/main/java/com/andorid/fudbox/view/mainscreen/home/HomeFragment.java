@@ -14,8 +14,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.andorid.fudbox.R;
 import com.andorid.fudbox.databinding.FragmentHomePageBinding;
+import com.andorid.fudbox.model.Restaurant;
 import com.andorid.fudbox.model.restaurant.RestaurantFeature;
-import com.andorid.fudbox.repository.mainscreen.home.menu.DishRepository;
 import com.andorid.fudbox.viewmodel.mainscreen.home.RestaurantViewModel;
 import com.google.android.gms.maps.model.LatLng;
 
@@ -62,22 +62,18 @@ public class HomeFragment extends Fragment implements RestaurantSearchResultAdap
         viewModel.searchRestaurants(latLngData);
 
         viewModel.getRestaurantsLiveData().observe(getViewLifecycleOwner(), restaurantFeatures -> {
-            adapter.setRestaurantFeatureList(restaurantFeatures);
+            adapter.setRestaurants(restaurantFeatures);
         });
 
-        DishRepository repository = new DishRepository();
-        repository.getAllDishes();
         return view;
     }
 
     @Override
-    public void onItemClick(RestaurantFeature restaurantFeature) {
+    public void onItemClick(Restaurant restaurant) {
         Bundle menuBundle = new Bundle();
-        menuBundle.putString("restaurant", restaurantFeature.getProperties().getName());
+        menuBundle.putString("restaurant", restaurant.getName());
         NavController navController = Navigation.findNavController(requireView());
         // Navigate to the MenuFragment using the action defined in the navigation graph
         navController.navigate(R.id.action_restaurantFragment_to_menuFragment, menuBundle);
     }
-
-
 }
