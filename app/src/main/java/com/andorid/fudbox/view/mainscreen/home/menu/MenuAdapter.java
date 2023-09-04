@@ -1,6 +1,7 @@
 package com.andorid.fudbox.view.mainscreen.home.menu;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.ViewGroup;
@@ -18,6 +19,16 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MenuHolder> {
 
     private final LayoutInflater inflater;
     private List<Dish> menuItems = new ArrayList<>();
+
+    private OnAddToCartClickListener addToCartClickListener;
+
+    public interface OnAddToCartClickListener {
+        void onAddToCartClick(Dish dish, int quantity);
+    }
+
+    public void setOnAddToCartClickListener(OnAddToCartClickListener listener) {
+        this.addToCartClickListener = listener;
+    }
 
     public MenuAdapter(Context context) {
         inflater = LayoutInflater.from(context);
@@ -46,10 +57,6 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MenuHolder> {
         return menuItems.size();
     }
 
-    public interface OnItemClickListener {
-        void onItemClick(MenuItem menuItem);
-    }
-
     public class MenuHolder extends RecyclerView.ViewHolder {
         private static final String EURO_SYMBOL = "€";
         private final ItemMenuBinding binding;
@@ -57,6 +64,20 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MenuHolder> {
         public MenuHolder(@NonNull ItemMenuBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
+
+            // Set click listener for the "Add to Cart" button
+            binding.addToCartButton.setOnClickListener(view -> {
+                int position = getAdapterPosition();
+                if (position != RecyclerView.NO_POSITION) {
+                    Dish menuItem = menuItems.get(position);
+                    // Trigger the listener with the selected Dish and quantity (you can get it from your TextView)
+                    if (addToCartClickListener != null) {
+                        int quantity = Integer.parseInt(binding.quantityTextInputLayout.getEditText().getText().toString());
+                        addToCartClickListener.onAddToCartClick(menuItem,quantity);
+
+                    }
+                }
+            });
         }
 
         public void bind(Dish menuItem) {

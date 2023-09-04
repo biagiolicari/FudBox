@@ -49,4 +49,12 @@ public class DishQuantity implements Serializable {
         result = 31 * result + quantity;
         return result;
     }
+
+    @Override
+    public String toString() {
+        return "DishQuantity{" +
+                "dish=" + dish +
+                ", quantity=" + quantity +
+                '}';
+    }
 }

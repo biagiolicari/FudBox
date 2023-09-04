@@ -1,33 +1,35 @@
 package com.andorid.fudbox.model;
 
 
-import com.andorid.fudbox.model.restaurant.RestaurantFeature;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 
 public class Order implements Serializable {
-    private final RestaurantFeature restaurantFeature;
-    private final ArrayList<DishQuantity> dishes;
+    private final String restaurant;
+    private List<DishQuantity> dishes;
 
-    public Order(RestaurantFeature restaurantFeature, ArrayList<DishQuantity> dishes) {
-        this.restaurantFeature = restaurantFeature;
+    public Order(String restaurant, List<DishQuantity> dishes) {
+        this.restaurant = restaurant;
         this.dishes = dishes;
     }
 
-    public Order(RestaurantFeature restaurantFeature) {
-        this.restaurantFeature = restaurantFeature;
+    public Order(String restaurant) {
+        this.restaurant = restaurant;
         this.dishes = new ArrayList<>();
     }
 
-    public RestaurantFeature getRestaurant() {
-        return restaurantFeature;
+    public String getRestaurant() {
+        return restaurant;
     }
 
     public List<DishQuantity> getDishes() {
         return dishes;
+    }
+
+    public void setDishes(List<DishQuantity> dishes) {
+        this.dishes = dishes;
     }
 
     public Double getTotalPrice() {
@@ -73,12 +75,10 @@ public class Order implements Serializable {
 
     @Override
     public String toString() {
-        StringBuilder orderStr = new StringBuilder();
-        for (DishQuantity dq : dishes) {
-            Dish dish = dq.getDish();
-            orderStr.append(dish.getName()).append(":").append(dq.getQuantity()).append(" ");
-        }
-        return orderStr.toString();
+        return "Order{" +
+                "restaurant='" + restaurant + '\'' +
+                ", dishes=" + dishes +
+                '}';
     }
 }
 

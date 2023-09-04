@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- fragment_order.xml -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:paddingBottom="?actionBarSize" >
+
+    <!-- RecyclerView to display the list of dishes -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/orderRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:padding="16dp"
+        android:scrollbars="vertical"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        >
+
+        <!-- Dish name -->
+        <TextView
+            android:id="@+id/totalPrice"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="16sp"
+            android:textColor="@android:color/black"
+            android:gravity="start"
+            android:layout_gravity="start"
+            android:text="@string/total_price"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"/>
+
+        <!-- Quantity -->
+        <TextView
+            android:id="@+id/totalPriceTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/black"
+            android:gravity="end"
+            android:layout_gravity="end"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"/>
+
+    </LinearLayout>
+
+    <!-- Button to complete the order -->
+    <Button
+        android:text="@string/register"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" android:id="@+id/completeOrderButton"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="145dp" android:layout_marginEnd="146dp"
+        app:layout_constraintEnd_toEndOf="parent" app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="24dp"
+        style="@style/Widget.MaterialComponents.Button" app:layout_constraintVertical_bias="0.0"/>
+
+
+</LinearLayout>
