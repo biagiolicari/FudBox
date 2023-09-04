@@ -2,10 +2,12 @@ package com.andorid.fudbox.repository.mainscreen.home.restaurant;
 
 import androidx.lifecycle.MutableLiveData;
 
+import com.andorid.fudbox.model.Restaurant;
 import com.andorid.fudbox.model.restaurant.RestaurantFeature;
 import com.andorid.fudbox.model.restaurant.RestaurantJsonObject;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -16,7 +18,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RestaurantRepository {
     private static final String BASE_URL = "https://api.geoapify.com/";
     private final IPlacesAPI iPlacesAPI;
-    private final MutableLiveData<List<RestaurantFeature>> restaurantMutableLiveData;
+    private final MutableLiveData<List<Restaurant>> restaurantMutableLiveData;
 
     public RestaurantRepository() {
         restaurantMutableLiveData = new MutableLiveData<>();
@@ -32,7 +34,7 @@ public class RestaurantRepository {
                 .create(IPlacesAPI.class);
     }
 
-    public MutableLiveData<List<RestaurantFeature>> getRestaurantMutableLiveData() {
+    public MutableLiveData<List<Restaurant>> getRestaurantMutableLiveData() {
         return restaurantMutableLiveData;
     }
 
@@ -41,8 +43,18 @@ public class RestaurantRepository {
             @Override
             public void onResponse(Call<RestaurantJsonObject> call, Response<RestaurantJsonObject> response) {
                 if (response.isSuccessful()) {
-                    RestaurantJsonObject restaurantJsonObject = response.body();
-                    restaurantMutableLiveData.setValue(restaurantJsonObject.getFeatures());
+                    List<RestaurantFeature> restaurantFeatures = response.body().getFeatures();
+                    List<Restaurant> restaurants = restaurantFeatures.stream()
+                            .map(item -> new Restaurant.Builder()
+                                    .setName(item.getProperties().getName())
+                                    .setAddress(item.getProperties().getAddressLine2())
+                                    .setCity(item.getProperties().getCity())
+                                    .setUid(item.getProperties().getPlaceId())
+                                    .setLat(item.getProperties().getLat())
+                                    .setLng(item.getProperties().getLon())
+                                    .build())
+                            .collect(Collectors.toList());
+                    restaurantMutableLiveData.setValue(restaurants);
                 }
             }
 

@@ -44,6 +44,28 @@ public class Dish implements Serializable {
                 '}';
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Dish dish = (Dish) o;
+
+        if (!name.equals(dish.name)) return false;
+        if (!price.equals(dish.price)) return false;
+        if (type != dish.type) return false;
+        return description.equals(dish.description);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = name.hashCode();
+        result = 31 * result + price.hashCode();
+        result = 31 * result + type.hashCode();
+        result = 31 * result + description.hashCode();
+        return result;
+    }
+
 
     public static class Builder {
         private String name = "N/A";

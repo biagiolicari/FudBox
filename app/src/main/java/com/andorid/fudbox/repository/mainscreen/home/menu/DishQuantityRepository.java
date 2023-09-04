@@ -28,16 +28,24 @@ public class DishQuantityRepository {
 
     public void addToCart(Dish dish, int quantity) {
         // Check if the dish is already in the cart
+        boolean dishExists = false;
+        DishQuantity dishQuantity = new DishQuantity(dish, quantity);
         for (DishQuantity cartItem : dishQuantities) {
-            if (cartItem.getDish().equals(dish)) {
+            if (cartItem.equals(dish)) {
                 // If the dish is already in the cart, update its quantity
                 cartItem.setQuantity(cartItem.getQuantity() + quantity);
-                dishQuantitiesLiveData.setValue(dishQuantities);
+                dishExists = true;
+                break; // Exit the loop since the dish is found
             }
-            // If the dish is not in the cart, add it as a new item
-            dishQuantities.add(new DishQuantity(dish, quantity));
-            dishQuantitiesLiveData.setValue(dishQuantities);
         }
+
+        // If the dish is not in the cart, add it as a new item
+        if (!dishExists) {
+            dishQuantities.add(new DishQuantity(dish, quantity));
+        }
+
+        // Update the LiveData with the modified list
+        dishQuantitiesLiveData.setValue(dishQuantities);
     }
 
 }

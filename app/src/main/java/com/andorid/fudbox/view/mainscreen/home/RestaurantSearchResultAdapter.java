@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.andorid.fudbox.databinding.ItemRestaurantBinding;
+import com.andorid.fudbox.model.Restaurant;
 import com.andorid.fudbox.model.restaurant.RestaurantFeature;
 import com.andorid.fudbox.utils.LatLngDistanceCalculator;
 import com.andorid.fudbox.utils.RatingGenerator;
@@ -18,13 +19,13 @@ import java.util.List;
 
 public class RestaurantSearchResultAdapter extends RecyclerView.Adapter<RestaurantSearchResultAdapter.RestaurantSearchResultHolder> {
     private final LayoutInflater inflater;
-    private List<RestaurantFeature> restaurantFeatureList = new ArrayList<>();
+    private List<Restaurant> restaurants = new ArrayList<>();
     private LatLng position;
 
     private OnItemClickListener itemClickListener;
 
     public interface OnItemClickListener {
-        void onItemClick(RestaurantFeature restaurantFeature);
+        void onItemClick(Restaurant restaurant);
     }
 
 
@@ -35,8 +36,8 @@ public class RestaurantSearchResultAdapter extends RecyclerView.Adapter<Restaura
         this.itemClickListener = listener;
     }
 
-    public void setRestaurantFeatureList(List<RestaurantFeature> restaurantFeatureList) {
-        this.restaurantFeatureList = restaurantFeatureList;
+    public void setRestaurants(List<Restaurant> restaurants) {
+        this.restaurants = restaurants;
         notifyDataSetChanged();
     }
 
@@ -49,18 +50,18 @@ public class RestaurantSearchResultAdapter extends RecyclerView.Adapter<Restaura
 
     @Override
     public void onBindViewHolder(@NonNull RestaurantSearchResultHolder holder, int position) {
-        RestaurantFeature restaurantFeature = restaurantFeatureList.get(position);
-        holder.bind(restaurantFeature);
+        Restaurant restaurant = restaurants.get(position);
+        holder.bind(restaurant);
         holder.itemView.setOnClickListener(v -> {
             if (itemClickListener != null) {
-                itemClickListener.onItemClick(restaurantFeature);
+                itemClickListener.onItemClick(restaurant);
             }
         });
     }
 
     @Override
     public int getItemCount() {
-        return restaurantFeatureList.size();
+        return restaurants.size();
     }
 
     class RestaurantSearchResultHolder extends RecyclerView.ViewHolder {
@@ -71,14 +72,14 @@ public class RestaurantSearchResultAdapter extends RecyclerView.Adapter<Restaura
             this.binding = binding;
         }
 
-        public void bind(RestaurantFeature restaurantFeature) {
-            String restaurantTitle = restaurantFeature.getProperties().getName() == null ? "Not Available" : restaurantFeature.getProperties().getName();
-            String restaurantAddress = restaurantFeature.getProperties().getAddressLine2() == null ? "Not Available" : restaurantFeature.getProperties().getAddressLine2();
+        public void bind(Restaurant restaurant) {
+            String restaurantTitle = restaurant.getName() == null ? "Not Available" : restaurant.getName();
+            String restaurantAddress = restaurant.getAddress() == null ? "Not Available" : restaurant.getAddress();
 
             binding.restaurantItemTitle.setText(restaurantTitle);
             binding.restaurantAddress.setText(restaurantAddress);
 
-            LatLng restaurantPosition = new LatLng(restaurantFeature.getProperties().getLat(), restaurantFeature.getProperties().getLon());
+            LatLng restaurantPosition = new LatLng(restaurant.getLat(), restaurant.getLng());
             binding.restaurantDistance.setText(LatLngDistanceCalculator.calculateDistance(position, restaurantPosition));
 
             binding.restaurantRating.setRating(RatingGenerator.generateRandomRating());

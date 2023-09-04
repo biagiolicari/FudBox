@@ -3,7 +3,7 @@ package com.andorid.fudbox.utils;
 import java.util.Random;
 
 public class RatingGenerator {
-    private static final float MIN_RATING = 3.5f;
+    private static final float MIN_RATING = 1.0f;
     private static final float MAX_RATING = 5.0f;
     private static final Random random = new Random();
 
