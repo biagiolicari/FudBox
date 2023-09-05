@@ -1,5 +1,6 @@
 package com.andorid.fudbox.view.mainscreen.home.menu;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.andorid.fudbox.databinding.FragmentMenuBinding;
 import com.andorid.fudbox.model.Dish;
 import com.andorid.fudbox.model.DishQuantity;
+import com.andorid.fudbox.model.Restaurant;
 import com.andorid.fudbox.viewmodel.mainscreen.home.menu.DishOrderViewModel;
 import com.andorid.fudbox.viewmodel.mainscreen.home.menu.MenuViewModel;
 import com.andorid.fudbox.viewmodel.mainscreen.order.OrderViewModel;
@@ -50,8 +52,10 @@ public class MenuFragment extends Fragment implements MenuAdapter.OnAddToCartCli
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         FragmentMenuBinding binding = FragmentMenuBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
-
-        binding.restaurantNameTextView.setText(getArguments().getString(RESTAURANT_ARG));
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
+            Restaurant restaurantBundle = getArguments().getSerializable(RESTAURANT_ARG, Restaurant.class);
+            binding.restaurantNameTextView.setText(restaurantBundle.getName());
+        }
 
         recyclerView = binding.menuRecyclerView;
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
@@ -85,9 +89,8 @@ public class MenuFragment extends Fragment implements MenuAdapter.OnAddToCartCli
         requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
-                // Torna al fragment precedente quando premi il pulsante indietro
-                NavHostFragment.findNavController(MenuFragment.this)
-                        .navigateUp(); // o .navigate(R.id.action_fragmentB_to_fragmentA) se vuoi esplicitamente usare un'azione
+                // Navigate back to the previous fragment (HomeFragment or Fragment A)
+                navigateBackToHomeFragment();
             }
         });
     }
@@ -95,7 +98,17 @@ public class MenuFragment extends Fragment implements MenuAdapter.OnAddToCartCli
     @Override
     public void onPause() {
         super.onPause();
-        orderViewModel.buildOrder(dishOrderViewModel.getDishOrderLiveData().getValue(), getArguments().getString(RESTAURANT_ARG));
+        if(dishOrderViewModel.getDishOrderLiveData().getValue() != null) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                orderViewModel.buildOrder(dishOrderViewModel.getDishOrderLiveData().getValue(), getArguments().getSerializable("restaurant", Restaurant.class));
+            }
+        }
+    }
+
+    // Inside menuFragment or any appropriate event handler
+    public void navigateBackToHomeFragment() {
+        // Navigate back to the previous fragment (HomeFragment)
+        NavHostFragment.findNavController(this).popBackStack();
     }
 
 

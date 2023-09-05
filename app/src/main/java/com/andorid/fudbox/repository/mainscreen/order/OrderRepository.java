@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.andorid.fudbox.model.Dish;
 import com.andorid.fudbox.model.DishQuantity;
 import com.andorid.fudbox.model.Order;
+import com.andorid.fudbox.model.Restaurant;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -72,7 +73,7 @@ public class OrderRepository {
      * }
      **/
 
-    public void buildOrder(List<DishQuantity> dishes, String restaurant) {
+    public void buildOrder(List<DishQuantity> dishes, Restaurant restaurant) {
         Order currentOrder = orderMutableLiveData.getValue();
 
         if (currentOrder == null || !currentOrder.getRestaurant().equals(restaurant)) {
@@ -83,8 +84,6 @@ public class OrderRepository {
             dishes.forEach(d -> {
                 currentOrder.addDishAndQuantity(d.getDish(), d.getQuantity());
             });
-
-
             orderMutableLiveData.setValue(currentOrder);
         }
     }
@@ -114,7 +113,7 @@ public class OrderRepository {
         if (currentUser != null && orderMutableLiveData.getValue() != null) {
             String uid = currentUser.getUid();
             Order latestOrder = orderMutableLiveData.getValue();
-            String restaurantName = latestOrder.getRestaurant();
+            String restaurantName = latestOrder.getRestaurant().getName();
             List<DishQuantity> dishes = latestOrder.getDishes();
 
             Map<String, Object> orderData = new HashMap<>();

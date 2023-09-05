@@ -7,20 +7,20 @@ import java.util.List;
 
 
 public class Order implements Serializable {
-    private final String restaurant;
+    private final Restaurant restaurant;
     private List<DishQuantity> dishes;
 
-    public Order(String restaurant, List<DishQuantity> dishes) {
+    public Order(Restaurant restaurant, List<DishQuantity> dishes) {
         this.restaurant = restaurant;
         this.dishes = dishes;
     }
 
-    public Order(String restaurant) {
+    public Order(Restaurant restaurant) {
         this.restaurant = restaurant;
         this.dishes = new ArrayList<>();
     }
 
-    public String getRestaurant() {
+    public Restaurant getRestaurant() {
         return restaurant;
     }
 

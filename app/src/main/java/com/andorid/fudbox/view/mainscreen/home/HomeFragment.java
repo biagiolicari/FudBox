@@ -72,7 +72,8 @@ public class HomeFragment extends Fragment implements RestaurantSearchResultAdap
     @Override
     public void onItemClick(Restaurant restaurant) {
         Bundle menuBundle = new Bundle();
-        menuBundle.putString("restaurant", restaurant.getName());
+        //menuBundle.putString("restaurant", restaurant.getName());
+        menuBundle.putSerializable("restaurant", restaurant);
         NavController navController = Navigation.findNavController(requireView());
         // Navigate to the MenuFragment using the action defined in the navigation graph
         navController.navigate(R.id.action_restaurantFragment_to_menuFragment, menuBundle);
