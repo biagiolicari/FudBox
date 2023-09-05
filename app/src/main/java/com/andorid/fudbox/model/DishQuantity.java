@@ -3,13 +3,12 @@ package com.andorid.fudbox.model;
 import java.io.Serializable;
 
 public class DishQuantity implements Serializable {
+    private final Dish dish;
+    private int quantity;
     public DishQuantity(Dish dish) {
         this.dish = dish;
         this.quantity = 0;
     }
-
-    private final Dish dish;
-    private int quantity;
 
     public DishQuantity(Dish dish, int quantity) {
         this.dish = dish;

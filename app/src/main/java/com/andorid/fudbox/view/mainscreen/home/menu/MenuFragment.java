@@ -19,7 +19,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.andorid.fudbox.databinding.FragmentMenuBinding;
 import com.andorid.fudbox.model.Dish;
-import com.andorid.fudbox.model.DishQuantity;
 import com.andorid.fudbox.model.Restaurant;
 import com.andorid.fudbox.viewmodel.mainscreen.home.menu.DishOrderViewModel;
 import com.andorid.fudbox.viewmodel.mainscreen.home.menu.MenuViewModel;
@@ -93,15 +92,22 @@ public class MenuFragment extends Fragment implements MenuAdapter.OnAddToCartCli
                 navigateBackToHomeFragment();
             }
         });
+
+        // Add the observer for dish quantities here
+        dishOrderViewModel.getDishOrderLiveData().observe(getViewLifecycleOwner(), dishQuantity -> {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU && dishQuantity != null) {
+                Restaurant restaurant = getArguments().getSerializable("restaurant", Restaurant.class);
+                orderViewModel.buildOrder(dishQuantity, restaurant);
+            }
+        });
     }
 
     @Override
-    public void onPause() {
-        super.onPause();
-        if(dishOrderViewModel.getDishOrderLiveData().getValue() != null) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                orderViewModel.buildOrder(dishOrderViewModel.getDishOrderLiveData().getValue(), getArguments().getSerializable("restaurant", Restaurant.class));
-            }
+    public void onStart() {
+        super.onStart();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU && dishOrderViewModel.getDishOrderLiveData().getValue() != null) {
+            Restaurant restaurant = getArguments().getSerializable("restaurant", Restaurant.class);
+
         }
     }
 
@@ -114,6 +120,6 @@ public class MenuFragment extends Fragment implements MenuAdapter.OnAddToCartCli
 
     @Override
     public void onAddToCartClick(Dish dish, int quantity) {
-        dishOrderViewModel.addToCart(dish, quantity);
+        dishOrderViewModel.addItemToCart(dish, quantity);
     }
 }

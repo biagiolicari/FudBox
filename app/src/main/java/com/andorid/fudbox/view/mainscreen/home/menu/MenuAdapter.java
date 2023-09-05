@@ -70,11 +70,9 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MenuHolder> {
                 int position = getAdapterPosition();
                 if (position != RecyclerView.NO_POSITION) {
                     Dish menuItem = menuItems.get(position);
-                    // Trigger the listener with the selected Dish and quantity (you can get it from your TextView)
                     if (addToCartClickListener != null) {
                         int quantity = Integer.parseInt(binding.quantityTextInputLayout.getEditText().getText().toString());
                         addToCartClickListener.onAddToCartClick(menuItem,quantity);
-
                     }
                 }
             });

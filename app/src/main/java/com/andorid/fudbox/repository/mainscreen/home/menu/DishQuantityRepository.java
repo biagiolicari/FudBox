@@ -5,47 +5,28 @@ import androidx.lifecycle.MutableLiveData;
 import com.andorid.fudbox.model.Dish;
 import com.andorid.fudbox.model.DishQuantity;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class DishQuantityRepository {
 
-    private final List<DishQuantity> dishQuantities;
-    private MutableLiveData<List<DishQuantity>> dishQuantitiesLiveData;
+    private DishQuantity dq;
+    private MutableLiveData<DishQuantity> dishQuantitiesLiveData;
 
     public DishQuantityRepository() {
         this.dishQuantitiesLiveData = new MutableLiveData<>();
-        this.dishQuantities = new ArrayList<>();
     }
 
-    public MutableLiveData<List<DishQuantity>> getDishQuantitiesLiveData() {
+    public MutableLiveData<DishQuantity> getDishQuantityLiveData() {
         return dishQuantitiesLiveData;
     }
 
-    public void setDishQuantitiesLiveData(MutableLiveData<List<DishQuantity>> dishQuantitiesLiveData) {
-        this.dishQuantitiesLiveData = dishQuantitiesLiveData;
+    public void addItemToCart(Dish dish, int quantity) {
+        DishQuantity dq = new DishQuantity(dish, quantity);
+        this.dishQuantitiesLiveData.setValue(dq);
     }
 
-    public void addToCart(Dish dish, int quantity) {
-        // Check if the dish is already in the cart
-        boolean dishExists = false;
-        DishQuantity dishQuantity = new DishQuantity(dish, quantity);
-        for (DishQuantity cartItem : dishQuantities) {
-            if (cartItem.equals(dish)) {
-                // If the dish is already in the cart, update its quantity
-                cartItem.setQuantity(cartItem.getQuantity() + quantity);
-                dishExists = true;
-                break; // Exit the loop since the dish is found
-            }
-        }
-
-        // If the dish is not in the cart, add it as a new item
-        if (!dishExists) {
-            dishQuantities.add(new DishQuantity(dish, quantity));
-        }
-
-        // Update the LiveData with the modified list
-        dishQuantitiesLiveData.setValue(dishQuantities);
+    public void addItemToCart(DishQuantity dq){
+        this.dishQuantitiesLiveData.setValue(dq);
     }
+
+
 
 }

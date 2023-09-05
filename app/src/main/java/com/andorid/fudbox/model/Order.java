@@ -1,6 +1,8 @@
 package com.andorid.fudbox.model;
 
 
+import android.util.Log;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,7 +10,7 @@ import java.util.List;
 
 public class Order implements Serializable {
     private final Restaurant restaurant;
-    private List<DishQuantity> dishes;
+    private List<DishQuantity> dishes =  new ArrayList<>();
 
     public Order(Restaurant restaurant, List<DishQuantity> dishes) {
         this.restaurant = restaurant;
@@ -17,7 +19,6 @@ public class Order implements Serializable {
 
     public Order(Restaurant restaurant) {
         this.restaurant = restaurant;
-        this.dishes = new ArrayList<>();
     }
 
     public Restaurant getRestaurant() {
@@ -41,18 +42,17 @@ public class Order implements Serializable {
         return totalPrice;
     }
 
-    public void addDishAndQuantity(Dish dish, int quantity) {
+    public void addDishAndQuantity(DishQuantity dishQuantity) {
         for (DishQuantity dq : dishes) {
-            if (dq.getDish().equals(dish)) {
-                int newQuantity = dq.getQuantity() + quantity;
+            if (dq.getDish().equals(dishQuantity.getDish())) {
+                int newQuantity = dq.getQuantity() + dishQuantity.getQuantity();
                 dq.setQuantity(newQuantity);
-                }
                 return;
             }
+        }
         // Dish is not in the order, must be added
-        if (quantity > 0) {
-            DishQuantity newDishQuantity = new DishQuantity(dish, quantity);
-            dishes.add(newDishQuantity);
+        if (dishQuantity.getQuantity() > 0) {
+            dishes.add(dishQuantity);
         }
     }
 

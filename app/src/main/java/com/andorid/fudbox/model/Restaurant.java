@@ -1,6 +1,7 @@
 package com.andorid.fudbox.model;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 public class Restaurant implements Serializable {
     private final String name;
@@ -43,6 +44,36 @@ public class Restaurant implements Serializable {
         return uid;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Restaurant that = (Restaurant) o;
+
+        if (Double.compare(that.lng, lng) != 0) return false;
+        if (Double.compare(that.lat, lat) != 0) return false;
+        if (!Objects.equals(name, that.name)) return false;
+        if (!Objects.equals(address, that.address)) return false;
+        if (!Objects.equals(city, that.city)) return false;
+        return Objects.equals(uid, that.uid);
+    }
+
+    @Override
+    public int hashCode() {
+        int result;
+        long temp;
+        result = name != null ? name.hashCode() : 0;
+        result = 31 * result + (address != null ? address.hashCode() : 0);
+        result = 31 * result + (city != null ? city.hashCode() : 0);
+        temp = Double.doubleToLongBits(lng);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(lat);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        result = 31 * result + (uid != null ? uid.hashCode() : 0);
+        return result;
+    }
+
     public static class Builder {
         private String name = "N/A";
         private String address = "N/A";
@@ -51,7 +82,9 @@ public class Restaurant implements Serializable {
         private double lat = 0.0;
         private String uid = "N/A";
 
-        public Builder(){}
+        public Builder() {
+        }
+
         public Builder setName(String name) {
             this.name = name;
             return this;

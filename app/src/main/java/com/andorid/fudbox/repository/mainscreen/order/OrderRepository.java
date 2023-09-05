@@ -44,46 +44,17 @@ public class OrderRepository {
         return orderMutableLiveData.getValue().getTotalPrice();
     }
 
-    /**
-     * public void buildOrder2(List<DishQuantity> dishes, String restaurant) {
-     * Order currentOrder = orderMutableLiveData.getValue();
-     * <p>
-     * if (currentOrder == null || !currentOrder.getRestaurant().equals(restaurant)) {
-     * // If there's no current order or the restaurant is different, create a new order
-     * orderMutableLiveData.setValue(new Order(restaurant, dishes));
-     * } else {
-     * // If the order is from the same restaurant, update the dishes' quantities
-     * Map<String, DishQuantity> currentDishMap = currentOrder.getDishes().stream()
-     * .collect(Collectors.toMap(dq -> dq.getDish().getName(), dq -> dq));
-     * <p>
-     * dishes.forEach(newDishQuantity -> {
-     * String dishName = newDishQuantity.getDish().getName();
-     * DishQuantity currentDishQuantity = currentDishMap.get(dishName);
-     * <p>
-     * if (currentDishQuantity != null) {
-     * int updatedQuantity = currentDishQuantity.getQuantity() + newDishQuantity.getQuantity();
-     * currentDishQuantity.setQuantity(updatedQuantity);
-     * } else {
-     * currentOrder.addDishAndQuantity(newDishQuantity.getDish(), newDishQuantity.getQuantity());
-     * }
-     * });
-     * <p>
-     * orderMutableLiveData.setValue(currentOrder);
-     * }
-     * }
-     **/
-
-    public void buildOrder(List<DishQuantity> dishes, Restaurant restaurant) {
+    public void buildOrder(DishQuantity dishQuantity, Restaurant restaurant) {
         Order currentOrder = orderMutableLiveData.getValue();
 
         if (currentOrder == null || !currentOrder.getRestaurant().equals(restaurant)) {
             // If there's no current order or the restaurant is different, create a new order
-            orderMutableLiveData.setValue(new Order(restaurant, dishes));
+            Order order = new Order(restaurant);
+            order.addDishAndQuantity(dishQuantity);
+            orderMutableLiveData.setValue(order);
         } else {
             // If the order is from the same restaurant, update the dishes' quantities
-            dishes.forEach(d -> {
-                currentOrder.addDishAndQuantity(d.getDish(), d.getQuantity());
-            });
+            currentOrder.addDishAndQuantity(dishQuantity);
             orderMutableLiveData.setValue(currentOrder);
         }
     }
