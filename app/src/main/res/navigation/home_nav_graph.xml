@@ -9,7 +9,13 @@
 
     <fragment android:id="@+id/nav_home" android:name="com.andorid.fudbox.view.mainscreen.home.HomeFragment"
               android:label="fragment_main" tools:layout="@layout/item_restaurant">
+        <action
+            android:id="@+id/action_restaurantFragment_to_menuFragment"
+            app:destination="@id/menuFragment" />
     </fragment>
+
+    <fragment android:id="@+id/menuFragment" android:name="com.andorid.fudbox.view.mainscreen.home.menu.MenuFragment"
+        android:label="fragment_menu" tools:layout="@layout/fragment_menu"/>
 
     <fragment android:id="@+id/loginRegisterFragment"
               android:name="com.andorid.fudbox.view.authentication.LoginRegisterFragment"
@@ -19,15 +25,9 @@
               android:label="fragment_user" tools:layout="@layout/fragment_user">
     </fragment>
 
-    <fragment android:id="@+id/menuFragment" android:name="com.andorid.fudbox.view.mainscreen.home.menu.MenuFragment"
-        android:label="fragment_menu" tools:layout="@layout/fragment_menu"/>
 
     <fragment android:id="@+id/nav_order" android:name="com.andorid.fudbox.view.mainscreen.order.OrderFragment"
         android:label="fragment_order" tools:layout="@layout/fragment_order"/>
-
-    <action
-        android:id="@+id/action_restaurantFragment_to_menuFragment"
-        app:destination="@id/menuFragment" />
 
 
 

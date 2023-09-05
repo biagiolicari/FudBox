@@ -93,10 +93,11 @@ public class MenuFragment extends Fragment implements MenuAdapter.OnAddToCartCli
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
+    public void onPause() {
+        super.onPause();
         orderViewModel.buildOrder(dishOrderViewModel.getDishOrderLiveData().getValue(), getArguments().getString(RESTAURANT_ARG));
     }
+
 
     @Override
     public void onAddToCartClick(Dish dish, int quantity) {

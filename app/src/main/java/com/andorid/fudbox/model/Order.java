@@ -41,22 +41,14 @@ public class Order implements Serializable {
         return totalPrice;
     }
 
-    public void addDish(Dish dish, int num) {
-        DishQuantity dishesToAdd = new DishQuantity(dish, num);
-        this.dishes.add(dishesToAdd);
-    }
-
-    public void setDishQuantity(Dish dish, int quantity) {
+    public void addDishAndQuantity(Dish dish, int quantity) {
         for (DishQuantity dq : dishes) {
-            if (dq.getDish().getName().equals(dish.getName())) {
-                if (quantity <= 0) {
-                    dishes.remove(dq);
-                } else {
-                    dq.setQuantity(quantity);
+            if (dq.getDish().equals(dish)) {
+                int newQuantity = dq.getQuantity() + quantity;
+                dq.setQuantity(newQuantity);
                 }
                 return;
             }
-        }
         // Dish is not in the order, must be added
         if (quantity > 0) {
             DishQuantity newDishQuantity = new DishQuantity(dish, quantity);

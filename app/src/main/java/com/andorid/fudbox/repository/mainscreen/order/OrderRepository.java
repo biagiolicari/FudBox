@@ -39,9 +39,38 @@ public class OrderRepository {
         return orderMutableLiveData;
     }
 
-    public Double getTotalPriceOfTheOrder(){
+    public Double getTotalPriceOfTheOrder() {
         return orderMutableLiveData.getValue().getTotalPrice();
     }
+
+    /**
+     * public void buildOrder2(List<DishQuantity> dishes, String restaurant) {
+     * Order currentOrder = orderMutableLiveData.getValue();
+     * <p>
+     * if (currentOrder == null || !currentOrder.getRestaurant().equals(restaurant)) {
+     * // If there's no current order or the restaurant is different, create a new order
+     * orderMutableLiveData.setValue(new Order(restaurant, dishes));
+     * } else {
+     * // If the order is from the same restaurant, update the dishes' quantities
+     * Map<String, DishQuantity> currentDishMap = currentOrder.getDishes().stream()
+     * .collect(Collectors.toMap(dq -> dq.getDish().getName(), dq -> dq));
+     * <p>
+     * dishes.forEach(newDishQuantity -> {
+     * String dishName = newDishQuantity.getDish().getName();
+     * DishQuantity currentDishQuantity = currentDishMap.get(dishName);
+     * <p>
+     * if (currentDishQuantity != null) {
+     * int updatedQuantity = currentDishQuantity.getQuantity() + newDishQuantity.getQuantity();
+     * currentDishQuantity.setQuantity(updatedQuantity);
+     * } else {
+     * currentOrder.addDishAndQuantity(newDishQuantity.getDish(), newDishQuantity.getQuantity());
+     * }
+     * });
+     * <p>
+     * orderMutableLiveData.setValue(currentOrder);
+     * }
+     * }
+     **/
 
     public void buildOrder(List<DishQuantity> dishes, String restaurant) {
         Order currentOrder = orderMutableLiveData.getValue();
@@ -51,20 +80,10 @@ public class OrderRepository {
             orderMutableLiveData.setValue(new Order(restaurant, dishes));
         } else {
             // If the order is from the same restaurant, update the dishes' quantities
-            Map<String, DishQuantity> currentDishMap = currentOrder.getDishes().stream()
-                    .collect(Collectors.toMap(dq -> dq.getDish().getName(), dq -> dq));
-
-            dishes.forEach(newDishQuantity -> {
-                String dishName = newDishQuantity.getDish().getName();
-                DishQuantity currentDishQuantity = currentDishMap.get(dishName);
-
-                if (currentDishQuantity != null) {
-                    int updatedQuantity = currentDishQuantity.getQuantity() + newDishQuantity.getQuantity();
-                    currentDishQuantity.setQuantity(updatedQuantity);
-                } else {
-                    currentOrder.addDish(newDishQuantity.getDish(), newDishQuantity.getQuantity());
-                }
+            dishes.forEach(d -> {
+                currentOrder.addDishAndQuantity(d.getDish(), d.getQuantity());
             });
+
 
             orderMutableLiveData.setValue(currentOrder);
         }
