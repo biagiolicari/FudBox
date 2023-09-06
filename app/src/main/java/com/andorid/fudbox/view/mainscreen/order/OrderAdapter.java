@@ -17,17 +17,7 @@ import com.andorid.fudbox.view.mainscreen.home.menu.MenuAdapter;
 import java.util.List;
 
 public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> {
-
     private Order order;
-    private OnConfirmOrderListener confirmOrderListener;
-
-    public void setOnAddToCartClickListener(OnConfirmOrderListener listener) {
-        this.confirmOrderListener = listener;
-    }
-
-    public interface OnConfirmOrderListener {
-        void onConfirmOrderListener(Order order);
-    }
 
     public void setDishes(Order order) {
         this.order = order;
