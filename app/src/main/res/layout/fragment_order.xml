@@ -8,13 +8,25 @@
     android:paddingBottom="?actionBarSize" >
 
     <!-- RecyclerView to display the list of dishes -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        android:layout_marginTop="16dp"
+    android:layout_marginBottom="16dp">
+
+    <!-- RecyclerView to display the list of dishes -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/orderRecyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_width="0dp"
+        android:layout_height="300dp"
         android:layout_weight="1"
         android:padding="16dp"
-        android:scrollbars="vertical"/>
+        android:scrollbars="vertical" />
+</LinearLayout>
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -22,6 +34,8 @@
         android:orientation="horizontal"
         android:paddingStart="8dp"
         android:paddingEnd="8dp"
+        android:id="@+id/priceLayout"
+        android:visibility="gone"
         >
 
         <!-- Dish name -->
@@ -29,14 +43,16 @@
             android:id="@+id/totalPrice"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:textSize="16sp"
-            android:textColor="@android:color/black"
-            android:gravity="start"
             android:layout_gravity="start"
-            android:text="@string/total_price"
             android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"/>
+            android:layout_marginEnd="8dp"
+            android:layout_weight="1"
+            android:gravity="start"
+            android:text="@string/total_price"
+            android:textColor="@android:color/black"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            />
 
         <!-- Quantity -->
         <TextView
@@ -54,15 +70,23 @@
     </LinearLayout>
 
     <!-- Button to complete the order -->
+
     <Button
-        android:text="@string/register"
+        android:id="@+id/completeOrderButton"
+        style="@style/Widget.MaterialComponents.Button"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" android:id="@+id/completeOrderButton"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="60dp"
+        android:layout_marginStart="145dp"
+        android:layout_marginEnd="145dp"
+        android:text="@string/completeOrder"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginStart="145dp" android:layout_marginEnd="146dp"
-        app:layout_constraintEnd_toEndOf="parent" app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="24dp"
-        style="@style/Widget.MaterialComponents.Button" app:layout_constraintVertical_bias="0.0"/>
+        app:layout_constraintVertical_bias="0.0"
+        android:visibility="gone"/>
+
+
 
 
 </LinearLayout>

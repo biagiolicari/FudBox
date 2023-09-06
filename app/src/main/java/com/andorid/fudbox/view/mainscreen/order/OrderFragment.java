@@ -50,6 +50,8 @@ public class OrderFragment extends Fragment {
             if (order != null) {
                 orderAdapter.setDishes(order);
                 binding.totalPriceTextView.setText(order.getTotalPrice().toString());
+                binding.completeOrderButton.setVisibility(View.VISIBLE);
+                binding.priceLayout.setVisibility(View.VISIBLE);
             }
         });
 
@@ -62,6 +64,7 @@ public class OrderFragment extends Fragment {
         binding.completeOrderButton.setOnClickListener(l -> {
             if(orderViewModel.getOrderLiveData().getValue() != null){
                 Log.wtf("CLICK", "TO SET");
+                orderViewModel.uploadToFireStore();
             } else {
                 CuteToast.ct(getContext(), "Please, order something before confirm.", CuteToast.LENGTH_SHORT, CuteToast.SAD, true).show();
             }

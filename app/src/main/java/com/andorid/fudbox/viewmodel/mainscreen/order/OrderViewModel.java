@@ -24,8 +24,6 @@ public class OrderViewModel extends ViewModel {
 
     public void buildOrder(DishOrder dishes, Restaurant restaurant) {
         orderRepository.buildOrder(dishes, restaurant);
-        orderLiveData.setValue(orderRepository.getOrderMutableLiveData().getValue());
-        Log.wtf("BUILDORDER", orderLiveData.getValue().toString());
     }
 
     public void clearOrder() {
