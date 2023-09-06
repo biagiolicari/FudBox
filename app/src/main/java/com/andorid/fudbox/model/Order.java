@@ -7,65 +7,55 @@ import java.util.List;
 
 
 public class Order implements Serializable {
-    private final String restaurant;
-    private List<DishQuantity> dishes;
+    private final Restaurant restaurant;
+    private List<DishOrder> dishes = new ArrayList<>();
 
-    public Order(String restaurant, List<DishQuantity> dishes) {
+    public Order(Restaurant restaurant, List<DishOrder> dishes) {
         this.restaurant = restaurant;
         this.dishes = dishes;
     }
 
-    public Order(String restaurant) {
+    public Order(Restaurant restaurant) {
         this.restaurant = restaurant;
-        this.dishes = new ArrayList<>();
     }
 
-    public String getRestaurant() {
+    public Restaurant getRestaurant() {
         return restaurant;
     }
 
-    public List<DishQuantity> getDishes() {
+    public List<DishOrder> getDishes() {
         return dishes;
     }
 
-    public void setDishes(List<DishQuantity> dishes) {
+    public void setDishes(List<DishOrder> dishes) {
         this.dishes = dishes;
     }
 
     public Double getTotalPrice() {
         Double totalPrice = 0.0;
-        for (DishQuantity dq : dishes) {
+        for (DishOrder dq : dishes) {
             Double dishPrice = dq.getDish().getPrice() * dq.getQuantity();
             totalPrice += dishPrice;
         }
         return totalPrice;
     }
 
-    public void addDish(Dish dish, int num) {
-        DishQuantity dishesToAdd = new DishQuantity(dish, num);
-        this.dishes.add(dishesToAdd);
-    }
-
-    public void setDishQuantity(Dish dish, int quantity) {
-        for (DishQuantity dq : dishes) {
-            if (dq.getDish().getName().equals(dish.getName())) {
-                if (quantity <= 0) {
-                    dishes.remove(dq);
-                } else {
-                    dq.setQuantity(quantity);
-                }
+    public void addDishAndQuantity(DishOrder dishOrder) {
+        for (DishOrder dq : dishes) {
+            if (dq.getDish().equals(dishOrder.getDish())) {
+                int newQuantity = dq.getQuantity() + dishOrder.getQuantity();
+                dq.setQuantity(newQuantity);
                 return;
             }
         }
         // Dish is not in the order, must be added
-        if (quantity > 0) {
-            DishQuantity newDishQuantity = new DishQuantity(dish, quantity);
-            dishes.add(newDishQuantity);
+        if (dishOrder.getQuantity() > 0) {
+            dishes.add(dishOrder);
         }
     }
 
     public int getDishQuantity(Dish dish) {
-        for (DishQuantity dq : dishes) {
+        for (DishOrder dq : dishes) {
             if (dq.getDish().getName().equals(dish.getName())) {
                 return dq.getQuantity();
             }

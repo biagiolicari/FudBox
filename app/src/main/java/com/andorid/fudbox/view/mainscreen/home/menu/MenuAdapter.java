@@ -1,9 +1,7 @@
 package com.andorid.fudbox.view.mainscreen.home.menu;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -22,16 +20,12 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MenuHolder> {
 
     private OnAddToCartClickListener addToCartClickListener;
 
-    public interface OnAddToCartClickListener {
-        void onAddToCartClick(Dish dish, int quantity);
+    public MenuAdapter(Context context) {
+        inflater = LayoutInflater.from(context);
     }
 
     public void setOnAddToCartClickListener(OnAddToCartClickListener listener) {
         this.addToCartClickListener = listener;
-    }
-
-    public MenuAdapter(Context context) {
-        inflater = LayoutInflater.from(context);
     }
 
     public void setMenuItems(List<Dish> menuItems) {
@@ -57,6 +51,10 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MenuHolder> {
         return menuItems.size();
     }
 
+    public interface OnAddToCartClickListener {
+        void onAddToCartClick(Dish dish, int quantity);
+    }
+
     public class MenuHolder extends RecyclerView.ViewHolder {
         private static final String EURO_SYMBOL = "€";
         private final ItemMenuBinding binding;
@@ -70,11 +68,9 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MenuHolder> {
                 int position = getAdapterPosition();
                 if (position != RecyclerView.NO_POSITION) {
                     Dish menuItem = menuItems.get(position);
-                    // Trigger the listener with the selected Dish and quantity (you can get it from your TextView)
                     if (addToCartClickListener != null) {
                         int quantity = Integer.parseInt(binding.quantityTextInputLayout.getEditText().getText().toString());
-                        addToCartClickListener.onAddToCartClick(menuItem,quantity);
-
+                        addToCartClickListener.onAddToCartClick(menuItem, quantity);
                     }
                 }
             });

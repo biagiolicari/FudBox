@@ -2,16 +2,16 @@ package com.andorid.fudbox.model;
 
 import java.io.Serializable;
 
-public class DishQuantity implements Serializable {
-    public DishQuantity(Dish dish) {
+public class DishOrder implements Serializable {
+    private final Dish dish;
+    private int quantity;
+
+    public DishOrder(Dish dish) {
         this.dish = dish;
         this.quantity = 0;
     }
 
-    private final Dish dish;
-    private int quantity;
-
-    public DishQuantity(Dish dish, int quantity) {
+    public DishOrder(Dish dish, int quantity) {
         this.dish = dish;
         this.quantity = quantity;
     }
@@ -37,7 +37,7 @@ public class DishQuantity implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        DishQuantity that = (DishQuantity) o;
+        DishOrder that = (DishOrder) o;
 
         if (quantity != that.quantity) return false;
         return dish.equals(that.dish);

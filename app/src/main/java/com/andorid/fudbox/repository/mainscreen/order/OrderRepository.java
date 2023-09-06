@@ -5,8 +5,9 @@ import android.util.Log;
 import androidx.lifecycle.MutableLiveData;
 
 import com.andorid.fudbox.model.Dish;
-import com.andorid.fudbox.model.DishQuantity;
+import com.andorid.fudbox.model.DishOrder;
 import com.andorid.fudbox.model.Order;
+import com.andorid.fudbox.model.Restaurant;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -39,33 +40,21 @@ public class OrderRepository {
         return orderMutableLiveData;
     }
 
-    public Double getTotalPriceOfTheOrder(){
+    public Double getTotalPriceOfTheOrder() {
         return orderMutableLiveData.getValue().getTotalPrice();
     }
 
-    public void buildOrder(List<DishQuantity> dishes, String restaurant) {
+    public void buildOrder(DishOrder dishOrder, Restaurant restaurant) {
         Order currentOrder = orderMutableLiveData.getValue();
 
         if (currentOrder == null || !currentOrder.getRestaurant().equals(restaurant)) {
             // If there's no current order or the restaurant is different, create a new order
-            orderMutableLiveData.setValue(new Order(restaurant, dishes));
+            Order order = new Order(restaurant);
+            order.addDishAndQuantity(dishOrder);
+            orderMutableLiveData.setValue(order);
         } else {
             // If the order is from the same restaurant, update the dishes' quantities
-            Map<String, DishQuantity> currentDishMap = currentOrder.getDishes().stream()
-                    .collect(Collectors.toMap(dq -> dq.getDish().getName(), dq -> dq));
-
-            dishes.forEach(newDishQuantity -> {
-                String dishName = newDishQuantity.getDish().getName();
-                DishQuantity currentDishQuantity = currentDishMap.get(dishName);
-
-                if (currentDishQuantity != null) {
-                    int updatedQuantity = currentDishQuantity.getQuantity() + newDishQuantity.getQuantity();
-                    currentDishQuantity.setQuantity(updatedQuantity);
-                } else {
-                    currentOrder.addDish(newDishQuantity.getDish(), newDishQuantity.getQuantity());
-                }
-            });
-
+            currentOrder.addDishAndQuantity(dishOrder);
             orderMutableLiveData.setValue(currentOrder);
         }
     }
@@ -78,7 +67,7 @@ public class OrderRepository {
         Order currentOrder = orderMutableLiveData.getValue();
 
         if (currentOrder != null) {
-            List<DishQuantity> modifiedDishes = currentOrder.getDishes().stream()
+            List<DishOrder> modifiedDishes = currentOrder.getDishes().stream()
                     .filter(dishQuantity -> !dishQuantity.getDish().equals(dishToRemove))
                     .collect(Collectors.toList());
 
@@ -95,12 +84,12 @@ public class OrderRepository {
         if (currentUser != null && orderMutableLiveData.getValue() != null) {
             String uid = currentUser.getUid();
             Order latestOrder = orderMutableLiveData.getValue();
-            String restaurantName = latestOrder.getRestaurant();
-            List<DishQuantity> dishes = latestOrder.getDishes();
+            String restaurantName = latestOrder.getRestaurant().getName();
+            List<DishOrder> dishes = latestOrder.getDishes();
 
             Map<String, Object> orderData = new HashMap<>();
             orderData.put("userUID", uid);
-            orderData.put("restaurantName", restaurantName);
+            orderData.put("restaurant", latestOrder.getRestaurant());
             orderData.put("dishes", dishes);
 
             firestore.collection("orders")
