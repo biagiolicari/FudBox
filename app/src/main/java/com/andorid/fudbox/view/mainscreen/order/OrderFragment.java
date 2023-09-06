@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.andorid.fudbox.R;
 import com.andorid.fudbox.databinding.FragmentOrderBinding;
 import com.andorid.fudbox.viewmodel.mainscreen.order.OrderViewModel;
+import com.rejowan.cutetoast.CuteToast;
 
 public class OrderFragment extends Fragment {
     private OrderViewModel orderViewModel;
@@ -59,7 +60,11 @@ public class OrderFragment extends Fragment {
     public void onStart() {
         super.onStart();
         binding.completeOrderButton.setOnClickListener(l -> {
-            Log.wtf("CLICK", "TO SET");
+            if(orderViewModel.getOrderLiveData().getValue() != null){
+                Log.wtf("CLICK", "TO SET");
+            } else {
+                CuteToast.ct(getContext(), "Please, order something before confirm.", CuteToast.LENGTH_SHORT, CuteToast.SAD, true).show();
+            }
         });
 
     }
