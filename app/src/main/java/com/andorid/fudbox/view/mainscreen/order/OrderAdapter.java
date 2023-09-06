@@ -9,16 +9,28 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.andorid.fudbox.R;
+import com.andorid.fudbox.model.Dish;
 import com.andorid.fudbox.model.DishOrder;
+import com.andorid.fudbox.model.Order;
+import com.andorid.fudbox.view.mainscreen.home.menu.MenuAdapter;
 
 import java.util.List;
 
 public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> {
 
-    private List<DishOrder> dishes;
+    private Order order;
+    private OnConfirmOrderListener confirmOrderListener;
 
-    public void setDishes(List<DishOrder> dishes) {
-        this.dishes = dishes;
+    public void setOnAddToCartClickListener(OnConfirmOrderListener listener) {
+        this.confirmOrderListener = listener;
+    }
+
+    public interface OnConfirmOrderListener {
+        void onConfirmOrderListener(Order order);
+    }
+
+    public void setDishes(Order order) {
+        this.order = order;
         notifyDataSetChanged();
     }
 
@@ -31,15 +43,15 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        if (dishes != null && position < dishes.size()) {
-            DishOrder dishOrder = dishes.get(position);
+        if (order != null && position < order.getDishes().size()) {
+            DishOrder dishOrder = order.getDishes().get(position);
             holder.bind(dishOrder);
         }
     }
 
     @Override
     public int getItemCount() {
-        return dishes != null ? dishes.size() : 0;
+        return order != null ? order.getDishes().size() : 0;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

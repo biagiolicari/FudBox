@@ -45,7 +45,7 @@ public class OrderFragment extends Fragment {
         // Observe the order data from the ViewModel and update the adapter
         orderViewModel.getOrderLiveData().observe(getViewLifecycleOwner(), order -> {
             if (order != null) {
-                orderAdapter.setDishes(order.getDishes());
+                orderAdapter.setDishes(order);
                 binding.totalPriceTextView.setText(order.getTotalPrice().toString());
             }
         });
