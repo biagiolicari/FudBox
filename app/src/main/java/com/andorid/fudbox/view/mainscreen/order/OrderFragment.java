@@ -1,11 +1,9 @@
 package com.andorid.fudbox.view.mainscreen.order;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -13,7 +11,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.andorid.fudbox.R;
-import com.andorid.fudbox.databinding.FragmentMenuBinding;
 import com.andorid.fudbox.databinding.FragmentOrderBinding;
 import com.andorid.fudbox.viewmodel.mainscreen.order.OrderViewModel;
 
@@ -55,14 +52,4 @@ public class OrderFragment extends Fragment {
 
         return view;
     }
-/**
- @Override public void onStart() {
- super.onStart();
- orderViewModel.getOrderLiveData().observe(getViewLifecycleOwner(), order -> {
- if(order != null){
- Log.wtf("ORDERRRRRR", order.toString());
- }
- });
- }
- **/
 }

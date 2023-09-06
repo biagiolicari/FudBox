@@ -5,7 +5,7 @@ import android.util.Log;
 import androidx.lifecycle.MutableLiveData;
 
 import com.andorid.fudbox.model.Dish;
-import com.andorid.fudbox.model.DishQuantity;
+import com.andorid.fudbox.model.DishOrder;
 import com.andorid.fudbox.model.Order;
 import com.andorid.fudbox.model.Restaurant;
 import com.google.firebase.auth.FirebaseAuth;
@@ -44,17 +44,17 @@ public class OrderRepository {
         return orderMutableLiveData.getValue().getTotalPrice();
     }
 
-    public void buildOrder(DishQuantity dishQuantity, Restaurant restaurant) {
+    public void buildOrder(DishOrder dishOrder, Restaurant restaurant) {
         Order currentOrder = orderMutableLiveData.getValue();
 
         if (currentOrder == null || !currentOrder.getRestaurant().equals(restaurant)) {
             // If there's no current order or the restaurant is different, create a new order
             Order order = new Order(restaurant);
-            order.addDishAndQuantity(dishQuantity);
+            order.addDishAndQuantity(dishOrder);
             orderMutableLiveData.setValue(order);
         } else {
             // If the order is from the same restaurant, update the dishes' quantities
-            currentOrder.addDishAndQuantity(dishQuantity);
+            currentOrder.addDishAndQuantity(dishOrder);
             orderMutableLiveData.setValue(currentOrder);
         }
     }
@@ -67,7 +67,7 @@ public class OrderRepository {
         Order currentOrder = orderMutableLiveData.getValue();
 
         if (currentOrder != null) {
-            List<DishQuantity> modifiedDishes = currentOrder.getDishes().stream()
+            List<DishOrder> modifiedDishes = currentOrder.getDishes().stream()
                     .filter(dishQuantity -> !dishQuantity.getDish().equals(dishToRemove))
                     .collect(Collectors.toList());
 
@@ -85,11 +85,11 @@ public class OrderRepository {
             String uid = currentUser.getUid();
             Order latestOrder = orderMutableLiveData.getValue();
             String restaurantName = latestOrder.getRestaurant().getName();
-            List<DishQuantity> dishes = latestOrder.getDishes();
+            List<DishOrder> dishes = latestOrder.getDishes();
 
             Map<String, Object> orderData = new HashMap<>();
             orderData.put("userUID", uid);
-            orderData.put("restaurantName", restaurantName);
+            orderData.put("restaurant", latestOrder.getRestaurant());
             orderData.put("dishes", dishes);
 
             firestore.collection("orders")

@@ -7,12 +7,10 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.andorid.fudbox.model.Dish;
-import com.andorid.fudbox.model.DishQuantity;
+import com.andorid.fudbox.model.DishOrder;
 import com.andorid.fudbox.model.Order;
 import com.andorid.fudbox.model.Restaurant;
 import com.andorid.fudbox.repository.mainscreen.order.OrderRepository;
-
-import java.util.List;
 
 
 public class OrderViewModel extends ViewModel {
@@ -24,7 +22,7 @@ public class OrderViewModel extends ViewModel {
         return orderLiveData;
     }
 
-    public void buildOrder(DishQuantity dishes, Restaurant restaurant) {
+    public void buildOrder(DishOrder dishes, Restaurant restaurant) {
         orderRepository.buildOrder(dishes, restaurant);
         orderLiveData.setValue(orderRepository.getOrderMutableLiveData().getValue());
         Log.wtf("BUILDORDER", orderLiveData.getValue().toString());

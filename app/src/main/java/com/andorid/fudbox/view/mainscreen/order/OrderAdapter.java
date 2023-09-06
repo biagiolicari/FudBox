@@ -9,15 +9,15 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.andorid.fudbox.R;
-import com.andorid.fudbox.model.DishQuantity;
+import com.andorid.fudbox.model.DishOrder;
 
 import java.util.List;
 
 public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> {
 
-    private List<DishQuantity> dishes;
+    private List<DishOrder> dishes;
 
-    public void setDishes(List<DishQuantity> dishes) {
+    public void setDishes(List<DishOrder> dishes) {
         this.dishes = dishes;
         notifyDataSetChanged();
     }
@@ -32,8 +32,8 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         if (dishes != null && position < dishes.size()) {
-            DishQuantity dishQuantity = dishes.get(position);
-            holder.bind(dishQuantity);
+            DishOrder dishOrder = dishes.get(position);
+            holder.bind(dishOrder);
         }
     }
 
@@ -56,10 +56,10 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
 
         }
 
-        public void bind(DishQuantity dishQuantity) {
-            dishNameTextView.setText(dishQuantity.getDish().getName());
-            quantityTextView.setText(String.valueOf(dishQuantity.getQuantity()));
-            priceTextView.setText(String.valueOf(dishQuantity.getDish().getPrice()));
+        public void bind(DishOrder dishOrder) {
+            dishNameTextView.setText(dishOrder.getDish().getName());
+            quantityTextView.setText(String.valueOf(dishOrder.getQuantity()));
+            priceTextView.setText(String.valueOf(dishOrder.getDish().getPrice()));
         }
     }
 }

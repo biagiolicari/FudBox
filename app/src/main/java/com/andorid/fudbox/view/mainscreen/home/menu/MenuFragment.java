@@ -2,7 +2,6 @@ package com.andorid.fudbox.view.mainscreen.home.menu;
 
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,7 +32,6 @@ public class MenuFragment extends Fragment implements MenuAdapter.OnAddToCartCli
     private MenuAdapter menuAdapter;
     private MenuViewModel menuViewModel;
     private DishOrderViewModel dishOrderViewModel;
-
     private OrderViewModel orderViewModel;
     private LiveData<List<Dish>> dishesLiveData;
 
@@ -52,7 +50,7 @@ public class MenuFragment extends Fragment implements MenuAdapter.OnAddToCartCli
         FragmentMenuBinding binding = FragmentMenuBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
-            Restaurant restaurantBundle = getArguments().getSerializable(RESTAURANT_ARG, Restaurant.class);
+            Restaurant restaurantBundle = getRestaurantBundle();
             binding.restaurantNameTextView.setText(restaurantBundle.getName());
         }
 
@@ -62,7 +60,6 @@ public class MenuFragment extends Fragment implements MenuAdapter.OnAddToCartCli
         menuAdapter = new MenuAdapter(requireContext());
         recyclerView.setAdapter(menuAdapter);
 
-        // Create a list of menu items (you can fetch this from a data source)
         dishesLiveData = menuViewModel.getDishes();
 
         menuViewModel.getDishes().observe(getViewLifecycleOwner(), dishes -> {
@@ -81,6 +78,15 @@ public class MenuFragment extends Fragment implements MenuAdapter.OnAddToCartCli
         return view;
     }
 
+    @Nullable
+    private Restaurant getRestaurantBundle() {
+        Restaurant restaurantBundle = null;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
+            restaurantBundle = getArguments().getSerializable(RESTAURANT_ARG, Restaurant.class);
+        }
+        return restaurantBundle;
+    }
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -88,12 +94,11 @@ public class MenuFragment extends Fragment implements MenuAdapter.OnAddToCartCli
         requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
-                // Navigate back to the previous fragment (HomeFragment or Fragment A)
                 navigateBackToHomeFragment();
             }
         });
 
-        // Add the observer for dish quantities here
+        // Add the observer for dish quantities
         dishOrderViewModel.getDishOrderLiveData().observe(getViewLifecycleOwner(), dishQuantity -> {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU && dishQuantity != null) {
                 Restaurant restaurant = getArguments().getSerializable("restaurant", Restaurant.class);
@@ -102,21 +107,11 @@ public class MenuFragment extends Fragment implements MenuAdapter.OnAddToCartCli
         });
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU && dishOrderViewModel.getDishOrderLiveData().getValue() != null) {
-            Restaurant restaurant = getArguments().getSerializable("restaurant", Restaurant.class);
-
-        }
-    }
-
     // Inside menuFragment or any appropriate event handler
     public void navigateBackToHomeFragment() {
         // Navigate back to the previous fragment (HomeFragment)
         NavHostFragment.findNavController(this).popBackStack();
     }
-
 
     @Override
     public void onAddToCartClick(Dish dish, int quantity) {

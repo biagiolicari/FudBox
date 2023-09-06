@@ -1,8 +1,6 @@
 package com.andorid.fudbox.model;
 
 
-import android.util.Log;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,9 +8,9 @@ import java.util.List;
 
 public class Order implements Serializable {
     private final Restaurant restaurant;
-    private List<DishQuantity> dishes =  new ArrayList<>();
+    private List<DishOrder> dishes = new ArrayList<>();
 
-    public Order(Restaurant restaurant, List<DishQuantity> dishes) {
+    public Order(Restaurant restaurant, List<DishOrder> dishes) {
         this.restaurant = restaurant;
         this.dishes = dishes;
     }
@@ -25,39 +23,39 @@ public class Order implements Serializable {
         return restaurant;
     }
 
-    public List<DishQuantity> getDishes() {
+    public List<DishOrder> getDishes() {
         return dishes;
     }
 
-    public void setDishes(List<DishQuantity> dishes) {
+    public void setDishes(List<DishOrder> dishes) {
         this.dishes = dishes;
     }
 
     public Double getTotalPrice() {
         Double totalPrice = 0.0;
-        for (DishQuantity dq : dishes) {
+        for (DishOrder dq : dishes) {
             Double dishPrice = dq.getDish().getPrice() * dq.getQuantity();
             totalPrice += dishPrice;
         }
         return totalPrice;
     }
 
-    public void addDishAndQuantity(DishQuantity dishQuantity) {
-        for (DishQuantity dq : dishes) {
-            if (dq.getDish().equals(dishQuantity.getDish())) {
-                int newQuantity = dq.getQuantity() + dishQuantity.getQuantity();
+    public void addDishAndQuantity(DishOrder dishOrder) {
+        for (DishOrder dq : dishes) {
+            if (dq.getDish().equals(dishOrder.getDish())) {
+                int newQuantity = dq.getQuantity() + dishOrder.getQuantity();
                 dq.setQuantity(newQuantity);
                 return;
             }
         }
         // Dish is not in the order, must be added
-        if (dishQuantity.getQuantity() > 0) {
-            dishes.add(dishQuantity);
+        if (dishOrder.getQuantity() > 0) {
+            dishes.add(dishOrder);
         }
     }
 
     public int getDishQuantity(Dish dish) {
-        for (DishQuantity dq : dishes) {
+        for (DishOrder dq : dishes) {
             if (dq.getDish().getName().equals(dish.getName())) {
                 return dq.getQuantity();
             }

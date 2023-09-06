@@ -3,27 +3,27 @@ package com.andorid.fudbox.repository.mainscreen.home.menu;
 import androidx.lifecycle.MutableLiveData;
 
 import com.andorid.fudbox.model.Dish;
-import com.andorid.fudbox.model.DishQuantity;
+import com.andorid.fudbox.model.DishOrder;
 
-public class DishQuantityRepository {
+public class DishOrderRepository {
 
-    private DishQuantity dq;
-    private MutableLiveData<DishQuantity> dishQuantitiesLiveData;
+    private DishOrder dq;
+    private MutableLiveData<DishOrder> dishQuantitiesLiveData;
 
-    public DishQuantityRepository() {
+    public DishOrderRepository() {
         this.dishQuantitiesLiveData = new MutableLiveData<>();
     }
 
-    public MutableLiveData<DishQuantity> getDishQuantityLiveData() {
+    public MutableLiveData<DishOrder> getDishQuantityLiveData() {
         return dishQuantitiesLiveData;
     }
 
     public void addItemToCart(Dish dish, int quantity) {
-        DishQuantity dq = new DishQuantity(dish, quantity);
+        DishOrder dq = new DishOrder(dish, quantity);
         this.dishQuantitiesLiveData.setValue(dq);
     }
 
-    public void addItemToCart(DishQuantity dq){
+    public void addItemToCart(DishOrder dq){
         this.dishQuantitiesLiveData.setValue(dq);
     }
 
