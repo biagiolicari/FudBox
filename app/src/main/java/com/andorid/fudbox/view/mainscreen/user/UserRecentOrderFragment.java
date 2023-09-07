@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
@@ -26,6 +27,7 @@ public class UserRecentOrderFragment extends Fragment {
     private UserViewModel userViewModel;
     private RecyclerView recyclerView;
     private UserRecentOrderAdapter userRecentOrderAdapter;
+    private ProgressBar loadingProgressBar;
 
 
     @Override
@@ -50,7 +52,11 @@ public class UserRecentOrderFragment extends Fragment {
 
         userViewModel.getRecentOrdersLiveData().observe(getViewLifecycleOwner(), dishes -> {
             userRecentOrderAdapter.setOrders(dishes);
+            hideLoadingProgressBar();
         });
+
+        loadingProgressBar = binding.loadingProgressBar;
+        showLoadingProgressBar();
 
         return view;
     }
@@ -69,5 +75,13 @@ public class UserRecentOrderFragment extends Fragment {
     public void navigateBackToUserFragment() {
         // Navigate back to the previous fragment (HomeFragment)
         NavHostFragment.findNavController(this).popBackStack();
+    }
+
+    private void showLoadingProgressBar() {
+        loadingProgressBar.setVisibility(View.VISIBLE);
+    }
+
+    private void hideLoadingProgressBar() {
+        loadingProgressBar.setVisibility(View.GONE);
     }
 }
