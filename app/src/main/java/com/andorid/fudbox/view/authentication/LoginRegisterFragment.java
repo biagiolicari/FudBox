@@ -36,6 +36,7 @@ public class LoginRegisterFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         authenticationViewModel = new ViewModelProvider(this).get(AuthenticationViewModel.class);
+
     }
 
     private void navigateToHomeActivity(){
@@ -45,13 +46,12 @@ public class LoginRegisterFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        Log.i("SONO IN START", "EGOLO");
         if(authenticationViewModel.getUserLiveData().getValue() == null){
             Log.i("USER", "NULLLLLLL");
         } else {
             Log.i("USERLIVE", authenticationViewModel.getUserLiveData().getValue().toString());
         }
-            authenticationViewModel.getUserLiveData().observe(this, new Observer<FirebaseUser>() {
+        authenticationViewModel.getUserLiveData().observe(this, new Observer<FirebaseUser>() {
                 @Override
                 public void onChanged(FirebaseUser firebaseUser) {
                     if (firebaseUser != null) {

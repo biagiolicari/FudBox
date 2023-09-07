@@ -7,13 +7,18 @@ import java.util.List;
 
 
 public class Order implements Serializable {
-    private final Restaurant restaurant;
+    private Restaurant restaurant;
     private List<DishOrder> dishes = new ArrayList<>();
 
     public Order(Restaurant restaurant, List<DishOrder> dishes) {
         this.restaurant = restaurant;
         this.dishes = dishes;
     }
+
+    public Order() {
+        // Default no-argument constructor required for Firestore deserialization
+    }
+
 
     public Order(Restaurant restaurant) {
         this.restaurant = restaurant;
@@ -61,6 +66,10 @@ public class Order implements Serializable {
             }
         }
         return 0;
+    }
+
+    public int getNumberOfDishOrdered(){
+        return dishes.size();
     }
 
     @Override

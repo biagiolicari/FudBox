@@ -65,6 +65,7 @@ public class OrderFragment extends Fragment {
             if(orderViewModel.getOrderLiveData().getValue() != null){
                 Log.wtf("CLICK", "TO SET");
                 orderViewModel.uploadToFireStore();
+                orderViewModel.clearOrder();
             } else {
                 CuteToast.ct(getContext(), "Please, order something before confirm.", CuteToast.LENGTH_SHORT, CuteToast.SAD, true).show();
             }

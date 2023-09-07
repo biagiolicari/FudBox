@@ -28,8 +28,6 @@ public class RestaurantSearchResultAdapter extends RecyclerView.Adapter<Restaura
         void onItemClick(Restaurant restaurant);
     }
 
-
-
     public RestaurantSearchResultAdapter(Context context, OnItemClickListener listener, LatLng position) {
         inflater = LayoutInflater.from(context);
         this.position = position;

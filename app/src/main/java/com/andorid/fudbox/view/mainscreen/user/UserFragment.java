@@ -11,8 +11,13 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+
 import com.andorid.fudbox.MainActivity;
 import com.andorid.fudbox.R;
+import com.andorid.fudbox.databinding.FragmentRecentOrdersBinding;
+import com.andorid.fudbox.databinding.FragmentUserBinding;
 import com.andorid.fudbox.viewmodel.authentication.LoggedInViewModel;
 import com.google.firebase.auth.FirebaseUser;
 import com.rejowan.cutetoast.CuteToast;
@@ -22,7 +27,9 @@ public class UserFragment extends Fragment {
 
     private TextView loggedInUserTextView;
     private Button logOutButton;
+    private Button recentOrdersButton;
     private LoggedInViewModel loggedInViewModel;
+    private FragmentUserBinding binding;
 
     public UserFragment() {
         // Required empty public constructor
@@ -32,14 +39,17 @@ public class UserFragment extends Fragment {
     public View onCreateView(
             @NonNull LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_user, container, false);
+        binding = FragmentUserBinding.inflate(inflater, container, false);
+        View view = binding.getRoot();
+        return view;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        loggedInUserTextView = view.findViewById(R.id.fragment_loggedin_user);
-        logOutButton = view.findViewById(R.id.fragment_logout_button);
+        loggedInUserTextView = binding.fragmentLoggedinUser;
+        logOutButton = binding.fragmentLogoutButton;
+        recentOrdersButton = binding.recentOrdersButton;
 
         loggedInViewModel = new ViewModelProvider(this).get(LoggedInViewModel.class);
         loggedInViewModel.getUserLiveData().observe(getViewLifecycleOwner(), new Observer<FirebaseUser>() {
@@ -52,6 +62,13 @@ public class UserFragment extends Fragment {
                     logOutButton.setEnabled(false);
                 }
             }
+        });
+
+
+        recentOrdersButton.setOnClickListener(c -> {
+            NavController navController = Navigation.findNavController(requireView());
+            // Navigate to the MenuFragment using the action defined in the navigation graph
+            navController.navigate(R.id.action_user_to_recent_order);
         });
         logOutButton.setOnClickListener(v -> logoutUser());
     }
