@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="completeOrder">Complete Order</string>
+    <string name="history_order">Order composed by: %1$d dishes</string>
 </resources>

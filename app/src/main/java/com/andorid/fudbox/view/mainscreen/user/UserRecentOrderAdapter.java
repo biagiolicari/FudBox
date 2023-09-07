@@ -10,15 +10,20 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.andorid.fudbox.databinding.ItemRecentOrderBinding;
 import com.andorid.fudbox.model.Order;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class UserRecentOrderAdapter extends RecyclerView.Adapter<UserRecentOrderAdapter.UserRecentOrderHolder> {
     private final LayoutInflater inflater;
     private List<Order> orders = new ArrayList<>();
+    private final NumberFormat currencyFormatter;
 
     public UserRecentOrderAdapter(Context context) {
         inflater = LayoutInflater.from(context);
+        currencyFormatter = NumberFormat.getCurrencyInstance(Locale.getDefault());
+
     }
 
     public void setOrders(List<Order> orders){
@@ -46,8 +51,6 @@ public class UserRecentOrderAdapter extends RecyclerView.Adapter<UserRecentOrder
 
     class UserRecentOrderHolder extends RecyclerView.ViewHolder{
         private final ItemRecentOrderBinding binding;
-        private StringBuilder numberOfDishText = new StringBuilder("Order Composed by: ");
-        private static final String EURO_SYMBOL = "€";
 
         public UserRecentOrderHolder(@NonNull ItemRecentOrderBinding binding) {
             super(binding.getRoot());
@@ -55,10 +58,10 @@ public class UserRecentOrderAdapter extends RecyclerView.Adapter<UserRecentOrder
         }
 
         public void bind(Order order) {
-            binding.numberOfDishOrdered.setText(numberOfDishText.append(order.getNumberOfDishOrdered()).append(" dishes."));
+            binding.numberOfDishOrdered.setText(String.format("Order Composed by: %d dishes.", order.getNumberOfDishOrdered()));
             binding.restaurantAddress.setText(order.getRestaurant().getAddress());
             binding.restaurantItemTitle.setText(order.getRestaurant().getName());
-            binding.totalPriceOrder.setText(EURO_SYMBOL + " " + order.getTotalPrice());
+            binding.totalPriceOrder.setText(currencyFormatter.format(order.getTotalPrice()));
             binding.orderDate.setText(order.getOrderDate());
         }
     }

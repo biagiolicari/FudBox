@@ -5,4 +5,5 @@
     <string name="title_activity_home">FudBox</string>
     <string name="x">x</string>
     <string name="total_price">Total Price</string>
+    <string name="euro">€ %1$s</string>
 </resources>
