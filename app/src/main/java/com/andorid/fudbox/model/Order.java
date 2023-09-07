@@ -9,19 +9,20 @@ import java.util.List;
 public class Order implements Serializable {
     private Restaurant restaurant;
     private List<DishOrder> dishes = new ArrayList<>();
+    private String orderDate;
 
-    public Order(Restaurant restaurant, List<DishOrder> dishes) {
+    public Order(Restaurant restaurant, List<DishOrder> dishes, String orderDate) {
         this.restaurant = restaurant;
         this.dishes = dishes;
+        this.orderDate = orderDate;
     }
-
-    public Order() {
-        // Default no-argument constructor required for Firestore deserialization
-    }
-
 
     public Order(Restaurant restaurant) {
         this.restaurant = restaurant;
+    }
+
+    public String getOrderDate() {
+        return orderDate;
     }
 
     public Restaurant getRestaurant() {
@@ -68,7 +69,7 @@ public class Order implements Serializable {
         return 0;
     }
 
-    public int getNumberOfDishOrdered(){
+    public int getNumberOfDishOrdered() {
         return dishes.size();
     }
 

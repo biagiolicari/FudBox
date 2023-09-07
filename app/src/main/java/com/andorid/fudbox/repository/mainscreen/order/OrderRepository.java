@@ -94,6 +94,7 @@ public class OrderRepository {
             orderData.put("userUID", uid);
             orderData.put("restaurant", latestOrder.getRestaurant());
             orderData.put("dishes", dishes);
+            orderData.put("orderDate", getFormattedDate());
 
             firestore.collection("orders")
                     .add(orderData)
@@ -104,6 +105,11 @@ public class OrderRepository {
                         Log.wtf("FIREBASE", e.getMessage());
                     });
         }
+    }
+
+    private String getFormattedDate(){
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yy HH:mm", Locale.getDefault());
+        return dateFormat.format(new Date());
     }
 }
 

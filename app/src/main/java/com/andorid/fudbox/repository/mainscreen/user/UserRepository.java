@@ -53,7 +53,8 @@ public class UserRepository {
                             Map<String, Object> restaurantData = (Map<String, Object>) document.getData().get("restaurant");
                             Restaurant restaurant = deserializeRestaurant(restaurantData);
                             List<DishOrder> dishOrderList = deserializeDishOrder(document.getData());
-                            orders.add(new Order(restaurant, dishOrderList));
+                            String orderDate = document.getData().get("orderDate").toString();
+                            orders.add(new Order(restaurant, dishOrderList, orderDate));
                         }
 
                         // Now, 'orders' contains the list of orders for the current user.
