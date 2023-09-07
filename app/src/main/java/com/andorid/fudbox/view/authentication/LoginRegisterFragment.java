@@ -46,19 +46,11 @@ public class LoginRegisterFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        if(authenticationViewModel.getUserLiveData().getValue() == null){
-            Log.i("USER", "NULLLLLLL");
-        } else {
-            Log.i("USERLIVE", authenticationViewModel.getUserLiveData().getValue().toString());
-        }
-        authenticationViewModel.getUserLiveData().observe(this, new Observer<FirebaseUser>() {
-                @Override
-                public void onChanged(FirebaseUser firebaseUser) {
-                    if (firebaseUser != null) {
-                        navigateToHomeActivity();
-                    }
-                }
-            });
+        authenticationViewModel.getUserLiveData().observe(this, firebaseUser -> {
+            if (firebaseUser != null) {
+                navigateToHomeActivity();
+            }
+        });
     }
 
     @Nullable
@@ -74,14 +66,11 @@ public class LoginRegisterFragment extends Fragment {
         loginButton.setOnClickListener(viewLogin -> {
             String email = emailInputText.getEditText().getText().toString();
             String password = passwordInputText.getEditText().getText().toString();
-            Log.i("EMAIL: ", emailInputText.getEditText().getText().toString());
 
             if (email.length() > 0 && password.length() > 0) {
                 authenticationViewModel.login(email, password);
             } else {
-                //Toast.makeText(getContext(), "Email Address and Password Must Be Entered", Toast.LENGTH_SHORT).show();
                 CuteToast.ct(getContext(), "Email Address and Password Must Be Entered", CuteToast.LENGTH_SHORT, CuteToast.ERROR, true).show();
-
             }
         });
 

@@ -6,59 +6,80 @@ import androidx.lifecycle.MutableLiveData;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import android.os.Handler;
+import android.os.Looper;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 public class AuthenticationRepo {
 
-    private FirebaseAuth firebaseAuth;
+    private final FirebaseAuth firebaseAuth;
+    private final MutableLiveData<FirebaseUser> userLiveData;
+    private final MutableLiveData<Boolean> loggedOutLiveData;
+    private final Handler mainHandler;
 
-    private Application application;
-    private MutableLiveData<FirebaseUser> userLiveData;
-    private MutableLiveData<Boolean> loggedOutLiveData;
-
-    public AuthenticationRepo(Application application){
-        this.application = application;
+    public AuthenticationRepo() {
         this.firebaseAuth = FirebaseAuth.getInstance();
         this.userLiveData = new MutableLiveData<>();
         this.loggedOutLiveData = new MutableLiveData<>();
+        this.mainHandler = new Handler(Looper.getMainLooper());
+        checkCurrentUser();
+    }
 
-        if (firebaseAuth.getCurrentUser() != null) {
-            userLiveData.postValue(firebaseAuth.getCurrentUser());
-            loggedOutLiveData.postValue(false);
+    private void checkCurrentUser() {
+        FirebaseUser currentUser = firebaseAuth.getCurrentUser();
+        if (currentUser != null) {
+            postUser(currentUser);
+            postLoggedOut(false);
         }
     }
 
     public void login(String email, String password) {
         firebaseAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(application.getMainExecutor(), task -> {
+                .addOnCompleteListener(mainHandler::post, task -> {
                     if (task.isSuccessful()) {
-                        userLiveData.postValue(firebaseAuth.getCurrentUser());
+                        checkCurrentUser();
                     } else {
-                        Toast.makeText(application.getApplicationContext(), "Login Failure: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                        handleAuthFailure(task.getException());
                     }
                 });
     }
 
     public void register(String email, String password) {
         firebaseAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(application.getMainExecutor(), task -> {
+                .addOnCompleteListener(mainHandler::post, task -> {
                     if (task.isSuccessful()) {
-                        userLiveData.postValue(firebaseAuth.getCurrentUser());
+                        checkCurrentUser();
                     } else {
-                        Toast.makeText(application.getApplicationContext(), "Registration Failure: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                        handleAuthFailure(task.getException());
                     }
                 });
     }
 
     public void logOut() {
         firebaseAuth.signOut();
-        loggedOutLiveData.postValue(true);
+        postLoggedOut(true);
     }
 
-    public MutableLiveData<FirebaseUser> getUserLiveData(){
+    private void handleAuthFailure(Exception exception) {
+        // Handle authentication failure, e.g., display error messages.
+    }
+
+    private void postUser(FirebaseUser user) {
+        userLiveData.postValue(user);
+    }
+
+    private void postLoggedOut(boolean loggedOut) {
+        loggedOutLiveData.postValue(loggedOut);
+    }
+
+    public LiveData<FirebaseUser> getUserLiveData() {
         return userLiveData;
     }
 
-    public MutableLiveData<Boolean> getLoggedOutLiveData(){
+    public LiveData<Boolean> getLoggedOutLiveData() {
         return loggedOutLiveData;
     }
-
 }
