@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
@@ -34,6 +35,8 @@ public class MenuFragment extends Fragment implements MenuAdapter.OnAddToCartCli
     private DishOrderViewModel dishOrderViewModel;
     private OrderViewModel orderViewModel;
     private LiveData<List<Dish>> dishesLiveData;
+    private ProgressBar progressBar;
+    private FragmentMenuBinding binding;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -47,7 +50,7 @@ public class MenuFragment extends Fragment implements MenuAdapter.OnAddToCartCli
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        FragmentMenuBinding binding = FragmentMenuBinding.inflate(inflater, container, false);
+        binding = FragmentMenuBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
             Restaurant restaurantBundle = getRestaurantBundle();
@@ -64,6 +67,7 @@ public class MenuFragment extends Fragment implements MenuAdapter.OnAddToCartCli
 
         menuViewModel.getDishes().observe(getViewLifecycleOwner(), dishes -> {
             menuAdapter.setMenuItems(dishes);
+            hideLoadingProgressBar();
         });
 
         menuAdapter.setOnAddToCartClickListener(this);
@@ -74,6 +78,9 @@ public class MenuFragment extends Fragment implements MenuAdapter.OnAddToCartCli
                 menuViewModel.clearErrorMessage(); // Optionally clear the error message in the ViewModel
             }
         });
+
+        progressBar = binding.loadingProgressBar;
+        showLoadingProgressBar();
 
         return view;
     }
@@ -107,7 +114,6 @@ public class MenuFragment extends Fragment implements MenuAdapter.OnAddToCartCli
         });
     }
 
-    // Inside menuFragment or any appropriate event handler
     public void navigateBackToHomeFragment() {
         // Navigate back to the previous fragment (HomeFragment)
         NavHostFragment.findNavController(this).popBackStack();
@@ -116,5 +122,13 @@ public class MenuFragment extends Fragment implements MenuAdapter.OnAddToCartCli
     @Override
     public void onAddToCartClick(Dish dish, int quantity) {
         dishOrderViewModel.addItemToCart(dish, quantity);
+    }
+
+    private void showLoadingProgressBar() {
+        progressBar.setVisibility(View.VISIBLE);
+    }
+
+    private void hideLoadingProgressBar() {
+        progressBar.setVisibility(View.GONE);
     }
 }
