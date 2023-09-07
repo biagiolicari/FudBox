@@ -24,6 +24,9 @@
 
     <fragment android:id="@+id/nav_user" android:name="com.andorid.fudbox.view.mainscreen.user.UserFragment"
               android:label="fragment_user" tools:layout="@layout/fragment_user">
+        <action
+            android:id="@+id/action_user_to_recent_order"
+            app:destination="@id/user_recent_order"/>
     </fragment>
 
     <fragment android:id="@+id/user_recent_order" android:name="com.andorid.fudbox.view.mainscreen.user.UserRecentOrderFragment"
@@ -34,18 +37,5 @@
     <fragment android:id="@+id/nav_order" android:name="com.andorid.fudbox.view.mainscreen.order.OrderFragment"
         android:label="fragment_order" tools:layout="@layout/fragment_order"/>
 
-    <navigation android:id="@+id/navigation"
-        app:startDestination="@id/nav_user">
-        <fragment
-            android:id="@+id/nav_user"
-            android:name="com.andorid.fudbox.view.mainscreen.user.UserFragment"
-            android:label="fragment_user"
-            tools:layout="@layout/fragment_user"></fragment>
-        <fragment
-            android:id="@+id/user_recent_order"
-            android:name="com.andorid.fudbox.view.mainscreen.user.UserRecentOrderFragment"
-            android:label="fragment_user_order"
-            tools:layout="@layout/fragment_recent_orders"></fragment>
-    </navigation>
 
 </navigation>
