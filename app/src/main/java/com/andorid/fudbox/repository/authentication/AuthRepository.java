@@ -1,7 +1,5 @@
 package com.andorid.fudbox.repository.authentication;
 
-import android.app.Application;
-import android.widget.Toast;
 import androidx.lifecycle.MutableLiveData;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -9,18 +7,15 @@ import com.google.firebase.auth.FirebaseUser;
 import android.os.Handler;
 import android.os.Looper;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
-public class AuthenticationRepo {
+public class AuthRepository {
 
     private final FirebaseAuth firebaseAuth;
     private final MutableLiveData<FirebaseUser> userLiveData;
     private final MutableLiveData<Boolean> loggedOutLiveData;
     private final Handler mainHandler;
 
-    public AuthenticationRepo() {
+    public AuthRepository() {
         this.firebaseAuth = FirebaseAuth.getInstance();
         this.userLiveData = new MutableLiveData<>();
         this.loggedOutLiveData = new MutableLiveData<>();
@@ -36,7 +31,7 @@ public class AuthenticationRepo {
         }
     }
 
-    public void login(String email, String password) {
+    public void signIn(String email, String password) {
         firebaseAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(mainHandler::post, task -> {
                     if (task.isSuccessful()) {
@@ -47,7 +42,7 @@ public class AuthenticationRepo {
                 });
     }
 
-    public void register(String email, String password) {
+    public void signUP(String email, String password) {
         firebaseAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(mainHandler::post, task -> {
                     if (task.isSuccessful()) {
@@ -58,7 +53,7 @@ public class AuthenticationRepo {
                 });
     }
 
-    public void logOut() {
+    public void signOut() {
         firebaseAuth.signOut();
         postLoggedOut(true);
     }

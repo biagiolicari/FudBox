@@ -1,41 +1,38 @@
 package com.andorid.fudbox.view.authentication;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import com.andorid.fudbox.R;
-import com.andorid.fudbox.viewmodel.authentication.AuthenticationViewModel;
+import com.andorid.fudbox.databinding.FragmentAuthBinding;
+import com.andorid.fudbox.viewmodel.authentication.AuthViewModel;
 import com.google.android.material.textfield.TextInputLayout;
-import com.google.firebase.auth.FirebaseUser;
 import com.rejowan.cutetoast.CuteToast;
 
-public class LoginRegisterFragment extends Fragment {
+public class AuthFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private Button loginButton;
     private Button signUpButton;
     private TextInputLayout emailInputText;
     private TextInputLayout passwordInputText;
-    private AuthenticationViewModel authenticationViewModel;
+    private AuthViewModel authViewModel;
 
-    public LoginRegisterFragment() {
+    public AuthFragment() {
         // Required empty public constructor
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        authenticationViewModel = new ViewModelProvider(this).get(AuthenticationViewModel.class);
+        authViewModel = new ViewModelProvider(this).get(AuthViewModel.class);
 
     }
 
@@ -46,7 +43,7 @@ public class LoginRegisterFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        authenticationViewModel.getUserLiveData().observe(this, firebaseUser -> {
+        authViewModel.getUserLiveData().observe(this, firebaseUser -> {
             if (firebaseUser != null) {
                 navigateToHomeActivity();
             }
@@ -56,19 +53,21 @@ public class LoginRegisterFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_loginregister, container, false);
+        //View view = inflater.inflate(R.layout.fragment_auth, container, false);
+        FragmentAuthBinding binding = FragmentAuthBinding.inflate(inflater, container, false);
+        View view = binding.getRoot();
 
-        emailInputText = view.findViewById(R.id.fragment_loginregister_email);
-        passwordInputText = view.findViewById(R.id.fragment_loginregister_password);
-        loginButton = view.findViewById(R.id.fragment_loginregister_login);
-        signUpButton = view.findViewById(R.id.fragment_loginregister_register);
+        emailInputText = binding.fragmentLoginregisterEmail;
+        passwordInputText = binding.fragmentLoginregisterPassword;
+        loginButton = binding.fragmentLoginregisterLogin;
+        signUpButton = binding.fragmentLoginregisterRegister;
 
         loginButton.setOnClickListener(viewLogin -> {
             String email = emailInputText.getEditText().getText().toString();
             String password = passwordInputText.getEditText().getText().toString();
 
             if (email.length() > 0 && password.length() > 0) {
-                authenticationViewModel.login(email, password);
+                authViewModel.login(email, password);
             } else {
                 CuteToast.ct(getContext(), "Email Address and Password Must Be Entered", CuteToast.LENGTH_SHORT, CuteToast.ERROR, true).show();
             }
@@ -79,14 +78,11 @@ public class LoginRegisterFragment extends Fragment {
             String password = passwordInputText.getEditText().getText().toString();
 
             if (email.length() > 0 && password.length() > 0) {
-                authenticationViewModel.register(email, password);
+                authViewModel.register(email, password);
             } else {
-                //Toast.makeText(getContext(), "Email Address and Password Must Be Entered", Toast.LENGTH_SHORT).show();
                 CuteToast.ct(getContext(), "Email Address and Password Must Be Entered", CuteToast.LENGTH_SHORT, CuteToast.ERROR, true).show();
-
             }
         });
-
         return view;
     }
 

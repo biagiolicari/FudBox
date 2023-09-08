@@ -6,19 +6,8 @@
 
     <fragment
             android:id="@+id/loginRegisterFragment"
-            android:name="com.andorid.fudbox.view.authentication.LoginRegisterFragment"
+            android:name="com.andorid.fudbox.view.authentication.AuthFragment"
             android:label="LoginRegisterFragment" >
-        <action
-                android:id="@+id/action_loginRegisterFragment_to_loggedInFragment"
-                app:destination="@+id/loggedInFragment" />
-    </fragment>
-    <fragment
-            android:id="@+id/loggedInFragment"
-            android:name="com.andorid.fudbox.view.authentication.LoggedInFragment"
-            android:label="LoggedInFragment" >
-        <action
-                android:id="@+id/action_loggedInFragment_to_loginRegisterFragment"
-                app:destination="@id/loginRegisterFragment" />
     </fragment>
 
     <activity android:id="@+id/placeActivity" android:name="com.andorid.fudbox.view.place.PlaceActivity"
