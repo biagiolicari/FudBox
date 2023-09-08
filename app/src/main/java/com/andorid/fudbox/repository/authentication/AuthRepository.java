@@ -1,18 +1,20 @@
 package com.andorid.fudbox.repository.authentication;
 
-import androidx.lifecycle.MutableLiveData;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-
 import android.os.Handler;
 import android.os.Looper;
+
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class AuthRepository {
 
     private final FirebaseAuth firebaseAuth;
     private final MutableLiveData<FirebaseUser> userLiveData;
     private final MutableLiveData<Boolean> loggedOutLiveData;
+    private final MutableLiveData<String> errorMessageLiveData;
     private final Handler mainHandler;
 
     public AuthRepository() {
@@ -20,7 +22,12 @@ public class AuthRepository {
         this.userLiveData = new MutableLiveData<>();
         this.loggedOutLiveData = new MutableLiveData<>();
         this.mainHandler = new Handler(Looper.getMainLooper());
+        this.errorMessageLiveData = new MutableLiveData<>();
         checkCurrentUser();
+    }
+
+    public MutableLiveData<String> getErrorMessageLiveData() {
+        return errorMessageLiveData;
     }
 
     private void checkCurrentUser() {
@@ -59,7 +66,7 @@ public class AuthRepository {
     }
 
     private void handleAuthFailure(Exception exception) {
-        // Handle authentication failure, e.g., display error messages.
+        this.errorMessageLiveData.setValue(exception.getMessage());
     }
 
     private void postUser(FirebaseUser user) {

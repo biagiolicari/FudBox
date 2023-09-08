@@ -5,12 +5,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
+
 import com.andorid.fudbox.R;
 import com.andorid.fudbox.databinding.FragmentAuthBinding;
 import com.andorid.fudbox.viewmodel.authentication.AuthViewModel;
@@ -36,7 +37,7 @@ public class AuthFragment extends Fragment {
 
     }
 
-    private void navigateToHomeActivity(){
+    private void navigateToHomeActivity() {
         Navigation.findNavController(requireView()).navigate(R.id.action_to_home_activity);
     }
 
@@ -53,7 +54,6 @@ public class AuthFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        //View view = inflater.inflate(R.layout.fragment_auth, container, false);
         FragmentAuthBinding binding = FragmentAuthBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
 
@@ -83,6 +83,8 @@ public class AuthFragment extends Fragment {
                 CuteToast.ct(getContext(), "Email Address and Password Must Be Entered", CuteToast.LENGTH_SHORT, CuteToast.ERROR, true).show();
             }
         });
+
+        authViewModel.getErrorMessageLiveData().observe(getViewLifecycleOwner(), e -> CuteToast.ct(getContext(), e, CuteToast.LENGTH_SHORT, CuteToast.ERROR, true).show());
         return view;
     }
 
