@@ -4,9 +4,9 @@ import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
 
+import com.andorid.fudbox.model.Cart;
 import com.andorid.fudbox.model.Dish;
 import com.andorid.fudbox.model.DishOrder;
-import com.andorid.fudbox.model.Order;
 import com.andorid.fudbox.model.Restaurant;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -20,26 +20,26 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class OrderRepository {
-    private static OrderRepository orderRepository;
-    private final MutableLiveData<Order> orderMutableLiveData;
+public class CartRepository {
+    private static CartRepository cartRepository;
+    private final MutableLiveData<Cart> orderMutableLiveData;
     private final FirebaseFirestore firestore;
     private final FirebaseAuth firebaseAuth;
 
-    private OrderRepository() {
+    private CartRepository() {
         orderMutableLiveData = new MutableLiveData<>();
         firestore = FirebaseFirestore.getInstance();
         firebaseAuth = FirebaseAuth.getInstance();
     }
 
-    public static OrderRepository getInstance() {
-        if (orderRepository == null) {
-            orderRepository = new OrderRepository();
+    public static CartRepository getInstance() {
+        if (cartRepository == null) {
+            cartRepository = new CartRepository();
         }
-        return orderRepository;
+        return cartRepository;
     }
 
-    public MutableLiveData<Order> getOrderMutableLiveData() {
+    public MutableLiveData<Cart> getOrderMutableLiveData() {
         return orderMutableLiveData;
     }
 
@@ -48,17 +48,17 @@ public class OrderRepository {
     }
 
     public void buildOrder(DishOrder dishOrder, Restaurant restaurant) {
-        Order currentOrder = orderMutableLiveData.getValue();
+        Cart currentCart = orderMutableLiveData.getValue();
 
-        if (currentOrder == null || !currentOrder.getRestaurant().equals(restaurant)) {
+        if (currentCart == null || !currentCart.getRestaurant().equals(restaurant)) {
             // If there's no current order or the restaurant is different, create a new order
-            Order order = new Order(restaurant);
-            order.addDishAndQuantity(dishOrder);
-            orderMutableLiveData.setValue(order);
+            Cart cart = new Cart(restaurant);
+            cart.addDishAndQuantity(dishOrder);
+            orderMutableLiveData.setValue(cart);
         } else {
             // If the order is from the same restaurant, update the dishes' quantities
-            currentOrder.addDishAndQuantity(dishOrder);
-            orderMutableLiveData.setValue(currentOrder);
+            currentCart.addDishAndQuantity(dishOrder);
+            orderMutableLiveData.setValue(currentCart);
         }
     }
 
@@ -67,17 +67,17 @@ public class OrderRepository {
     }
 
     public void removeDishFromOrder(Dish dishToRemove) {
-        Order currentOrder = orderMutableLiveData.getValue();
+        Cart currentCart = orderMutableLiveData.getValue();
 
-        if (currentOrder != null) {
-            List<DishOrder> modifiedDishes = currentOrder.getDishes().stream()
+        if (currentCart != null) {
+            List<DishOrder> modifiedDishes = currentCart.getDishes().stream()
                     .filter(dishQuantity -> !dishQuantity.getDish().equals(dishToRemove))
                     .collect(Collectors.toList());
 
-            Order modifiedOrder = new Order(currentOrder.getRestaurant());
-            modifiedOrder.setDishes(modifiedDishes);
+            Cart modifiedCart = new Cart(currentCart.getRestaurant());
+            modifiedCart.setDishes(modifiedDishes);
 
-            orderMutableLiveData.setValue(modifiedOrder);
+            orderMutableLiveData.setValue(modifiedCart);
         }
     }
 
@@ -86,13 +86,13 @@ public class OrderRepository {
 
         if (currentUser != null && orderMutableLiveData.getValue() != null) {
             String uid = currentUser.getUid();
-            Order latestOrder = orderMutableLiveData.getValue();
-            String restaurantName = latestOrder.getRestaurant().getName();
-            List<DishOrder> dishes = latestOrder.getDishes();
+            Cart latestCart = orderMutableLiveData.getValue();
+            String restaurantName = latestCart.getRestaurant().getName();
+            List<DishOrder> dishes = latestCart.getDishes();
 
             Map<String, Object> orderData = new HashMap<>();
             orderData.put("userUID", uid);
-            orderData.put("restaurant", latestOrder.getRestaurant());
+            orderData.put("restaurant", latestCart.getRestaurant());
             orderData.put("dishes", dishes);
             orderData.put("orderDate", getFormattedDate());
 
