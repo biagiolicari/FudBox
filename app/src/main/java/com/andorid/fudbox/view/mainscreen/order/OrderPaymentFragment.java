@@ -34,7 +34,7 @@ public class OrderPaymentFragment extends Fragment {
         binding = FragmentOrderPaymentBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
 
-        binding.payButton.setOnClickListener(l ->  paymentCompleted());
+        binding.payButton.setOnClickListener(l -> paymentCompleted());
         return view;
     }
 
@@ -43,7 +43,7 @@ public class OrderPaymentFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
     }
 
-    private void paymentCompleted(){
+    private void paymentCompleted() {
         orderViewModel.uploadOrderToFirestore();
         CuteToast.ct(requireContext(), getString(R.string.order_completed), CuteToast.LENGTH_SHORT, CuteToast.HAPPY, true).show();
         NavController navController = Navigation.findNavController(requireView());

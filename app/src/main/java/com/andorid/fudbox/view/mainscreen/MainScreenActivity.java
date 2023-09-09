@@ -1,9 +1,7 @@
 package com.andorid.fudbox.view.mainscreen;
 
-import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
@@ -49,9 +47,9 @@ public class MainScreenActivity extends AppCompatActivity {
 
         // Initialize the Bundle with arguments
         /**
-        Bundle args = new Bundle();
-        args.putDouble("latitude", latLng.latitude);
-        args.putDouble("longitude", latLng.longitude);
+         Bundle args = new Bundle();
+         args.putDouble("latitude", latLng.latitude);
+         args.putDouble("longitude", latLng.longitude);
          **/
         sharedLatLng.setLatLngMutableLiveData(latLng);
         // Set the navigation graph and pass arguments

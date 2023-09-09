@@ -64,7 +64,7 @@ public class CartFragment extends Fragment {
     public void onStart() {
         super.onStart();
         binding.completeOrderButton.setOnClickListener(l -> {
-            if(cartViewModel.getOrderLiveData().getValue() != null){
+            if (cartViewModel.getOrderLiveData().getValue() != null) {
                 Log.wtf("CLICK", "TO SET");
                 //orderViewModel.uploadToFireStore();
                 NavController navController = Navigation.findNavController(requireView());

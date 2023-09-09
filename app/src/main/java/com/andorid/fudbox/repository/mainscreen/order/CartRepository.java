@@ -107,7 +107,7 @@ public class CartRepository {
         }
     }
 
-    private String getFormattedDate(){
+    private String getFormattedDate() {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yy HH:mm", Locale.getDefault());
         return dateFormat.format(new Date());
     }

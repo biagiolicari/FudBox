@@ -13,7 +13,7 @@ import com.andorid.fudbox.repository.mainscreen.order.CartRepository;
 
 public class CartViewModel extends ViewModel {
     private final CartRepository cartRepository = CartRepository.getInstance();
-    private MutableLiveData<Cart> orderLiveData = cartRepository.getCartLiveData();
+    private final MutableLiveData<Cart> orderLiveData = cartRepository.getCartLiveData();
 
 
     public LiveData<Cart> getOrderLiveData() {

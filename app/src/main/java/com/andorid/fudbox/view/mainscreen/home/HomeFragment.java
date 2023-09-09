@@ -1,7 +1,6 @@
 package com.andorid.fudbox.view.mainscreen.home;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +16,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.andorid.fudbox.R;
 import com.andorid.fudbox.databinding.FragmentHomePageBinding;
 import com.andorid.fudbox.model.Restaurant;
-import com.andorid.fudbox.model.restaurant.RestaurantFeature;
 import com.andorid.fudbox.viewmodel.mainscreen.home.RestaurantViewModel;
 import com.andorid.fudbox.viewmodel.mainscreen.shared.SharedLatLng;
 import com.google.android.gms.maps.model.LatLng;
@@ -41,14 +39,15 @@ public class HomeFragment extends Fragment implements RestaurantSearchResultAdap
         super.onCreate(savedInstanceState);
         viewModel = new ViewModelProvider(this).get(RestaurantViewModel.class);
         /**
-        Bundle args = getArguments();
-        if (args != null) {
-            latLngData = new LatLng(args.getDouble("latitude"), args.getDouble("longitude"));
-        }
+         Bundle args = getArguments();
+         if (args != null) {
+         latLngData = new LatLng(args.getDouble("latitude"), args.getDouble("longitude"));
+         }
          **/
         viewModel.init();
         sharedLatLng = new ViewModelProvider(requireActivity()).get(SharedLatLng.class);
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

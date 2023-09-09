@@ -6,26 +6,25 @@ import androidx.lifecycle.ViewModel;
 import com.andorid.fudbox.model.Cart;
 import com.andorid.fudbox.model.Order;
 import com.andorid.fudbox.repository.mainscreen.order.OrderRepository;
-import com.google.android.libraries.places.api.model.Place;
 
 public class OrderViewModel extends ViewModel {
     private OrderRepository orderRepository;
     private LiveData<Order> orderLiveData;
 
-    public void init(){
+    public void init() {
         orderRepository = OrderRepository.getInstance();
         orderLiveData = orderRepository.getOrderMutableLiveData();
     }
 
-    public LiveData<Order> getOrderLiveData(){
+    public LiveData<Order> getOrderLiveData() {
         return orderLiveData;
     }
 
-    public void uploadOrderToFirestore(){
+    public void uploadOrderToFirestore() {
         orderRepository.uploadToFireStore();
     }
 
-    public void buildOrder(Cart cart, String deliveryPlace){
+    public void buildOrder(Cart cart, String deliveryPlace) {
         orderRepository.buildOrder(cart, deliveryPlace);
     }
 }

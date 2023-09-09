@@ -10,20 +10,19 @@ import java.util.List;
 
 public class UserViewModel extends ViewModel {
     private UserRepository repository;
+    private LiveData<List<Cart>> recentOrdersLiveData;
+
+    public UserViewModel() {
+
+    }
 
     public LiveData<List<Cart>> getRecentOrdersLiveData() {
         return recentOrdersLiveData;
     }
 
-    private LiveData<List<Cart>> recentOrdersLiveData;
-
-    public UserViewModel(){
-
-    }
-
-    public void init(){
+    public void init() {
         repository = new UserRepository();
-        if(repository.getRecentOrderLiveData().getValue() == null) {
+        if (repository.getRecentOrderLiveData().getValue() == null) {
             repository.fetchOrdersFromFirestore();
             recentOrdersLiveData = repository.getRecentOrderLiveData();
         }

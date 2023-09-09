@@ -1,7 +1,5 @@
 package com.andorid.fudbox.model;
 
-import com.google.android.libraries.places.api.model.Place;
-
 import java.util.List;
 
 public class Order {
@@ -9,6 +7,7 @@ public class Order {
     private final String date;
     private final String userUid;
     private final String deliveryAddress;
+
     public Order(Cart cart, String date, String userUid, String deliveryAddress) {
         this.cart = cart;
         this.date = date;

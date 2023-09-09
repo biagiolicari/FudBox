@@ -7,7 +7,7 @@ import com.google.android.gms.maps.model.LatLng;
 
 
 public class SharedLatLng extends ViewModel {
-    private MutableLiveData<LatLng> latLngMutableLiveData = new MutableLiveData<>();
+    private final MutableLiveData<LatLng> latLngMutableLiveData = new MutableLiveData<>();
 
     public MutableLiveData<LatLng> getLatLngMutableLiveData() {
         return latLngMutableLiveData;

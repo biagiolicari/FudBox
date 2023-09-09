@@ -17,15 +17,15 @@ import java.util.Locale;
 import java.util.Map;
 
 public class OrderRepository {
+    private static OrderRepository orderRepository;
     private final FirebaseFirestore firestore;
     private final FirebaseAuth firebaseAuth;
-    private MutableLiveData<Order> orderMutableLiveData;
-    private static OrderRepository orderRepository;
+    private final MutableLiveData<Order> orderMutableLiveData;
 
     private OrderRepository() {
         firestore = FirebaseFirestore.getInstance();
         firebaseAuth = FirebaseAuth.getInstance();
-        orderMutableLiveData =  new MutableLiveData<>();
+        orderMutableLiveData = new MutableLiveData<>();
     }
 
     public static OrderRepository getInstance() {
@@ -39,12 +39,12 @@ public class OrderRepository {
         return orderMutableLiveData;
     }
 
-    public void buildOrder(Cart cart, String deliveryPlace){
+    public void buildOrder(Cart cart, String deliveryPlace) {
         Order order = new Order(cart,
                 generateOrderFormattedDate(),
                 firebaseAuth.getCurrentUser().getUid(),
                 deliveryPlace
-                );
+        );
         orderMutableLiveData.setValue(order);
     }
 
@@ -69,7 +69,7 @@ public class OrderRepository {
         }
     }
 
-    private String generateOrderFormattedDate(){
+    private String generateOrderFormattedDate() {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yy HH:mm", Locale.getDefault());
         return dateFormat.format(new Date());
     }

@@ -57,7 +57,7 @@ public class PlaceActivity extends AppCompatActivity implements OnMapReadyCallba
 
     private static final String TAG = "ADDRESS_AUTOCOMPLETE";
     private static final String MAP_FRAGMENT_TAG = "MAP";
-    private static final String COUNTRY="IT";
+    private static final String COUNTRY = "IT";
     private LatLng coordinates;
     private SupportMapFragment mapFragment;
     private GoogleMap map;
@@ -89,7 +89,13 @@ public class PlaceActivity extends AppCompatActivity implements OnMapReadyCallba
     View.OnClickListener startAutocompleteIntentListener = view -> {
         view.setOnClickListener(null);
         startAutocompleteIntent();
-    };    private final ActivityResultLauncher<String> requestPermissionLauncher =
+    };
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent intent) {
+        super.onActivityResult(requestCode, resultCode, intent);
+        binding.autocompleteAddress.setOnClickListener(startAutocompleteIntentListener);
+    }    private final ActivityResultLauncher<String> requestPermissionLauncher =
             registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
                 if (isGranted) {
                     getGeoLocalizationData();
@@ -100,12 +106,6 @@ public class PlaceActivity extends AppCompatActivity implements OnMapReadyCallba
 
                 }
             });
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent intent) {
-        super.onActivityResult(requestCode, resultCode, intent);
-        binding.autocompleteAddress.setOnClickListener(startAutocompleteIntentListener);
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -295,6 +295,8 @@ public class PlaceActivity extends AppCompatActivity implements OnMapReadyCallba
         }
 
     }
+
+
 
 
 }

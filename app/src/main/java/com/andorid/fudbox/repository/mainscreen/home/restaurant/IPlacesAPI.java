@@ -5,6 +5,7 @@ import com.andorid.fudbox.model.restaurant.RestaurantJsonObject;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
+
 public interface IPlacesAPI {
 
     @GET("v2/places")

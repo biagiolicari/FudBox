@@ -17,8 +17,8 @@ import java.util.Locale;
 
 public class UserRecentOrderAdapter extends RecyclerView.Adapter<UserRecentOrderAdapter.UserRecentOrderHolder> {
     private final LayoutInflater inflater;
-    private List<Cart> carts = new ArrayList<>();
     private final NumberFormat currencyFormatter;
+    private List<Cart> carts = new ArrayList<>();
 
     public UserRecentOrderAdapter(Context context) {
         inflater = LayoutInflater.from(context);
@@ -26,7 +26,7 @@ public class UserRecentOrderAdapter extends RecyclerView.Adapter<UserRecentOrder
 
     }
 
-    public void setOrders(List<Cart> carts){
+    public void setOrders(List<Cart> carts) {
         this.carts = carts;
         notifyDataSetChanged();
     }
@@ -49,7 +49,7 @@ public class UserRecentOrderAdapter extends RecyclerView.Adapter<UserRecentOrder
         return carts.size();
     }
 
-    class UserRecentOrderHolder extends RecyclerView.ViewHolder{
+    class UserRecentOrderHolder extends RecyclerView.ViewHolder {
         private final ItemRecentOrderBinding binding;
 
         public UserRecentOrderHolder(@NonNull ItemRecentOrderBinding binding) {

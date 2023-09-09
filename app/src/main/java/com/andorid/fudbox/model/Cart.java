@@ -7,7 +7,7 @@ import java.util.List;
 
 
 public class Cart implements Serializable {
-    private Restaurant restaurant;
+    private final Restaurant restaurant;
     private List<DishOrder> dishes = new ArrayList<>();
     private String orderDate;
 

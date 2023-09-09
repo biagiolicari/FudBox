@@ -23,10 +23,10 @@ public class RestaurantRepository {
     public RestaurantRepository() {
         restaurantMutableLiveData = new MutableLiveData<>();
         /**
-        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
-        interceptor.level(HttpLoggingInterceptor.Level.BODY);
-        OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
-        **/
+         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+         interceptor.level(HttpLoggingInterceptor.Level.BODY);
+         OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
+         **/
         iPlacesAPI = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
