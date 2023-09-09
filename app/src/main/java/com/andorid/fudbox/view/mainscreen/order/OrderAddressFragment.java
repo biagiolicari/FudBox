@@ -78,6 +78,7 @@ public class OrderAddressFragment extends Fragment {
         binding.autocompleteAddress1.setOnClickListener(startAutocompleteIntentListener);
         // Submit
         Button saveButton = binding.autocompleteSaveButton;
+        saveButton.setEnabled(Boolean.FALSE);
         saveButton.setOnClickListener(v -> saveForm());
         return view;
     }
