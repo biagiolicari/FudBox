@@ -75,7 +75,7 @@ public class OrderAddressFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = FragmentOrderAddressBinding.inflate(getLayoutInflater());
-        View view = (binding.getRoot());
+        View view = binding.getRoot();
         // Attach an Autocomplete intent to the Address 1 EditText field
         binding.autocompleteAddress1.setOnClickListener(startAutocompleteIntentListener);
         // Submit
