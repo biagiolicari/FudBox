@@ -8,7 +8,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.andorid.fudbox.model.Dish;
 import com.andorid.fudbox.model.DishOrder;
 import com.andorid.fudbox.model.DishType;
-import com.andorid.fudbox.model.Order;
+import com.andorid.fudbox.model.Cart;
 import com.andorid.fudbox.model.Restaurant;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -21,7 +21,7 @@ import java.util.Map;
 
 public class UserRepository {
     private final FirebaseFirestore firestore;
-    private final MutableLiveData<List<Order>> ordersLiveData;
+    private final MutableLiveData<List<Cart>> ordersLiveData;
     private final FirebaseAuth firebaseAuth;
     private final MutableLiveData<FirebaseUser> userLiveData;
 
@@ -46,7 +46,7 @@ public class UserRepository {
                     .whereEqualTo("userUID", uid)
                     .get()
                     .addOnSuccessListener(queryDocumentSnapshots -> {
-                        List<Order> orders = new ArrayList<>();
+                        List<Cart> carts = new ArrayList<>();
 
                         for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
                             // Convert Firestore document to your Order object
@@ -54,11 +54,11 @@ public class UserRepository {
                             Restaurant restaurant = deserializeRestaurant(restaurantData);
                             List<DishOrder> dishOrderList = deserializeDishOrder(document.getData());
                             String orderDate = document.getData().get("orderDate").toString();
-                            orders.add(new Order(restaurant, dishOrderList, orderDate));
+                            carts.add(new Cart(restaurant, dishOrderList, orderDate));
                         }
 
                         // Now, 'orders' contains the list of orders for the current user.
-                        ordersLiveData.setValue(orders);
+                        ordersLiveData.setValue(carts);
                     })
                     .addOnFailureListener(e -> {
                         Log.wtf("FIREBASE", e.getMessage());
@@ -110,7 +110,7 @@ public class UserRepository {
     }
 
 
-    public LiveData<List<Order>> getRecentOrderLiveData() {
+    public LiveData<List<Cart>> getRecentOrderLiveData() {
         return this.ordersLiveData;
     }
 

@@ -38,4 +38,27 @@
 
     <string name="google_key">AIzaSyA9lAgWMIKYTYuwE0_N8q3W5AYAZnZPHNk</string>
 
+    <!-- Label for the autocomplete form's heading. -->
+    <string name="autocomplete_address_heading_label" translatable="false">Delivery Address</string>
+
+    <!-- Label for the address form's second address line field. -->
+    <string name="autocomplete_address2_label" translatable="false">Apartment, unit, suite, or floor #</string>
+
+    <!-- Label for the address form's city field. -->
+    <string name="autocomplete_city_label" translatable="false">City</string>
+
+    <!-- Label for the address form's state field. -->
+    <string name="autocomplete_state_label" translatable="false">State/Province</string>
+
+    <!-- Label for the address form's postal code field. -->
+    <string name="autocomplete_postal_label" translatable="false">Postal code</string>
+
+    <!-- Label for the address form's country field. -->
+    <string name="autocomplete_country_label" translatable="false">Country/Region</string>
+
+    <!-- Label for the address form's proximity check setting. -->
+    <string name="autocomplete_proximity_check" translatable="false">Check device proximity</string>
+
+    <string name="autocomplete_reset_button" translatable="false">reset address</string>
+
 </resources>

@@ -9,39 +9,35 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.andorid.fudbox.R;
-import com.andorid.fudbox.model.Dish;
+import com.andorid.fudbox.model.Cart;
 import com.andorid.fudbox.model.DishOrder;
-import com.andorid.fudbox.model.Order;
-import com.andorid.fudbox.view.mainscreen.home.menu.MenuAdapter;
 
-import java.util.List;
+public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
+    private Cart cart;
 
-public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> {
-    private Order order;
-
-    public void setDishes(Order order) {
-        this.order = order;
+    public void setDishes(Cart cart) {
+        this.cart = cart;
         notifyDataSetChanged();
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_order_dish, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_cart_dish, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        if (order != null && position < order.getDishes().size()) {
-            DishOrder dishOrder = order.getDishes().get(position);
+        if (cart != null && position < cart.getDishes().size()) {
+            DishOrder dishOrder = cart.getDishes().get(position);
             holder.bind(dishOrder);
         }
     }
 
     @Override
     public int getItemCount() {
-        return order != null ? order.getDishes().size() : 0;
+        return cart != null ? cart.getDishes().size() : 0;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

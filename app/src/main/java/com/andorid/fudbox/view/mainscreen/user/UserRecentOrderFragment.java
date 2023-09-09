@@ -17,13 +17,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.andorid.fudbox.databinding.FragmentRecentOrdersBinding;
-import com.andorid.fudbox.model.Order;
+import com.andorid.fudbox.model.Cart;
 import com.andorid.fudbox.viewmodel.mainscreen.user.UserViewModel;
 
 import java.util.List;
 
 public class UserRecentOrderFragment extends Fragment {
-    private LiveData<List<Order>> recentOrdersLiveData;
+    private LiveData<List<Cart>> recentOrdersLiveData;
     private UserViewModel userViewModel;
     private RecyclerView recyclerView;
     private UserRecentOrderAdapter userRecentOrderAdapter;

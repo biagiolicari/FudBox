@@ -22,7 +22,7 @@ import com.andorid.fudbox.model.Dish;
 import com.andorid.fudbox.model.Restaurant;
 import com.andorid.fudbox.viewmodel.mainscreen.home.menu.DishOrderViewModel;
 import com.andorid.fudbox.viewmodel.mainscreen.home.menu.MenuViewModel;
-import com.andorid.fudbox.viewmodel.mainscreen.order.OrderViewModel;
+import com.andorid.fudbox.viewmodel.mainscreen.order.CartViewModel;
 import com.rejowan.cutetoast.CuteToast;
 
 import java.util.List;
@@ -33,7 +33,7 @@ public class MenuFragment extends Fragment implements MenuAdapter.OnAddToCartCli
     private MenuAdapter menuAdapter;
     private MenuViewModel menuViewModel;
     private DishOrderViewModel dishOrderViewModel;
-    private OrderViewModel orderViewModel;
+    private CartViewModel cartViewModel;
     private LiveData<List<Dish>> dishesLiveData;
     private ProgressBar progressBar;
     private FragmentMenuBinding binding;
@@ -43,7 +43,7 @@ public class MenuFragment extends Fragment implements MenuAdapter.OnAddToCartCli
         super.onCreate(savedInstanceState);
         menuViewModel = new ViewModelProvider(this).get(MenuViewModel.class);
         dishOrderViewModel = new ViewModelProvider(this).get(DishOrderViewModel.class);
-        orderViewModel = new ViewModelProvider(requireActivity()).get(OrderViewModel.class);
+        cartViewModel = new ViewModelProvider(requireActivity()).get(CartViewModel.class);
         menuViewModel.init();
         dishOrderViewModel.init();
     }
@@ -109,7 +109,7 @@ public class MenuFragment extends Fragment implements MenuAdapter.OnAddToCartCli
         dishOrderViewModel.getDishOrderLiveData().observe(getViewLifecycleOwner(), dishQuantity -> {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU && dishQuantity != null) {
                 Restaurant restaurant = getArguments().getSerializable("restaurant", Restaurant.class);
-                orderViewModel.buildOrder(dishQuantity, restaurant);
+                cartViewModel.buildOrder(dishQuantity, restaurant);
             }
         });
     }
