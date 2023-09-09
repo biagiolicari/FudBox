@@ -49,7 +49,11 @@
     </fragment>
 
     <fragment android:id="@+id/order_payment" android:name="com.andorid.fudbox.view.mainscreen.order.OrderPaymentFragment"
-        android:label="fragment_order_payment" tools:layout="@layout/fragment_order_payment"/>
+        android:label="fragment_order_payment" tools:layout="@layout/fragment_order_payment">
+        <action
+            android:id="@+id/action_return_to_home"
+            app:destination="@id/nav_home"/>
+    </fragment>
 
 
 </navigation>

@@ -10,4 +10,5 @@
     <string name="expire">Expiration Year</string>
     <string name="complete_order">Pay with your card</string>
     <string name="checkout">Proceed to checkout</string>
+    <string name="order_completed">Payment accepted! Order will be delivered ASAP</string>
 </resources>
