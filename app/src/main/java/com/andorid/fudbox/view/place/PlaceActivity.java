@@ -23,6 +23,7 @@ import androidx.core.content.ContextCompat;
 import com.andorid.fudbox.R;
 import com.andorid.fudbox.databinding.ActivityPlaceBinding;
 import com.andorid.fudbox.view.mainscreen.MainScreenActivity;
+import com.andorid.fudbox.viewmodel.mainscreen.shared.SharedLatLng;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -66,7 +67,6 @@ public class PlaceActivity extends AppCompatActivity implements OnMapReadyCallba
     private View mapPanel;
     private String address;
     private ActivityPlaceBinding binding;
-    // [START maps_solutions_android_autocomplete_define]
     private final ActivityResultLauncher<Intent> startAutocomplete = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             result -> {

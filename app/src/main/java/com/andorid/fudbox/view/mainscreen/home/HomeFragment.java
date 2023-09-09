@@ -18,17 +18,17 @@ import com.andorid.fudbox.databinding.FragmentHomePageBinding;
 import com.andorid.fudbox.model.Restaurant;
 import com.andorid.fudbox.viewmodel.mainscreen.home.RestaurantViewModel;
 import com.andorid.fudbox.viewmodel.mainscreen.shared.SharedLatLng;
-import com.google.android.gms.maps.model.LatLng;
+import com.andorid.fudbox.viewmodel.mainscreen.shared.SharedRestaurantViewModel;
 
 
 public class HomeFragment extends Fragment implements RestaurantSearchResultAdapter.OnItemClickListener {
-    private LatLng latLngData;
     private RestaurantViewModel viewModel;
     private RestaurantSearchResultAdapter adapter;
     private RecyclerView recyclerView;
     private FragmentHomePageBinding binding;
     private ProgressBar progressBar;
     private SharedLatLng sharedLatLng;
+    private SharedRestaurantViewModel sharedRestaurantViewModel;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -38,14 +38,9 @@ public class HomeFragment extends Fragment implements RestaurantSearchResultAdap
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         viewModel = new ViewModelProvider(this).get(RestaurantViewModel.class);
-        /**
-         Bundle args = getArguments();
-         if (args != null) {
-         latLngData = new LatLng(args.getDouble("latitude"), args.getDouble("longitude"));
-         }
-         **/
         viewModel.init();
         sharedLatLng = new ViewModelProvider(requireActivity()).get(SharedLatLng.class);
+        sharedRestaurantViewModel = new ViewModelProvider(requireActivity()).get(SharedRestaurantViewModel.class);
     }
 
     @Override
@@ -80,6 +75,7 @@ public class HomeFragment extends Fragment implements RestaurantSearchResultAdap
     public void onItemClick(Restaurant restaurant) {
         Bundle menuBundle = new Bundle();
         menuBundle.putSerializable("restaurant", restaurant);
+        sharedRestaurantViewModel.setRestaurantToLiveData(restaurant);
         NavController navController = Navigation.findNavController(requireView());
         // Navigate to the MenuFragment using the action defined in the navigation graph
         navController.navigate(R.id.action_restaurantFragment_to_menuFragment, menuBundle);

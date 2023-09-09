@@ -1,6 +1,5 @@
 package com.andorid.fudbox.view.mainscreen.home.menu;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,6 +22,7 @@ import com.andorid.fudbox.model.Restaurant;
 import com.andorid.fudbox.viewmodel.mainscreen.home.menu.DishOrderViewModel;
 import com.andorid.fudbox.viewmodel.mainscreen.home.menu.MenuViewModel;
 import com.andorid.fudbox.viewmodel.mainscreen.order.CartViewModel;
+import com.andorid.fudbox.viewmodel.mainscreen.shared.SharedRestaurantViewModel;
 import com.rejowan.cutetoast.CuteToast;
 
 import java.util.List;
@@ -37,6 +37,7 @@ public class MenuFragment extends Fragment implements MenuAdapter.OnAddToCartCli
     private LiveData<List<Dish>> dishesLiveData;
     private ProgressBar progressBar;
     private FragmentMenuBinding binding;
+    private SharedRestaurantViewModel sharedRestaurantViewModel;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -44,6 +45,7 @@ public class MenuFragment extends Fragment implements MenuAdapter.OnAddToCartCli
         menuViewModel = new ViewModelProvider(this).get(MenuViewModel.class);
         dishOrderViewModel = new ViewModelProvider(this).get(DishOrderViewModel.class);
         cartViewModel = new ViewModelProvider(requireActivity()).get(CartViewModel.class);
+        sharedRestaurantViewModel = new ViewModelProvider(requireActivity()).get(SharedRestaurantViewModel.class);
         menuViewModel.init();
         dishOrderViewModel.init();
     }
@@ -52,10 +54,9 @@ public class MenuFragment extends Fragment implements MenuAdapter.OnAddToCartCli
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentMenuBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
-            Restaurant restaurantBundle = getRestaurantBundle();
-            binding.restaurantNameTextView.setText(restaurantBundle.getName());
-        }
+
+        sharedRestaurantViewModel.getRestaurantMutableLiveData()
+                .observe(getViewLifecycleOwner(), restaurant -> binding.restaurantNameTextView.setText(restaurant.getName()));
 
         recyclerView = binding.menuRecyclerView;
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
@@ -85,15 +86,6 @@ public class MenuFragment extends Fragment implements MenuAdapter.OnAddToCartCli
         return view;
     }
 
-    @Nullable
-    private Restaurant getRestaurantBundle() {
-        Restaurant restaurantBundle = null;
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
-            restaurantBundle = getArguments().getSerializable(RESTAURANT_ARG, Restaurant.class);
-        }
-        return restaurantBundle;
-    }
-
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -107,8 +99,8 @@ public class MenuFragment extends Fragment implements MenuAdapter.OnAddToCartCli
 
         // Add the observer for dish quantities
         dishOrderViewModel.getDishOrderLiveData().observe(getViewLifecycleOwner(), dishQuantity -> {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU && dishQuantity != null) {
-                Restaurant restaurant = getArguments().getSerializable("restaurant", Restaurant.class);
+            if (sharedRestaurantViewModel.getRestaurantMutableLiveData().getValue() != null) {
+                Restaurant restaurant = sharedRestaurantViewModel.getRestaurantMutableLiveData().getValue();
                 cartViewModel.buildOrder(dishQuantity, restaurant);
             }
         });
