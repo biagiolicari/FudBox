@@ -41,8 +41,15 @@
             app:destination="@id/order_address"/>
     </fragment>
 
-    <fragment android:id="@+id/order_address" android:name="com.andorid.fudbox.view.mainscreen.order.payment.OrderAddressFragment"
-        android:label="fragment_order_address" tools:layout="@layout/fragment_order_address"/>
+    <fragment android:id="@+id/order_address" android:name="com.andorid.fudbox.view.mainscreen.order.OrderAddressFragment"
+        android:label="fragment_order_address" tools:layout="@layout/fragment_order_address">
+        <action
+            android:id="@+id/action_order_payment"
+            app:destination="@id/order_payment"/>
+    </fragment>
+
+    <fragment android:id="@+id/order_payment" android:name="com.andorid.fudbox.view.mainscreen.order.OrderPaymentFragment"
+        android:label="fragment_order_payment" tools:layout="@layout/fragment_order_payment"/>
 
 
 </navigation>

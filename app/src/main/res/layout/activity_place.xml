@@ -9,7 +9,7 @@
     tools:context=".view.place.PlaceActivity">
 
     <LinearLayout
-        android:id="@+id/autocomplete_scroll_container"
+        android:id="@+id/container_linear_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">

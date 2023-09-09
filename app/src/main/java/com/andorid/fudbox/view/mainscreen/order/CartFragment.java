@@ -70,7 +70,6 @@ public class CartFragment extends Fragment {
                 NavController navController = Navigation.findNavController(requireView());
                 // Navigate to the MenuFragment using the action defined in the navigation graph
                 navController.navigate(R.id.action_order_to_orderaddress);
-                cartViewModel.clearOrder();
             } else {
                 CuteToast.ct(getContext(), "Please, order something before confirm.", CuteToast.LENGTH_SHORT, CuteToast.SAD, true).show();
             }

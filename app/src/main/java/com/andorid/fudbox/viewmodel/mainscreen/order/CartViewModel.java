@@ -13,7 +13,7 @@ import com.andorid.fudbox.repository.mainscreen.order.CartRepository;
 
 public class CartViewModel extends ViewModel {
     private final CartRepository cartRepository = CartRepository.getInstance();
-    private MutableLiveData<Cart> orderLiveData = cartRepository.getOrderMutableLiveData();
+    private MutableLiveData<Cart> orderLiveData = cartRepository.getCartLiveData();
 
 
     public LiveData<Cart> getOrderLiveData() {
@@ -21,15 +21,15 @@ public class CartViewModel extends ViewModel {
     }
 
     public void buildOrder(DishOrder dishes, Restaurant restaurant) {
-        cartRepository.buildOrder(dishes, restaurant);
+        cartRepository.buildCart(dishes, restaurant);
     }
 
     public void clearOrder() {
-        cartRepository.clearOrder();
+        cartRepository.clearCart();
     }
 
     public void removeDishFromOrder(Dish dishToRemove) {
-        cartRepository.removeDishFromOrder(dishToRemove);
+        cartRepository.removeDishFromCart(dishToRemove);
     }
 
     public void uploadToFireStore() {
