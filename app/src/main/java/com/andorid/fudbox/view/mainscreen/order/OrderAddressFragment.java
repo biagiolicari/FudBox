@@ -57,9 +57,7 @@ public class OrderAddressFragment extends Fragment {
                     Log.i(TAG, "User canceled autocomplete");
                 }
             });
-    View.OnClickListener startAutocompleteIntentListener = view -> {
-        startAutocompleteIntent();
-    };
+    View.OnClickListener startAutocompleteIntentListener = view -> startAutocompleteIntent();
     private OrderViewModel orderViewModel;
     private CartViewModel cartViewModel;
 

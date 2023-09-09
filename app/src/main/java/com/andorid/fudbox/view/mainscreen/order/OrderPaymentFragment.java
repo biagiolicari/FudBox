@@ -9,7 +9,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.andorid.fudbox.databinding.FragmentOrderAddressBinding;
 import com.andorid.fudbox.databinding.FragmentOrderPaymentBinding;
 import com.andorid.fudbox.viewmodel.mainscreen.order.OrderViewModel;
 
