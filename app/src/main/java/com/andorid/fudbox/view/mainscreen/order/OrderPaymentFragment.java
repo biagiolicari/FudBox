@@ -1,5 +1,7 @@
 package com.andorid.fudbox.view.mainscreen.order;
 
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,13 +36,55 @@ public class OrderPaymentFragment extends Fragment {
         binding = FragmentOrderPaymentBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
 
-        binding.payButton.setOnClickListener(l -> paymentCompleted());
+        binding.payButton.setOnClickListener(l -> {
+            if(isPaymentDetailsValid()) {
+                paymentCompleted();
+            }
+        });
         return view;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+    }
+
+    private boolean isPaymentDetailsValid(){
+        return checkNameAndSurname() && checkCVCAndExpiration() && checkCardNumberText();
+    }
+
+    private boolean checkCardNumberText(){
+        if(binding.cardNumber.getText().toString().isEmpty()){
+            binding.cardNumberLayout.setError(getString(R.string.empty_field));
+            binding.cardNumberLayout.setErrorTextColor(ColorStateList.valueOf(Color.RED));
+            return false;
+        }else {
+            return true;
+        }
+    }
+
+    private boolean checkNameAndSurname(){
+        if(binding.cardNumber.getText().toString().isEmpty() || binding.surname.getText().toString().isEmpty()){
+            binding.nameLayout.setError(getString(R.string.empty_field));
+            binding.surnameLayout.setError(getString(R.string.empty_field));
+            binding.nameLayout.setErrorTextColor(ColorStateList.valueOf(Color.RED));
+            binding.surnameLayout.setErrorTextColor(ColorStateList.valueOf(Color.RED));
+            return false;
+        }else {
+            return true;
+        }
+    }
+
+    private boolean checkCVCAndExpiration(){
+        if(binding.cvc.getText().toString().isEmpty() || binding.cardExpiration.getText().toString().isEmpty()){
+            binding.cvcLayout.setError(getString(R.string.empty_field));
+            binding.expirationLayout.setError(getString(R.string.empty_field));
+            binding.cvcLayout.setErrorTextColor(ColorStateList.valueOf(Color.RED));
+            binding.expirationLayout.setErrorTextColor(ColorStateList.valueOf(Color.RED));
+            return false;
+        }else {
+            return true;
+        }
     }
 
     private void paymentCompleted() {
