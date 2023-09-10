@@ -1,84 +1,55 @@
 package com.andorid.fudbox.model;
 
-
-import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
+public class Order {
+    private final Cart cart;
+    private final String date;
+    private final String userUid;
+    private final String deliveryAddress;
 
-public class Order implements Serializable {
-    private Restaurant restaurant;
-    private List<DishOrder> dishes = new ArrayList<>();
-    private String orderDate;
-
-    public Order(Restaurant restaurant, List<DishOrder> dishes, String orderDate) {
-        this.restaurant = restaurant;
-        this.dishes = dishes;
-        this.orderDate = orderDate;
+    public Order(Cart cart, String date, String userUid, String deliveryAddress) {
+        this.cart = cart;
+        this.date = date;
+        this.userUid = userUid;
+        this.deliveryAddress = deliveryAddress;
     }
 
-    public Order(Restaurant restaurant) {
-        this.restaurant = restaurant;
+    public Cart getCart() {
+        return cart;
     }
 
-    public String getOrderDate() {
-        return orderDate;
+    public String getDeliveryAddress() {
+        return deliveryAddress;
     }
 
-    public Restaurant getRestaurant() {
-        return restaurant;
+    public String getDate() {
+        return date;
     }
 
-    public List<DishOrder> getDishes() {
-        return dishes;
+    public String getUserUid() {
+        return userUid;
     }
 
-    public void setDishes(List<DishOrder> dishes) {
-        this.dishes = dishes;
+    public Double getTotalCostOfOrder() {
+        return cart.getTotalPrice();
     }
 
-    public Double getTotalPrice() {
-        Double totalPrice = 0.0;
-        for (DishOrder dq : dishes) {
-            Double dishPrice = dq.getDish().getPrice() * dq.getQuantity();
-            totalPrice += dishPrice;
-        }
-        return totalPrice;
-    }
-
-    public void addDishAndQuantity(DishOrder dishOrder) {
-        for (DishOrder dq : dishes) {
-            if (dq.getDish().equals(dishOrder.getDish())) {
-                int newQuantity = dq.getQuantity() + dishOrder.getQuantity();
-                dq.setQuantity(newQuantity);
-                return;
-            }
-        }
-        // Dish is not in the order, must be added
-        if (dishOrder.getQuantity() > 0) {
-            dishes.add(dishOrder);
-        }
-    }
-
-    public int getDishQuantity(Dish dish) {
-        for (DishOrder dq : dishes) {
-            if (dq.getDish().getName().equals(dish.getName())) {
-                return dq.getQuantity();
-            }
-        }
-        return 0;
+    public List<DishOrder> getOrderedDish() {
+        return cart.getDishes();
     }
 
     public int getNumberOfDishOrdered() {
-        return dishes.size();
+        return cart.getNumberOfDishOrdered();
     }
 
-    @Override
-    public String toString() {
-        return "Order{" +
-                "restaurant='" + restaurant + '\'' +
-                ", dishes=" + dishes +
-                '}';
+    public String getRestaurantName() {
+        return cart.getRestaurant().getName();
     }
+
+    public String getRestaurantAddress() {
+        return cart.getRestaurant().getAddress();
+    }
+
+
 }
-

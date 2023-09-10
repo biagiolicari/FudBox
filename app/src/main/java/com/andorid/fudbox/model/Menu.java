@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Menu {
-    private List<Dish> dishList;
+    private final List<Dish> dishList;
 
     public Menu() {
         dishList = new ArrayList<>();

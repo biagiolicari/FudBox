@@ -1,28 +1,30 @@
 package com.andorid.fudbox.view.mainscreen;
 
-import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 
 import com.andorid.fudbox.R;
+import com.andorid.fudbox.viewmodel.mainscreen.shared.SharedLatLng;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.Objects;
 
 public class MainScreenActivity extends AppCompatActivity {
+    private SharedLatLng sharedLatLng;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        sharedLatLng = new ViewModelProvider(this).get(SharedLatLng.class);
 
         // Get latitude and longitude from intent
         Intent intent = getIntent();
@@ -44,12 +46,14 @@ public class MainScreenActivity extends AppCompatActivity {
         NavController navController = navHost.getNavController();
 
         // Initialize the Bundle with arguments
-        Bundle args = new Bundle();
-        args.putDouble("latitude", latLng.latitude);
-        args.putDouble("longitude", latLng.longitude);
-
+        /**
+         Bundle args = new Bundle();
+         args.putDouble("latitude", latLng.latitude);
+         args.putDouble("longitude", latLng.longitude);
+         **/
+        sharedLatLng.setLatLngMutableLiveData(latLng);
         // Set the navigation graph and pass arguments
-        navController.setGraph(R.navigation.home_nav_graph, args);
+        navController.setGraph(R.navigation.home_nav_graph);
 
         // Attach the BottomNavigationView to the NavController
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);

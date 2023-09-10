@@ -52,7 +52,7 @@ public class MenuViewModel extends AndroidViewModel {
         return filteredDishes;
     }
 
-    public void clearErrorMessage(){
+    public void clearErrorMessage() {
         this.errorLiveData.setValue(null);
     }
 }

@@ -34,8 +34,26 @@
     </fragment>
 
 
-    <fragment android:id="@+id/nav_order" android:name="com.andorid.fudbox.view.mainscreen.order.OrderFragment"
-        android:label="fragment_order" tools:layout="@layout/fragment_order"/>
+    <fragment android:id="@+id/nav_order" android:name="com.andorid.fudbox.view.mainscreen.order.CartFragment"
+        android:label="fragment_order" tools:layout="@layout/fragment_cart">
+        <action
+            android:id="@+id/action_order_to_orderaddress"
+            app:destination="@id/order_address"/>
+    </fragment>
+
+    <fragment android:id="@+id/order_address" android:name="com.andorid.fudbox.view.mainscreen.order.OrderAddressFragment"
+        android:label="fragment_order_address" tools:layout="@layout/fragment_order_address">
+        <action
+            android:id="@+id/action_order_payment"
+            app:destination="@id/order_payment"/>
+    </fragment>
+
+    <fragment android:id="@+id/order_payment" android:name="com.andorid.fudbox.view.mainscreen.order.OrderPaymentFragment"
+        android:label="fragment_order_payment" tools:layout="@layout/fragment_order_payment">
+        <action
+            android:id="@+id/action_return_to_home"
+            app:destination="@id/nav_home"/>
+    </fragment>
 
 
 </navigation>

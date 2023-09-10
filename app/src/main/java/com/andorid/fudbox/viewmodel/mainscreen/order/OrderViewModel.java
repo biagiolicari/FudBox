@@ -1,40 +1,34 @@
 package com.andorid.fudbox.viewmodel.mainscreen.order;
 
-import android.util.Log;
-
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.andorid.fudbox.model.Dish;
-import com.andorid.fudbox.model.DishOrder;
+import com.andorid.fudbox.model.Cart;
 import com.andorid.fudbox.model.Order;
-import com.andorid.fudbox.model.Restaurant;
 import com.andorid.fudbox.repository.mainscreen.order.OrderRepository;
 
-
 public class OrderViewModel extends ViewModel {
-    private final OrderRepository orderRepository = OrderRepository.getInstance();
-    private MutableLiveData<Order> orderLiveData = orderRepository.getOrderMutableLiveData();
+    private OrderRepository orderRepository;
+    private LiveData<Order> orderLiveData;
 
+    public void init() {
+        orderRepository = OrderRepository.getInstance();
+        orderLiveData = orderRepository.getOrderMutableLiveData();
+    }
 
     public LiveData<Order> getOrderLiveData() {
         return orderLiveData;
     }
 
-    public void buildOrder(DishOrder dishes, Restaurant restaurant) {
-        orderRepository.buildOrder(dishes, restaurant);
-    }
-
-    public void clearOrder() {
-        orderRepository.clearOrder();
-    }
-
-    public void removeDishFromOrder(Dish dishToRemove) {
-        orderRepository.removeDishFromOrder(dishToRemove);
-    }
-
-    public void uploadToFireStore() {
+    public void uploadOrderToFirestore() {
         orderRepository.uploadToFireStore();
+    }
+
+    public void buildOrder(Cart cart, String deliveryPlace) {
+        orderRepository.buildOrder(cart, deliveryPlace);
+    }
+
+    public long getTotalOrderPrice(){
+        return orderLiveData.getValue().getTotalCostOfOrder().longValue();
     }
 }

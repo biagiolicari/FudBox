@@ -23,6 +23,7 @@ import androidx.core.content.ContextCompat;
 import com.andorid.fudbox.R;
 import com.andorid.fudbox.databinding.ActivityPlaceBinding;
 import com.andorid.fudbox.view.mainscreen.MainScreenActivity;
+import com.andorid.fudbox.viewmodel.mainscreen.shared.SharedLatLng;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -57,7 +58,7 @@ public class PlaceActivity extends AppCompatActivity implements OnMapReadyCallba
 
     private static final String TAG = "ADDRESS_AUTOCOMPLETE";
     private static final String MAP_FRAGMENT_TAG = "MAP";
-    private static final String COUNTRY="IT";
+    private static final String COUNTRY = "IT";
     private LatLng coordinates;
     private SupportMapFragment mapFragment;
     private GoogleMap map;
@@ -66,7 +67,6 @@ public class PlaceActivity extends AppCompatActivity implements OnMapReadyCallba
     private View mapPanel;
     private String address;
     private ActivityPlaceBinding binding;
-    // [START maps_solutions_android_autocomplete_define]
     private final ActivityResultLauncher<Intent> startAutocomplete = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             result -> {
@@ -89,7 +89,13 @@ public class PlaceActivity extends AppCompatActivity implements OnMapReadyCallba
     View.OnClickListener startAutocompleteIntentListener = view -> {
         view.setOnClickListener(null);
         startAutocompleteIntent();
-    };    private final ActivityResultLauncher<String> requestPermissionLauncher =
+    };
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent intent) {
+        super.onActivityResult(requestCode, resultCode, intent);
+        binding.autocompleteAddress.setOnClickListener(startAutocompleteIntentListener);
+    }    private final ActivityResultLauncher<String> requestPermissionLauncher =
             registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
                 if (isGranted) {
                     getGeoLocalizationData();
@@ -100,12 +106,6 @@ public class PlaceActivity extends AppCompatActivity implements OnMapReadyCallba
 
                 }
             });
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent intent) {
-        super.onActivityResult(requestCode, resultCode, intent);
-        binding.autocompleteAddress.setOnClickListener(startAutocompleteIntentListener);
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -295,6 +295,8 @@ public class PlaceActivity extends AppCompatActivity implements OnMapReadyCallba
         }
 
     }
+
+
 
 
 }

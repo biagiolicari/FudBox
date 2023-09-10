@@ -8,7 +8,7 @@ import com.andorid.fudbox.model.DishOrder;
 public class DishOrderRepository {
 
     private DishOrder dq;
-    private MutableLiveData<DishOrder> dishQuantitiesLiveData;
+    private final MutableLiveData<DishOrder> dishQuantitiesLiveData;
 
     public DishOrderRepository() {
         this.dishQuantitiesLiveData = new MutableLiveData<>();
@@ -23,10 +23,9 @@ public class DishOrderRepository {
         this.dishQuantitiesLiveData.setValue(dq);
     }
 
-    public void addItemToCart(DishOrder dq){
+    public void addItemToCart(DishOrder dq) {
         this.dishQuantitiesLiveData.setValue(dq);
     }
-
 
 
 }

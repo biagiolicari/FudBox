@@ -1,13 +1,15 @@
 package com.andorid.fudbox.model.restaurant;
+
 import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
 public class RestaurantJsonObject {
-        @SerializedName("type")
-        private String type;
+    @SerializedName("type")
+    private String type;
 
-        @SerializedName("features")
-        private List<RestaurantFeature> restaurantFeatures;
+    @SerializedName("features")
+    private List<RestaurantFeature> restaurantFeatures;
 
     public String getType() {
         return type;
@@ -26,5 +28,5 @@ public class RestaurantJsonObject {
     }
 
     // Getter methods
-    }
+}
 

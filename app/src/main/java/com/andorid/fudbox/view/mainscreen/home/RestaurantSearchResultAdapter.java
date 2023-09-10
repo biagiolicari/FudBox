@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.andorid.fudbox.databinding.ItemRestaurantBinding;
 import com.andorid.fudbox.model.Restaurant;
-import com.andorid.fudbox.model.restaurant.RestaurantFeature;
 import com.andorid.fudbox.utils.LatLngDistanceCalculator;
 import com.andorid.fudbox.utils.RatingGenerator;
 import com.google.android.gms.maps.model.LatLng;
@@ -20,13 +19,9 @@ import java.util.List;
 public class RestaurantSearchResultAdapter extends RecyclerView.Adapter<RestaurantSearchResultAdapter.RestaurantSearchResultHolder> {
     private final LayoutInflater inflater;
     private List<Restaurant> restaurants = new ArrayList<>();
-    private LatLng position;
+    private final LatLng position;
 
-    private OnItemClickListener itemClickListener;
-
-    public interface OnItemClickListener {
-        void onItemClick(Restaurant restaurant);
-    }
+    private final OnItemClickListener itemClickListener;
 
     public RestaurantSearchResultAdapter(Context context, OnItemClickListener listener, LatLng position) {
         inflater = LayoutInflater.from(context);
@@ -60,6 +55,10 @@ public class RestaurantSearchResultAdapter extends RecyclerView.Adapter<Restaura
     @Override
     public int getItemCount() {
         return restaurants.size();
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(Restaurant restaurant);
     }
 
     class RestaurantSearchResultHolder extends RecyclerView.ViewHolder {
