@@ -66,18 +66,12 @@ public class CartRepository {
         cartLiveData.setValue(null);
     }
 
-    public void removeDishFromCart(Dish dishToRemove) {
+    public void removeDishFromCart(DishOrder dishOrder) {
         Cart currentCart = cartLiveData.getValue();
 
         if (currentCart != null) {
-            List<DishOrder> modifiedDishes = currentCart.getDishes().stream()
-                    .filter(dishQuantity -> !dishQuantity.getDish().equals(dishToRemove))
-                    .collect(Collectors.toList());
-
-            Cart modifiedCart = new Cart(currentCart.getRestaurant());
-            modifiedCart.setDishes(modifiedDishes);
-
-            cartLiveData.setValue(modifiedCart);
+            currentCart.removeDishOrder(dishOrder);
+            cartLiveData.setValue(currentCart);
         }
     }
 

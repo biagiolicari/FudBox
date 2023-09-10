@@ -28,7 +28,7 @@ public class CartViewModel extends ViewModel {
         cartRepository.clearCart();
     }
 
-    public void removeDishFromOrder(Dish dishToRemove) {
+    public void removeDishFromOrder(DishOrder dishToRemove) {
         cartRepository.removeDishFromCart(dishToRemove);
     }
 

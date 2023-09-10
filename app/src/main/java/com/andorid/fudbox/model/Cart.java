@@ -67,6 +67,10 @@ public class Cart implements Serializable {
         return dishes.size();
     }
 
+    public void removeDishOrder(DishOrder dishOrderToRemove) {
+        dishes.remove(dishOrderToRemove);
+    }
+
     @Override
     public String toString() {
         return "Order{" +

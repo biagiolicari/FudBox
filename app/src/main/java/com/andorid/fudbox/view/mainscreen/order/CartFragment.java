@@ -15,10 +15,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.andorid.fudbox.R;
 import com.andorid.fudbox.databinding.FragmentCartBinding;
+import com.andorid.fudbox.model.DishOrder;
 import com.andorid.fudbox.viewmodel.mainscreen.order.CartViewModel;
 import com.rejowan.cutetoast.CuteToast;
 
-public class CartFragment extends Fragment {
+public class CartFragment extends Fragment implements CartAdapter.OnRemoveDishClickListener{
     private CartViewModel cartViewModel;
     private RecyclerView orderRecyclerView;
     private CartAdapter cartAdapter;
@@ -44,9 +45,9 @@ public class CartFragment extends Fragment {
         // Initialize the RecyclerView and its adapter
         orderRecyclerView = binding.orderRecyclerView;
         orderRecyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
-        cartAdapter = new CartAdapter();
+        cartAdapter = new CartAdapter(requireContext());
         orderRecyclerView.setAdapter(cartAdapter);
-
+        cartAdapter.setOnRemoveDishClickListener(this);
         // Observe the order data from the ViewModel and update the adapter
         cartViewModel.getOrderLiveData().observe(getViewLifecycleOwner(), order -> {
             if (order != null) {
@@ -75,5 +76,10 @@ public class CartFragment extends Fragment {
             }
         });
 
+    }
+
+    @Override
+    public void onRemoveDishClick(DishOrder dishOrder) {
+        cartViewModel.removeDishFromOrder(dishOrder);
     }
 }

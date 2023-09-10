@@ -1,5 +1,10 @@
 package com.andorid.fudbox.view.mainscreen.order;
 
+import android.content.Context;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,11 +14,21 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.andorid.fudbox.R;
+import com.andorid.fudbox.databinding.ItemCartDishBinding;
+import com.andorid.fudbox.databinding.ItemMenuBinding;
 import com.andorid.fudbox.model.Cart;
+import com.andorid.fudbox.model.Dish;
 import com.andorid.fudbox.model.DishOrder;
+import com.andorid.fudbox.view.mainscreen.home.menu.MenuAdapter;
 
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
     private Cart cart;
+    private final LayoutInflater inflater;
+    private OnRemoveDishClickListener onRemoveDishClick;
+
+    public CartAdapter(Context context){
+        inflater = LayoutInflater.from(context);
+    }
 
     public void setDishes(Cart cart) {
         this.cart = cart;
@@ -23,8 +38,8 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_cart_dish, parent, false);
-        return new ViewHolder(view);
+        ItemCartDishBinding itemCartDishBinding = ItemCartDishBinding.inflate(inflater, parent, false);
+        return new ViewHolder(itemCartDishBinding);
     }
 
     @Override
@@ -40,24 +55,41 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
         return cart != null ? cart.getDishes().size() : 0;
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public interface OnRemoveDishClickListener {
+        void onRemoveDishClick(DishOrder dishOrder);
+    }
 
-        private final TextView dishNameTextView;
-        private final TextView quantityTextView;
-        private final TextView priceTextView;
+    public void setOnRemoveDishClickListener(OnRemoveDishClickListener listener) {
+        this.onRemoveDishClick = listener;
+    }
 
-        public ViewHolder(@NonNull View itemView) {
-            super(itemView);
-            dishNameTextView = itemView.findViewById(R.id.dishNameTextView);
-            quantityTextView = itemView.findViewById(R.id.quantityTextView);
-            priceTextView = itemView.findViewById(R.id.priceTextView);
+    public class ViewHolder extends RecyclerView.ViewHolder {
+
+        private ItemCartDishBinding binding;
+
+        public ViewHolder(@NonNull ItemCartDishBinding binding) {
+            super(binding.getRoot());
+            this.binding = binding;
+
+            // Set click listener for the "Add to Cart" button
+            binding.imageButton2.setOnClickListener(view -> {
+                int position = getAdapterPosition();
+                if (position != RecyclerView.NO_POSITION) {
+                    DishOrder dishOrder = cart.getDishes().get(position);
+                    if (onRemoveDishClick != null) {
+                        onRemoveDishClick.onRemoveDishClick(dishOrder);
+
+                    }
+                }
+            });
 
         }
 
         public void bind(DishOrder dishOrder) {
-            dishNameTextView.setText(dishOrder.getDish().getName());
-            quantityTextView.setText(String.valueOf(dishOrder.getQuantity()));
-            priceTextView.setText(String.valueOf(dishOrder.getDish().getPrice()));
+            binding.itemNameTextView.setText(dishOrder.getDish().getName());
+            binding.itemDescriptionTextView.setText(dishOrder.getDish().getDescription());
+            binding.quantityTextInputLayout.getEditText().setText(String.valueOf(dishOrder.getQuantity()));
+            binding.priceTextView.setText(dishOrder.getDish().getPrice().toString());
         }
     }
 }
