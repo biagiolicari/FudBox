@@ -81,32 +81,6 @@ public class CartRepository {
         }
     }
 
-    public void uploadToFireStore() {
-        FirebaseUser currentUser = firebaseAuth.getCurrentUser();
-
-        if (currentUser != null && cartLiveData.getValue() != null) {
-            String uid = currentUser.getUid();
-            Cart latestCart = cartLiveData.getValue();
-            String restaurantName = latestCart.getRestaurant().getName();
-            List<DishOrder> dishes = latestCart.getDishes();
-
-            Map<String, Object> orderData = new HashMap<>();
-            orderData.put("userUID", uid);
-            orderData.put("restaurant", latestCart.getRestaurant());
-            orderData.put("dishes", dishes);
-            orderData.put("orderDate", getFormattedDate());
-
-            firestore.collection("orders")
-                    .add(orderData)
-                    .addOnSuccessListener(documentReference -> {
-                        Log.i("FIREBASE", "ORDER ADDED CORRECTLY");
-                    })
-                    .addOnFailureListener(e -> {
-                        Log.wtf("FIREBASE", e.getMessage());
-                    });
-        }
-    }
-
     private String getFormattedDate() {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yy HH:mm", Locale.getDefault());
         return dateFormat.format(new Date());

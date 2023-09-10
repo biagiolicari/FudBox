@@ -9,20 +9,14 @@ import java.util.List;
 public class Cart implements Serializable {
     private final Restaurant restaurant;
     private List<DishOrder> dishes = new ArrayList<>();
-    private String orderDate;
 
     public Cart(Restaurant restaurant, List<DishOrder> dishes, String orderDate) {
         this.restaurant = restaurant;
         this.dishes = dishes;
-        this.orderDate = orderDate;
     }
 
     public Cart(Restaurant restaurant) {
         this.restaurant = restaurant;
-    }
-
-    public String getOrderDate() {
-        return orderDate;
     }
 
     public Restaurant getRestaurant() {

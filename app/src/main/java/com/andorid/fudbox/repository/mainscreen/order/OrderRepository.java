@@ -17,6 +17,7 @@ import java.util.Locale;
 import java.util.Map;
 
 public class OrderRepository {
+    public static final String COLLECTION_PATH = "orders";
     private static OrderRepository orderRepository;
     private final FirebaseFirestore firestore;
     private final FirebaseAuth firebaseAuth;
@@ -52,14 +53,9 @@ public class OrderRepository {
         FirebaseUser currentUser = firebaseAuth.getCurrentUser();
 
         if (currentUser != null && orderMutableLiveData.getValue() != null) {
-            String uid = currentUser.getUid();
             Order order = orderMutableLiveData.getValue();
-
-            Map<String, Object> orderData = new HashMap<>();
-            orderData.put("order", order);
-
-            firestore.collection("orders")
-                    .add(orderData)
+            firestore.collection(COLLECTION_PATH)
+                    .add(order)
                     .addOnSuccessListener(documentReference -> {
                         Log.i("FIREBASE", "ORDER ADDED CORRECTLY");
                     })

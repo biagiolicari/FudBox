@@ -32,7 +32,4 @@ public class CartViewModel extends ViewModel {
         cartRepository.removeDishFromCart(dishToRemove);
     }
 
-    public void uploadToFireStore() {
-        cartRepository.uploadToFireStore();
-    }
 }
