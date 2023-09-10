@@ -58,7 +58,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|center"
             android:layout_marginTop="16dp"
-            android:text="@string/autocomplete_save_button" />
+            android:text="@string/autocomplete_save_button"
+            android:backgroundTint="@color/black"/>
 
         <!-- The map for visual confirmation of the selected address -->
         <!-- Stub to only load the map after Autocomplete prediction selection -->
