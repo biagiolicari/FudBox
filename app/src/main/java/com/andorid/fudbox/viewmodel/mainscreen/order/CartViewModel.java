@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.andorid.fudbox.model.Cart;
-import com.andorid.fudbox.model.Dish;
 import com.andorid.fudbox.model.DishOrder;
 import com.andorid.fudbox.model.Restaurant;
 import com.andorid.fudbox.repository.mainscreen.order.CartRepository;
@@ -28,8 +27,15 @@ public class CartViewModel extends ViewModel {
         cartRepository.clearCart();
     }
 
-    public void removeDishFromOrder(DishOrder dishToRemove) {
+    public void removeDishQuantityFromCart(DishOrder dishToRemove) {
         cartRepository.removeDishFromCart(dishToRemove);
     }
 
+    public void incrementDishQuantityFromCart(DishOrder dishToRemove) {
+        cartRepository.incrementDishQuantityFromCart(dishToRemove);
+    }
+
+    public void decrementDishQuantityFromCart(DishOrder dishToRemove) {
+        cartRepository.decrementDishQuantityFromCart(dishToRemove);
+    }
 }

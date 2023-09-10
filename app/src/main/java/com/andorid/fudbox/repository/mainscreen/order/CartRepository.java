@@ -1,24 +1,16 @@
 package com.andorid.fudbox.repository.mainscreen.order;
 
-import android.util.Log;
-
 import androidx.lifecycle.MutableLiveData;
 
 import com.andorid.fudbox.model.Cart;
-import com.andorid.fudbox.model.Dish;
 import com.andorid.fudbox.model.DishOrder;
 import com.andorid.fudbox.model.Restaurant;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Locale;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 public class CartRepository {
     private static CartRepository cartRepository;
@@ -71,6 +63,24 @@ public class CartRepository {
 
         if (currentCart != null) {
             currentCart.removeDishOrder(dishOrder);
+            cartLiveData.setValue(currentCart);
+        }
+    }
+
+    public void incrementDishQuantityFromCart(DishOrder dishOrder) {
+        Cart currentCart = cartLiveData.getValue();
+
+        if (currentCart != null) {
+            currentCart.incrementDishOrder(dishOrder);
+            cartLiveData.setValue(currentCart);
+        }
+    }
+
+    public void decrementDishQuantityFromCart(DishOrder dishOrder) {
+        Cart currentCart = cartLiveData.getValue();
+
+        if (currentCart != null) {
+            currentCart.decrementDishOrder(dishOrder);
             cartLiveData.setValue(currentCart);
         }
     }

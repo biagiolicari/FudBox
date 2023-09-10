@@ -7,6 +7,7 @@ import java.util.List;
 
 
 public class Cart implements Serializable {
+    public static final int UNITY_QUANTITY = 1;
     private final Restaurant restaurant;
     private List<DishOrder> dishes = new ArrayList<>();
 
@@ -54,6 +55,25 @@ public class Cart implements Serializable {
         }
     }
 
+    public void incrementDishOrder(DishOrder dishOrder) {
+        for (DishOrder dq : dishes) {
+            if (dq.getDish().equals(dishOrder.getDish())) {
+
+                dq.setQuantity(dq.getQuantity() + UNITY_QUANTITY);
+                return;
+            }
+        }
+    }
+
+    public void decrementDishOrder(DishOrder dishOrder) {
+        for (DishOrder dq : dishes) {
+            if (dq.getDish().equals(dishOrder.getDish()) && dq.getQuantity() > UNITY_QUANTITY) {
+                dq.setQuantity(dq.getQuantity() - UNITY_QUANTITY);
+                return;
+            }
+        }
+    }
+
     public int getDishQuantity(Dish dish) {
         for (DishOrder dq : dishes) {
             if (dq.getDish().getName().equals(dish.getName())) {
@@ -62,6 +82,7 @@ public class Cart implements Serializable {
         }
         return 0;
     }
+
 
     public int getNumberOfDishOrdered() {
         return dishes.size();

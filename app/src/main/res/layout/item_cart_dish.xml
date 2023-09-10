@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- item_order_dish.xml -->
+<?xml version="1.0" encoding="utf-8"?><!-- item_order_dish.xml -->
 <!-- item_order_dish.xml -->
 <!-- item_order_dish.xml -->
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -8,96 +7,116 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="?android:attr/selectableItemBackground"
-    android:orientation="vertical"
-    android:padding="16dp">
+    android:orientation="vertical">
 
-    <!-- Dish name -->
     <TextView
         android:id="@+id/itemNameTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="?android:attr/textColorPrimary"
-        android:textSize="20sp"
+        android:textSize="14sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- Descr -->
-
-
-    <!-- Price -->
-
 
     <TextView
         android:id="@+id/itemDescriptionTextView"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
         android:textColor="?android:attr/textColorSecondary"
-        android:textSize="16sp"
-        app:layout_constraintTop_toBottomOf="@+id/itemNameTextView"
-        tools:layout_editor_absoluteX="17dp" />
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/quantityTextInputLayout"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="52dp"
-        app:layout_constraintEnd_toEndOf="@+id/itemNameTextView"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/itemNameTextView"
-        app:layout_constraintTop_toBottomOf="@+id/itemNameTextView">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/quantityEditText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:importantForAccessibility="yes"
-            android:inputType="number"
-            android:text="1" />
-    </com.google.android.material.textfield.TextInputLayout>
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/itemNameTextView" />
 
     <TextView
         android:id="@+id/perEachTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
-        android:layout_marginStart="4dp"
         android:gravity="end"
         android:text="@string/x"
         android:textColor="@color/grey"
         android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="@+id/quantityTextInputLayout"
-        app:layout_constraintStart_toEndOf="@+id/quantityTextInputLayout"
-        app:layout_constraintTop_toTopOf="@+id/quantityTextInputLayout"
-        app:layout_constraintVertical_bias="0.538" />
+        app:layout_constraintBottom_toBottomOf="@+id/quantityEditText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.032"
+        app:layout_constraintStart_toEndOf="@+id/quantityEditText"
+        app:layout_constraintTop_toTopOf="@+id/quantityEditText"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/quantityEditText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:importantForAccessibility="yes"
+        android:inputType="none"
+        android:text="1"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/itemNameTextView"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/itemNameTextView"
+        app:layout_constraintTop_toBottomOf="@+id/itemDescriptionTextView" />
 
     <TextView
         android:id="@+id/priceTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
-        android:layout_marginStart="12dp"
         android:gravity="end"
         android:textColor="@android:color/black"
         android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="@+id/quantityTextInputLayout"
+        app:layout_constraintBottom_toBottomOf="@+id/perEachTextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.048"
         app:layout_constraintStart_toEndOf="@+id/perEachTextView"
-        app:layout_constraintTop_toTopOf="@+id/quantityTextInputLayout"
-        app:layout_constraintVertical_bias="0.517" />
+        app:layout_constraintTop_toTopOf="@+id/perEachTextView" />
 
     <ImageButton
-        android:id="@+id/imageButton2"
+        android:id="@+id/trash_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="56dp"
+        android:layout_marginTop="40dp"
+        android:background="@android:color/transparent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/quantityTextInputLayout"
+        app:layout_constraintHorizontal_bias="0.956"
+        app:layout_constraintStart_toStartOf="@+id/quantityEditText"
         app:layout_constraintTop_toTopOf="@+id/itemDescriptionTextView"
         app:srcCompat="@drawable/trash" />
+
+    <ImageButton
+        android:id="@+id/plus_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:background="@android:color/transparent"
+        app:layout_constraintBottom_toBottomOf="@+id/trash_button"
+        app:layout_constraintEnd_toStartOf="@+id/trash_button"
+        app:layout_constraintTop_toTopOf="@+id/trash_button"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/plus" />
+
+    <ImageButton
+        android:id="@+id/minus_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:background="@android:color/transparent"
+        app:layout_constraintBottom_toBottomOf="@+id/plus_button"
+        app:layout_constraintEnd_toStartOf="@+id/plus_button"
+        app:layout_constraintTop_toTopOf="@+id/plus_button"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/minus" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

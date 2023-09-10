@@ -1,75 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- fragment_order.xml -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:paddingBottom="?actionBarSize" >
 
-    <!-- RecyclerView to display the list of dishes -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingStart="8dp"
-        android:paddingEnd="8dp"
-        android:layout_marginTop="16dp"
-    android:layout_marginBottom="16dp">
 
     <!-- RecyclerView to display the list of dishes -->
+
+
+    <!-- Button to complete the order -->
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/orderRecyclerView"
         android:layout_width="0dp"
-        android:layout_height="300dp"
+        android:layout_height="450sp"
         android:layout_weight="1"
+        android:background="@drawable/rounded_corners_background"
         android:padding="16dp"
-        android:scrollbars="vertical" />
-</LinearLayout>
-
+        android:scrollbars="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.069" />
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:id="@+id/priceLayout"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="8dp"
+        android:layout_marginBottom="4dp"
         android:orientation="horizontal"
         android:paddingStart="8dp"
         android:paddingEnd="8dp"
-        android:id="@+id/priceLayout"
         android:visibility="gone"
-        >
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/orderRecyclerView"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/orderRecyclerView"
+        app:layout_constraintTop_toBottomOf="@+id/orderRecyclerView"
+        app:layout_constraintVertical_bias="0.101">
 
-        <!-- Dish name -->
         <TextView
             android:id="@+id/totalPrice"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
             android:layout_weight="1"
             android:gravity="start"
             android:text="@string/total_price"
             android:textColor="@android:color/black"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            />
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
         <!-- Quantity -->
         <TextView
             android:id="@+id/totalPriceTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:textColor="@android:color/black"
-            android:gravity="end"
             android:layout_gravity="end"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"/>
+            android:gravity="end"
+            android:textColor="@android:color/black"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
     </LinearLayout>
-
-    <!-- Button to complete the order -->
 
     <Button
         android:id="@+id/completeOrderButton"
@@ -77,16 +76,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginVertical="60dp"
-        android:layout_marginStart="145dp"
-        android:layout_marginEnd="145dp"
         android:text="@string/completeOrder"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintEnd_toEndOf="@+id/priceLayout"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="@+id/priceLayout"
+        app:layout_constraintTop_toBottomOf="@+id/priceLayout"
+        app:layout_constraintVertical_bias="0.863"
         android:visibility="gone"/>
 
 
-
-
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

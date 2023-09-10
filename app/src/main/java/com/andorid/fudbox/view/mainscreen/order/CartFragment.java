@@ -19,7 +19,7 @@ import com.andorid.fudbox.model.DishOrder;
 import com.andorid.fudbox.viewmodel.mainscreen.order.CartViewModel;
 import com.rejowan.cutetoast.CuteToast;
 
-public class CartFragment extends Fragment implements CartAdapter.OnRemoveDishClickListener{
+public class CartFragment extends Fragment implements CartAdapter.OnRemoveDishClickListener {
     private CartViewModel cartViewModel;
     private RecyclerView orderRecyclerView;
     private CartAdapter cartAdapter;
@@ -80,6 +80,16 @@ public class CartFragment extends Fragment implements CartAdapter.OnRemoveDishCl
 
     @Override
     public void onRemoveDishClick(DishOrder dishOrder) {
-        cartViewModel.removeDishFromOrder(dishOrder);
+        cartViewModel.removeDishQuantityFromCart(dishOrder);
+    }
+
+    @Override
+    public void onDecrementDishClick(DishOrder dishOrder) {
+        cartViewModel.decrementDishQuantityFromCart(dishOrder);
+    }
+
+    @Override
+    public void onIncrementDishClick(DishOrder dishOrder) {
+        cartViewModel.incrementDishQuantityFromCart(dishOrder);
     }
 }
