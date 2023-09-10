@@ -11,9 +11,9 @@
     <LinearLayout
         android:id="@+id/container"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_gravity="center">
+        android:layout_height="384dp"
+        android:layout_gravity="center"
+        android:orientation="vertical">
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/card_number_layout"
@@ -21,8 +21,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
             android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
             android:hint="@string/card_number">
 
             <com.andorid.fudbox.model.place.AutocompleteEditText
@@ -38,8 +38,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:baselineAligned="false">
+            android:baselineAligned="false"
+            android:orientation="horizontal">
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -53,16 +53,17 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
-                    android:layout_marginEnd="16dp"
                     android:layout_marginTop="8dp"
+                    android:layout_marginEnd="16dp"
                     android:hint="@string/name">
+
                     <EditText
                         android:id="@+id/name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:autofillHints=""
                         android:imeOptions="actionNext"
-                        android:inputType="textCapCharacters"/>
+                        android:inputType="textCapCharacters" />
                 </com.google.android.material.textfield.TextInputLayout>
 
             </LinearLayout>
@@ -79,8 +80,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
-                    android:layout_marginEnd="16dp"
                     android:layout_marginTop="8dp"
+                    android:layout_marginEnd="16dp"
                     android:hint="@string/surname">
 
                     <EditText
@@ -89,7 +90,7 @@
                         android:layout_height="wrap_content"
                         android:autofillHints=""
                         android:imeOptions="actionNext"
-                        android:inputType="textCapCharacters"/>
+                        android:inputType="textCapCharacters" />
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
         </LinearLayout>
@@ -97,8 +98,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:baselineAligned="false">
+            android:baselineAligned="false"
+            android:orientation="horizontal">
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -112,16 +113,17 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
-                    android:layout_marginEnd="16dp"
                     android:layout_marginTop="8dp"
+                    android:layout_marginEnd="16dp"
                     android:hint="@string/cvc">
+
                     <EditText
                         android:id="@+id/cvc"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:autofillHints=""
                         android:imeOptions="actionNext"
-                        android:inputType="textCapCharacters"/>
+                        android:inputType="textCapCharacters" />
                 </com.google.android.material.textfield.TextInputLayout>
 
             </LinearLayout>
@@ -138,8 +140,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
-                    android:layout_marginEnd="16dp"
                     android:layout_marginTop="8dp"
+                    android:layout_marginEnd="16dp"
                     android:hint="@string/expire">
 
                     <EditText
@@ -161,7 +163,15 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|center"
             android:layout_marginTop="16dp"
-            android:text="@string/autocomplete_save_button" />
+            android:text="@string/complete_order" />
+
+        <com.google.android.gms.wallet.button.PayButton
+            android:id="@+id/googlePayButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="20dp" />
 
     </LinearLayout>
 </LinearLayout>

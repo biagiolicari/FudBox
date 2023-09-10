@@ -62,7 +62,7 @@ public class UserRecentOrderAdapter extends RecyclerView.Adapter<UserRecentOrder
             binding.restaurantAddress.setText(cart.getRestaurant().getAddress());
             binding.restaurantItemTitle.setText(cart.getRestaurant().getName());
             binding.totalPriceOrder.setText(currencyFormatter.format(cart.getTotalPrice()));
-            binding.orderDate.setText(cart.getOrderDate());
+            //binding.orderDate.setText(cart.getOrderDate());
         }
     }
 }

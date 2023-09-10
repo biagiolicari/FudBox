@@ -1,13 +1,20 @@
 package com.andorid.fudbox.view.mainscreen.order;
 
+import android.app.Activity;
+import android.app.PendingIntent;
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.IntentSenderRequest;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -17,18 +24,56 @@ import androidx.navigation.Navigation;
 
 import com.andorid.fudbox.R;
 import com.andorid.fudbox.databinding.FragmentOrderPaymentBinding;
+import com.andorid.fudbox.utils.PaymentsUtil;
+import com.andorid.fudbox.viewmodel.mainscreen.order.CheckoutViewModel;
 import com.andorid.fudbox.viewmodel.mainscreen.order.OrderViewModel;
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.common.api.CommonStatusCodes;
+import com.google.android.gms.common.api.ResolvableApiException;
+import com.google.android.gms.tasks.Task;
+import com.google.android.gms.wallet.PaymentData;
+import com.google.android.gms.wallet.button.ButtonOptions;
+import com.google.android.gms.wallet.button.PayButton;
 import com.rejowan.cutetoast.CuteToast;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.Locale;
 
 public class OrderPaymentFragment extends Fragment {
     private OrderViewModel orderViewModel;
     private FragmentOrderPaymentBinding binding;
+    private CheckoutViewModel checkoutViewModel;
+    private PayButton googlePayButton;
+
+    ActivityResultLauncher<IntentSenderRequest> resolvePaymentForResult = registerForActivityResult(
+            new ActivityResultContracts.StartIntentSenderForResult(),
+            result -> {
+                switch (result.getResultCode()) {
+                    case Activity.RESULT_OK:
+                        Intent resultData = result.getData();
+                        if (resultData != null) {
+                            PaymentData paymentData = PaymentData.getFromIntent(result.getData());
+                            if (paymentData != null) {
+                                handlePaymentCompleted();
+                            }
+                        }
+                        break;
+
+                    case Activity.RESULT_CANCELED:
+                        CuteToast.ct(requireContext(), getString(R.string.payment_deleted), CuteToast.LENGTH_SHORT, CuteToast.SAD, true).show();
+                        break;
+                }
+            });
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         orderViewModel = new ViewModelProvider(requireActivity()).get(OrderViewModel.class);
+        checkoutViewModel = new ViewModelProvider(requireActivity()).get(CheckoutViewModel.class);
         orderViewModel.init();
+        checkoutViewModel.canUseGooglePay.observe(this, this::setGooglePayAvailable);
     }
 
     @Nullable
@@ -39,9 +84,21 @@ public class OrderPaymentFragment extends Fragment {
 
         binding.payButton.setOnClickListener(l -> {
             if(isPaymentDetailsValid()) {
-                paymentCompleted();
+                handlePaymentCompleted();
             }
         });
+
+        googlePayButton = binding.googlePayButton;
+        try {
+            googlePayButton.initialize(
+                    ButtonOptions.newBuilder()
+                            .setAllowedPaymentMethods(PaymentsUtil.getAllowedPaymentMethods().toString()).build()
+            );
+            googlePayButton.setOnClickListener(this::requestPayment);
+        } catch (JSONException e) {
+            googlePayButton.setVisibility(View.INVISIBLE);
+        }
+
         return view;
     }
 
@@ -93,10 +150,54 @@ public class OrderPaymentFragment extends Fragment {
         }
     }
 
-    private void paymentCompleted() {
+    private void handlePaymentCompleted() {
         orderViewModel.uploadOrderToFirestore();
         CuteToast.ct(requireContext(), getString(R.string.order_completed), CuteToast.LENGTH_SHORT, CuteToast.HAPPY, true).show();
         NavController navController = Navigation.findNavController(requireView());
         navController.navigate(R.id.action_return_to_home);
     }
+
+    private void setGooglePayAvailable(boolean available) {
+        if (available) {
+            googlePayButton.setVisibility(View.VISIBLE);
+        } else {
+            CuteToast.ct(requireContext(), getString(R.string.google_pay_status_unavailable), CuteToast.LENGTH_LONG, CuteToast.CONFUSE).show();
+        }
+    }
+
+
+    public void requestPayment(View view) {
+        // Disables the button to prevent multiple clicks.
+        googlePayButton.setClickable(false);
+        // This price is not displayed to the user.
+        final Task<PaymentData> task = checkoutViewModel.getLoadPaymentDataTask(orderViewModel.getTotalOrderPrice());
+
+        task.addOnCompleteListener(completedTask -> {
+            if (completedTask.isSuccessful()) {
+                handlePaymentCompleted();
+            } else {
+                Exception exception = completedTask.getException();
+                if (exception instanceof ResolvableApiException) {
+                    PendingIntent resolution = ((ResolvableApiException) exception).getResolution();
+                    resolvePaymentForResult.launch(new IntentSenderRequest.Builder(resolution).build());
+
+                } else if (exception instanceof ApiException) {
+                    ApiException apiException = (ApiException) exception;
+                    handleError(apiException.getStatusCode(), apiException.getMessage());
+
+                } else {
+                    handleError(CommonStatusCodes.INTERNAL_ERROR, "Unexpected non API" +
+                            " exception when trying to deliver the task result to an activity!");
+                }
+            }
+            // Re-enables the Google Pay payment button.
+            googlePayButton.setClickable(true);
+        });
+    }
+
+    private void handleError(int statusCode, @Nullable String message) {
+        Log.e("loadPaymentData failed",
+                String.format(Locale.getDefault(), "Error code: %d, Message: %s", statusCode, message));
+    }
+
 }

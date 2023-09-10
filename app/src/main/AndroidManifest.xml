@@ -26,6 +26,10 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyA9lAgWMIKYTYuwE0_N8q3W5AYAZnZPHNk" />
 
+        <meta-data
+            android:name="com.google.android.gms.wallet.api.enabled"
+            android:value="true" />
+
         <activity
                 android:name=".MainActivity"
                 android:exported="true">

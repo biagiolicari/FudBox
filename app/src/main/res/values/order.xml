@@ -11,4 +11,17 @@
     <string name="complete_order">Pay with your card</string>
     <string name="checkout">Proceed to checkout</string>
     <string name="order_completed">Payment accepted! Order will be delivered ASAP</string>
+
+    <string name="googlepay_button_content_description">Google Pay</string>
+    <string name="buy_with_googlepay_button_content_description">Buy with Google Pay</string>
+    <string name="checkout_with_googlepay_button_content_description">Checkout With Google Pay</string>
+    <string name="pay_with_googlepay_button_content_description">Pay With Google Pay</string>
+    <string name="text_content_description">Text for the Google Pay button</string>
+    <string name="overlay_content_description">Overlay for the Google Pay button</string>
+    <!-- Checkout -->
+    <string name="google_pay_status_unavailable">Unfortunately, Google Pay is not available on this device.</string>
+    <string name="google_wallet_status_unavailable" translatable="false">Unfortunately, Google Wallet is not available on this phone.</string>
+    <string name="gateway_replace_name_example">"Gateway name set to \"example\" - please modify Constants.java and replace it with your own gateway."</string>
+    <string name="add_google_wallet_success" translatable="false">The pass was added successfully!</string>
+    <string name="payment_deleted">Your payment was deleted</string>
 </resources>

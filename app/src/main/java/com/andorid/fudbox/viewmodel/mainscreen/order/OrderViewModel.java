@@ -27,4 +27,8 @@ public class OrderViewModel extends ViewModel {
     public void buildOrder(Cart cart, String deliveryPlace) {
         orderRepository.buildOrder(cart, deliveryPlace);
     }
+
+    public long getTotalOrderPrice(){
+        return orderLiveData.getValue().getTotalCostOfOrder().longValue();
+    }
 }
