@@ -8,7 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.andorid.fudbox.databinding.ItemRecentOrderBinding;
-import com.andorid.fudbox.model.Cart;
+import com.andorid.fudbox.model.Order;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -18,7 +18,7 @@ import java.util.Locale;
 public class UserRecentOrderAdapter extends RecyclerView.Adapter<UserRecentOrderAdapter.UserRecentOrderHolder> {
     private final LayoutInflater inflater;
     private final NumberFormat currencyFormatter;
-    private List<Cart> carts = new ArrayList<>();
+    private List<Order> carts = new ArrayList<>();
 
     public UserRecentOrderAdapter(Context context) {
         inflater = LayoutInflater.from(context);
@@ -26,7 +26,7 @@ public class UserRecentOrderAdapter extends RecyclerView.Adapter<UserRecentOrder
 
     }
 
-    public void setOrders(List<Cart> carts) {
+    public void setOrders(List<Order> carts) {
         this.carts = carts;
         notifyDataSetChanged();
     }
@@ -40,8 +40,8 @@ public class UserRecentOrderAdapter extends RecyclerView.Adapter<UserRecentOrder
 
     @Override
     public void onBindViewHolder(@NonNull UserRecentOrderHolder holder, int position) {
-        Cart cart = carts.get(position);
-        holder.bind(cart);
+        Order order = carts.get(position);
+        holder.bind(order);
     }
 
     @Override
@@ -57,12 +57,12 @@ public class UserRecentOrderAdapter extends RecyclerView.Adapter<UserRecentOrder
             this.binding = binding;
         }
 
-        public void bind(Cart cart) {
-            binding.numberOfDishOrdered.setText(String.format("Order Composed by: %d dishes.", cart.getNumberOfDishOrdered()));
-            binding.restaurantAddress.setText(cart.getRestaurant().getAddress());
-            binding.restaurantItemTitle.setText(cart.getRestaurant().getName());
-            binding.totalPriceOrder.setText(currencyFormatter.format(cart.getTotalPrice()));
-            //binding.orderDate.setText(cart.getOrderDate());
+        public void bind(Order order) {
+            binding.numberOfDishOrdered.setText(String.format("Order Composed by: %d dishes.", order.getNumberOfDishOrdered()));
+            binding.restaurantAddress.setText(order.getRestaurantAddress());
+            binding.restaurantItemTitle.setText(order.getRestaurantName());
+            binding.totalPriceOrder.setText(currencyFormatter.format(order.getTotalCostOfOrder()));
+            binding.orderDate.setText(order.getDate());
         }
     }
 }

@@ -16,9 +16,9 @@
             android:id="@+id/restaurant_item_image"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:scaleType="centerCrop"
             android:adjustViewBounds="true"
-            android:maxHeight="160dp"
+            android:maxHeight="120dp"
+            android:scaleType="centerCrop"
             android:src="@drawable/not_available" />
 
 

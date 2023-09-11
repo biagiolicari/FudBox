@@ -1,8 +1,9 @@
 package com.andorid.fudbox.model;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Order {
+public class Order implements Serializable {
     private final Cart cart;
     private final String date;
     private final String userUid;
@@ -52,4 +53,13 @@ public class Order {
     }
 
 
+    @Override
+    public String toString() {
+        return "Order{" +
+                "cart=" + cart +
+                ", date='" + date + '\'' +
+                ", userUid='" + userUid + '\'' +
+                ", deliveryAddress='" + deliveryAddress + '\'' +
+                '}';
+    }
 }

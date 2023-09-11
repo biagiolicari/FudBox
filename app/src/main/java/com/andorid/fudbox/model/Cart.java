@@ -11,7 +11,7 @@ public class Cart implements Serializable {
     private final Restaurant restaurant;
     private List<DishOrder> dishes = new ArrayList<>();
 
-    public Cart(Restaurant restaurant, List<DishOrder> dishes, String orderDate) {
+    public Cart(Restaurant restaurant, List<DishOrder> dishes) {
         this.restaurant = restaurant;
         this.dishes = dishes;
     }
@@ -94,7 +94,7 @@ public class Cart implements Serializable {
 
     @Override
     public String toString() {
-        return "Order{" +
+        return "Cart{" +
                 "restaurant='" + restaurant + '\'' +
                 ", dishes=" + dishes +
                 '}';

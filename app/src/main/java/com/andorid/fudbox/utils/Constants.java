@@ -42,101 +42,120 @@ import java.util.List;
  */
 public class Constants {
 
-  /**
-   * Changing this to ENVIRONMENT_PRODUCTION will make the API return chargeable card information.
-   * Please refer to the documentation to read about the required steps needed to enable
-   * ENVIRONMENT_PRODUCTION.
-   *
-   * @value #PAYMENTS_ENVIRONMENT
-   */
-  public static final int PAYMENTS_ENVIRONMENT = WalletConstants.ENVIRONMENT_TEST;
+    /**
+     * Changing this to ENVIRONMENT_PRODUCTION will make the API return chargeable card information.
+     * Please refer to the documentation to read about the required steps needed to enable
+     * ENVIRONMENT_PRODUCTION.
+     *
+     * @value #PAYMENTS_ENVIRONMENT
+     */
+    public static final int PAYMENTS_ENVIRONMENT = WalletConstants.ENVIRONMENT_TEST;
 
-  /**
-   * The allowed networks to be requested from the API. If the user has cards from networks not
-   * specified here in their account, these will not be offered for them to choose in the popup.
-   *
-   * @value #SUPPORTED_NETWORKS
-   */
-  public static final List<String> SUPPORTED_NETWORKS = Arrays.asList(
-      "AMEX",
-      "DISCOVER",
-      "JCB",
-      "MASTERCARD",
-      "VISA");
+    /**
+     * The allowed networks to be requested from the API. If the user has cards from networks not
+     * specified here in their account, these will not be offered for them to choose in the popup.
+     *
+     * @value #SUPPORTED_NETWORKS
+     */
+    public static final List<String> SUPPORTED_NETWORKS = Arrays.asList(
+            "AMEX",
+            "DISCOVER",
+            "JCB",
+            "MASTERCARD",
+            "VISA");
 
-  /**
-   * The Google Pay API may return cards on file on Google.com (PAN_ONLY) and/or a device token on
-   * an Android device authenticated with a 3-D Secure cryptogram (CRYPTOGRAM_3DS).
-   *
-   * @value #SUPPORTED_METHODS
-   */
-  public static final List<String> SUPPORTED_METHODS = Arrays.asList(
-      "PAN_ONLY",
-      "CRYPTOGRAM_3DS");
+    /**
+     * The Google Pay API may return cards on file on Google.com (PAN_ONLY) and/or a device token on
+     * an Android device authenticated with a 3-D Secure cryptogram (CRYPTOGRAM_3DS).
+     *
+     * @value #SUPPORTED_METHODS
+     */
+    public static final List<String> SUPPORTED_METHODS = Arrays.asList(
+            "PAN_ONLY",
+            "CRYPTOGRAM_3DS");
 
-  /**
-   * Required by the API, but not visible to the user.
-   *
-   * @value #COUNTRY_CODE Your local country
-   */
-  public static final String COUNTRY_CODE = "US";
+    /**
+     * Required by the API, but not visible to the user.
+     *
+     * @value #COUNTRY_CODE Your local country
+     */
+    public static final String COUNTRY_CODE = "US";
 
-  /**
-   * Required by the API, but not visible to the user.
-   *
-   * @value #CURRENCY_CODE Your local currency
-   */
-  public static final String CURRENCY_CODE = "USD";
+    /**
+     * Required by the API, but not visible to the user.
+     *
+     * @value #CURRENCY_CODE Your local currency
+     */
+    public static final String CURRENCY_CODE = "USD";
 
-  /**
-   * Supported countries for shipping (use ISO 3166-1 alpha-2 country codes). Relevant only when
-   * requesting a shipping address.
-   *
-   * @value #SHIPPING_SUPPORTED_COUNTRIES
-   */
-  public static final List<String> SHIPPING_SUPPORTED_COUNTRIES = Arrays.asList("US", "GB");
+    /**
+     * Supported countries for shipping (use ISO 3166-1 alpha-2 country codes). Relevant only when
+     * requesting a shipping address.
+     *
+     * @value #SHIPPING_SUPPORTED_COUNTRIES
+     */
+    public static final List<String> SHIPPING_SUPPORTED_COUNTRIES = Arrays.asList("US", "GB");
 
-  /**
-   * The name of your payment processor/gateway. Please refer to their documentation for more
-   * information.
-   *
-   * @value #PAYMENT_GATEWAY_TOKENIZATION_NAME
-   */
-  public static final String PAYMENT_GATEWAY_TOKENIZATION_NAME = "example";
+    /**
+     * The name of your payment processor/gateway. Please refer to their documentation for more
+     * information.
+     *
+     * @value #PAYMENT_GATEWAY_TOKENIZATION_NAME
+     */
+    public static final String PAYMENT_GATEWAY_TOKENIZATION_NAME = "example";
 
-  /**
-   * Custom parameters required by the processor/gateway.
-   * In many cases, your processor / gateway will only require a gatewayMerchantId.
-   * Please refer to your processor's documentation for more information. The number of parameters
-   * required and their names vary depending on the processor.
-   *
-   * @value #PAYMENT_GATEWAY_TOKENIZATION_PARAMETERS
-   */
-  public static final HashMap<String, String> PAYMENT_GATEWAY_TOKENIZATION_PARAMETERS =
-      new HashMap<String, String>() {{
-        put("gateway", PAYMENT_GATEWAY_TOKENIZATION_NAME);
-        put("gatewayMerchantId", "exampleGatewayMerchantId");
-        // Your processor may require additional parameters.
-      }};
+    /**
+     * Custom parameters required by the processor/gateway.
+     * In many cases, your processor / gateway will only require a gatewayMerchantId.
+     * Please refer to your processor's documentation for more information. The number of parameters
+     * required and their names vary depending on the processor.
+     *
+     * @value #PAYMENT_GATEWAY_TOKENIZATION_PARAMETERS
+     */
+    public static final HashMap<String, String> PAYMENT_GATEWAY_TOKENIZATION_PARAMETERS =
+            new HashMap<String, String>() {{
+                put("gateway", PAYMENT_GATEWAY_TOKENIZATION_NAME);
+                put("gatewayMerchantId", "exampleGatewayMerchantId");
+                // Your processor may require additional parameters.
+            }};
 
-  /**
-   * Only used for {@code DIRECT} tokenization. Can be removed when using {@code PAYMENT_GATEWAY}
-   * tokenization.
-   *
-   * @value #DIRECT_TOKENIZATION_PUBLIC_KEY
-   */
-  public static final String DIRECT_TOKENIZATION_PUBLIC_KEY = "REPLACE_ME";
+    /**
+     * Only used for {@code DIRECT} tokenization. Can be removed when using {@code PAYMENT_GATEWAY}
+     * tokenization.
+     *
+     * @value #DIRECT_TOKENIZATION_PUBLIC_KEY
+     */
+    public static final String DIRECT_TOKENIZATION_PUBLIC_KEY = "REPLACE_ME";
 
-  /**
-   * Parameters required for {@code DIRECT} tokenization.
-   * Only used for {@code DIRECT} tokenization. Can be removed when using {@code PAYMENT_GATEWAY}
-   * tokenization.
-   *
-   * @value #DIRECT_TOKENIZATION_PARAMETERS
-   */
-  public static final HashMap<String, String> DIRECT_TOKENIZATION_PARAMETERS =
-      new HashMap<String, String>() {{
-        put("protocolVersion", "ECv2");
-        put("publicKey", DIRECT_TOKENIZATION_PUBLIC_KEY);
-      }};
+    /**
+     * Parameters required for {@code DIRECT} tokenization.
+     * Only used for {@code DIRECT} tokenization. Can be removed when using {@code PAYMENT_GATEWAY}
+     * tokenization.
+     *
+     * @value #DIRECT_TOKENIZATION_PARAMETERS
+     */
+    public static final HashMap<String, String> DIRECT_TOKENIZATION_PARAMETERS =
+            new HashMap<String, String>() {{
+                put("protocolVersion", "ECv2");
+                put("publicKey", DIRECT_TOKENIZATION_PUBLIC_KEY);
+            }};
+
+
+    public static final String COLLECTION_PATH = "orders";
+    public static final String USER_UID = "userUid";
+    public static final String CART = "cart";
+    public static final String RESTAURANT = "restaurant";
+    public static final String RESTAURANT_NAME = "name";
+    public static final String RESTAURANT_ADDRESS = "address";
+    public static final String RESTAURANT_CITY = "city";
+    public static final String LAT = "lat";
+    public static final String LNG = "lng";
+    public static final String UID = "uid";
+    public static final String DISHES = "dishes";
+    public static final String QUANTITY = "quantity";
+    public static final String DISH = "dish";
+    public static final String NAME = "name";
+    public static final String PRICE = "price";
+    public static final String DESCRIPTION = "description";
+    public static final String TYPE = "type";
 }

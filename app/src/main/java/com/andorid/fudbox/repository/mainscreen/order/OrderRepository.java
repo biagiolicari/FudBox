@@ -54,8 +54,13 @@ public class OrderRepository {
 
         if (currentUser != null && orderMutableLiveData.getValue() != null) {
             Order order = orderMutableLiveData.getValue();
+            Map<String, Object> map = new HashMap<>();
+            map.put("cart", order.getCart());
+            map.put("userUid", order.getUserUid());
+            map.put("date", order.getDate());
+            map.put("deliveryAddress", order.getDeliveryAddress());
             firestore.collection(COLLECTION_PATH)
-                    .add(order)
+                    .add(map)
                     .addOnSuccessListener(documentReference -> {
                         Log.i("FIREBASE", "ORDER ADDED CORRECTLY");
                     })
