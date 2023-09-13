@@ -1,15 +1,20 @@
 package com.andorid.fudbox.repository.mainscreen.home.menu;
 
-import androidx.lifecycle.LiveData;
+import android.util.Log;
+
 import androidx.lifecycle.MutableLiveData;
 
 import com.andorid.fudbox.model.Dish;
 import com.andorid.fudbox.model.DishType;
+import com.andorid.fudbox.utils.Resource;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Random;
+import java.util.stream.Collectors;
 
 public class DishRepository {
     private static final String DESCRIPTION = "description";
@@ -18,18 +23,17 @@ public class DishRepository {
     private static final String TYPE = "type";
     private static final String COLLECTION = "menu_appetizer";
     private final FirebaseFirestore firestore;
-    private final MutableLiveData<String> errorLiveData = new MutableLiveData<>();
+    private final MutableLiveData<Resource<List<Dish>>> dishListLiveData = new MutableLiveData<>();
 
     public DishRepository() {
         firestore = FirebaseFirestore.getInstance();
     }
 
-    public MutableLiveData<String> getErrorLiveData() {
-        return errorLiveData;
+    public MutableLiveData<Resource<List<Dish>>> getDishListLiveData() {
+        return dishListLiveData;
     }
 
-    public LiveData<List<Dish>> getAllDishes() {
-        MutableLiveData<List<Dish>> dishMutableLiveData = new MutableLiveData<>();
+    public void getAllDishes() {
         firestore.collection(COLLECTION)
                 .get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
@@ -37,10 +41,18 @@ public class DishRepository {
                     for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
                         dishList.add(this.createDishFromDocumentSnapshot(documentSnapshot));
                     }
-                    dishMutableLiveData.setValue(dishList);
+
+                    Map<DishType, List<Dish>> dishesByType = dishList.stream()
+                            .collect(Collectors.groupingBy(Dish::getType));
+
+                    List<Dish> randomDishes = dishesByType.values().stream()
+                            .map(this::getRandomDish)
+                            .collect(Collectors.toList());
+
+                    randomDishes.forEach(dish -> Log.wtf("DISH", dish.toString()));
+                    dishListLiveData.setValue(Resource.success(randomDishes));
                 })
-                .addOnFailureListener(e -> errorLiveData.setValue(e.getMessage()));
-        return dishMutableLiveData;
+                .addOnFailureListener(e -> dishListLiveData.setValue(Resource.error(e.getMessage(), null)));
     }
 
     private Dish createDishFromDocumentSnapshot(DocumentSnapshot documentSnapshot) {
@@ -50,6 +62,12 @@ public class DishRepository {
                 .setName(documentSnapshot.getString(NAME))
                 .setType(DishType.valueOf(documentSnapshot.getString(TYPE)))
                 .build();
+    }
+
+    private Dish getRandomDish(List<Dish> dishes) {
+        Random random = new Random();
+        int randomIndex = random.nextInt(dishes.size());
+        return dishes.get(randomIndex);
     }
 
 }

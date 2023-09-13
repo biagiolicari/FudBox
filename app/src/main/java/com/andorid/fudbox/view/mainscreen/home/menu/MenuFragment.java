@@ -10,7 +10,6 @@ import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -25,16 +24,12 @@ import com.andorid.fudbox.viewmodel.mainscreen.order.CartViewModel;
 import com.andorid.fudbox.viewmodel.mainscreen.shared.SharedRestaurantViewModel;
 import com.rejowan.cutetoast.CuteToast;
 
-import java.util.List;
-
 public class MenuFragment extends Fragment implements MenuAdapter.OnAddToCartClickListener {
-    private final static String RESTAURANT_ARG = "restaurant";
     private RecyclerView recyclerView;
     private MenuAdapter menuAdapter;
     private MenuViewModel menuViewModel;
     private DishOrderViewModel dishOrderViewModel;
     private CartViewModel cartViewModel;
-    private LiveData<List<Dish>> dishesLiveData;
     private ProgressBar progressBar;
     private FragmentMenuBinding binding;
     private SharedRestaurantViewModel sharedRestaurantViewModel;
@@ -64,21 +59,19 @@ public class MenuFragment extends Fragment implements MenuAdapter.OnAddToCartCli
         menuAdapter = new MenuAdapter(requireContext());
         recyclerView.setAdapter(menuAdapter);
 
-        dishesLiveData = menuViewModel.getDishes();
+        menuViewModel.fetchDishes().observe(getViewLifecycleOwner(), dishData -> {
+            switch (dishData.status){
+                case SUCCESS:
+                    menuAdapter.setMenuItems(dishData.data);
+                    hideLoadingProgressBar();
+                    break;
+                case ERROR:
+                    CuteToast.ct(requireContext(), dishData.message, CuteToast.LENGTH_LONG, CuteToast.SAD).show();
+            }
 
-        menuViewModel.getDishes().observe(getViewLifecycleOwner(), dishes -> {
-            menuAdapter.setMenuItems(dishes);
-            hideLoadingProgressBar();
         });
 
         menuAdapter.setOnAddToCartClickListener(this);
-
-        menuViewModel.getErrorLiveData().observe(getViewLifecycleOwner(), errorMessage -> {
-            if (errorMessage != null) {
-                CuteToast.ct(requireContext(), errorMessage, CuteToast.LENGTH_SHORT, CuteToast.CONFUSE, true).show();
-                menuViewModel.clearErrorMessage(); // Optionally clear the error message in the ViewModel
-            }
-        });
 
         progressBar = binding.loadingProgressBar;
         showLoadingProgressBar();
