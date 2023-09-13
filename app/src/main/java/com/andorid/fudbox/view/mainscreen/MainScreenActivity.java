@@ -19,10 +19,10 @@ import java.util.Objects;
 public class MainScreenActivity extends AppCompatActivity {
     private SharedLatLng sharedLatLng;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_home);
         sharedLatLng = new ViewModelProvider(this).get(SharedLatLng.class);
 
@@ -44,17 +44,9 @@ public class MainScreenActivity extends AppCompatActivity {
     private void setupNavigation(LatLng latLng) {
         NavHostFragment navHost = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.activity_home_navHost);
         NavController navController = navHost.getNavController();
-
-        // Initialize the Bundle with arguments
-        /**
-         Bundle args = new Bundle();
-         args.putDouble("latitude", latLng.latitude);
-         args.putDouble("longitude", latLng.longitude);
-         **/
         sharedLatLng.setLatLngMutableLiveData(latLng);
         // Set the navigation graph and pass arguments
         navController.setGraph(R.navigation.home_nav_graph);
-
         // Attach the BottomNavigationView to the NavController
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
         NavigationUI.setupWithNavController(bottomNavigationView, navController);

@@ -1,7 +1,9 @@
 package com.andorid.fudbox.view.place;
 
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;
+import static android.Manifest.permission.ACCESS_WIFI_STATE;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
@@ -17,15 +19,13 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresPermission;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import com.andorid.fudbox.R;
 import com.andorid.fudbox.databinding.ActivityPlaceBinding;
 import com.andorid.fudbox.view.mainscreen.MainScreenActivity;
-import com.andorid.fudbox.viewmodel.mainscreen.shared.SharedLatLng;
-import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMapOptions;
@@ -35,11 +35,14 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.Task;
 import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.model.AddressComponent;
 import com.google.android.libraries.places.api.model.AddressComponents;
 import com.google.android.libraries.places.api.model.Place;
 import com.google.android.libraries.places.api.model.TypeFilter;
+import com.google.android.libraries.places.api.net.FindCurrentPlaceRequest;
+import com.google.android.libraries.places.api.net.FindCurrentPlaceResponse;
 import com.google.android.libraries.places.api.net.PlacesClient;
 import com.google.android.libraries.places.widget.Autocomplete;
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
@@ -95,15 +98,17 @@ public class PlaceActivity extends AppCompatActivity implements OnMapReadyCallba
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
         binding.autocompleteAddress.setOnClickListener(startAutocompleteIntentListener);
-    }    private final ActivityResultLauncher<String> requestPermissionLauncher =
-            registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
-                if (isGranted) {
-                    getGeoLocalizationData();
+    }
+
+    @SuppressLint("MissingPermission")
+    private final ActivityResultLauncher<String[]> requestPermissionLauncher =
+            registerForActivityResult(new ActivityResultContracts.RequestMultiplePermissions(), isGranted -> {
+                if (Boolean.TRUE.equals(isGranted.get(Manifest.permission.ACCESS_FINE_LOCATION))
+                        && Boolean.TRUE.equals(isGranted.get(ACCESS_WIFI_STATE))) {
+                    findCurrentPlaceWithPermissions();
                 } else {
                     // Fallback behavior if user denies permission
                     Log.d(TAG, "User denied permission");
-                    CuteToast.ct(this, "User denied permission", CuteToast.LENGTH_SHORT, CuteToast.CONFUSE, true).show();
-
                 }
             });
 
@@ -133,7 +138,7 @@ public class PlaceActivity extends AppCompatActivity implements OnMapReadyCallba
 
     private void setupGeolocalizationButton() {
         Button geolocalizationButton = findViewById(R.id.geolocalize_button);
-        geolocalizationButton.setOnClickListener(l -> getGeoLocalizationData());
+        geolocalizationButton.setOnClickListener(l -> checkLocationPermissions());
     }
 
     private void setupSetAddressButton() {
@@ -266,39 +271,47 @@ public class PlaceActivity extends AppCompatActivity implements OnMapReadyCallba
 
     }
 
-    private Boolean checkLocationPermissions() {
-        if (ContextCompat.checkSelfPermission(this, ACCESS_FINE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED) {
-            requestPermissionLauncher.launch(
-                    ACCESS_FINE_LOCATION);
-            return Boolean.FALSE;
-        } else {
-            return Boolean.TRUE;
-        }
-    }
-
     @SuppressLint("MissingPermission")
-    private void getGeoLocalizationData() {
-        if (checkLocationPermissions()) {
-            FusedLocationProviderClient fusedLocationClient =
-                    LocationServices.getFusedLocationProviderClient(this);
-            fusedLocationClient.getLastLocation()
-                    .addOnSuccessListener(this, location -> {
-                        // Got last known location. In some rare situations this can be null.
-                        if (location == null) {
-                            return;
-                        }
-                        coordinates = new LatLng(location.getLatitude(), location.getLongitude());
-                        showMap(coordinates);
-
-                    });
+    private void checkLocationPermissions() {
+        if (ContextCompat.checkSelfPermission(this, ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
+            findCurrentPlaceWithPermissions();
+        } else {
+            requestPermissionLauncher.launch(new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_WIFI_STATE});
         }
-
     }
 
+    @RequiresPermission(allOf = {ACCESS_FINE_LOCATION, ACCESS_WIFI_STATE})
+    private void findCurrentPlaceWithPermissions() {
+        setLoading(true);
+        FindCurrentPlaceRequest currentPlaceRequest =
+                FindCurrentPlaceRequest.newInstance(Arrays.asList(Place.Field.LAT_LNG, Place.Field.ID));
 
+        Task<FindCurrentPlaceResponse> currentPlaceTask =
+                placesClient.findCurrentPlace(currentPlaceRequest);
 
+        currentPlaceTask.addOnSuccessListener(
+                (response) ->{
+                    Place place = response.getPlaceLikelihoods().get(0).getPlace();
+                    // Access the latitude and longitude
+                    double latitude = place.getLatLng().latitude;
+                    double longitude = place.getLatLng().longitude;
+                    Log.w("LAT LONG", latitude + "    " + longitude);
+                    coordinates = new LatLng(place.getLatLng().latitude, place.getLatLng().longitude);
+                    showMap(coordinates);
+                });
 
+        currentPlaceTask.addOnFailureListener(
+                (exception) -> {
+                    CuteToast.ct(getApplicationContext(), exception.getMessage(), CuteToast.LENGTH_LONG, CuteToast.ERROR).show();
+                });
+
+        currentPlaceTask.addOnCompleteListener(task -> setLoading(false));
+    }
+
+    private void setLoading(boolean loading) {
+        binding.loading.setVisibility(loading ? View.VISIBLE : View.INVISIBLE);
+    }
 }
 
 

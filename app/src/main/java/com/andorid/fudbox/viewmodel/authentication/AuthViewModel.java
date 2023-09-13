@@ -1,18 +1,22 @@
 package com.andorid.fudbox.viewmodel.authentication;
 
+import android.app.Application;
+
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.andorid.fudbox.repository.authentication.AuthRepository;
 import com.google.firebase.auth.FirebaseUser;
 
-public class AuthViewModel extends ViewModel {
+public class AuthViewModel extends AndroidViewModel {
     private final AuthRepository authRepository;
     private final LiveData<FirebaseUser> userLiveData;
     private final LiveData<String> errorMessageLiveData;
 
-    public AuthViewModel() {
-        authRepository = new AuthRepository();
+    public AuthViewModel(Application application) {
+        super(application);
+        authRepository = new AuthRepository(application);
         userLiveData = authRepository.getUserLiveData();
         errorMessageLiveData = authRepository.getErrorMessageLiveData();
     }

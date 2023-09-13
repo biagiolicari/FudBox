@@ -1,7 +1,6 @@
 package com.andorid.fudbox.repository.authentication;
 
-import android.os.Handler;
-import android.os.Looper;
+import android.app.Application;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -15,13 +14,13 @@ public class AuthRepository {
     private final MutableLiveData<FirebaseUser> userLiveData;
     private final MutableLiveData<Boolean> loggedOutLiveData;
     private final MutableLiveData<String> errorMessageLiveData;
-    private final Handler mainHandler;
+    private final Application application;
 
-    public AuthRepository() {
+    public AuthRepository(Application application) {
         this.firebaseAuth = FirebaseAuth.getInstance();
         this.userLiveData = new MutableLiveData<>();
         this.loggedOutLiveData = new MutableLiveData<>();
-        this.mainHandler = new Handler(Looper.getMainLooper());
+        this.application = application;
         this.errorMessageLiveData = new MutableLiveData<>();
         checkCurrentUser();
     }
@@ -40,7 +39,7 @@ public class AuthRepository {
 
     public void signIn(String email, String password) {
         firebaseAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(mainHandler::post, task -> {
+                .addOnCompleteListener(application.getMainExecutor(), task -> {
                     if (task.isSuccessful()) {
                         checkCurrentUser();
                     } else {
@@ -51,7 +50,7 @@ public class AuthRepository {
 
     public void signUP(String email, String password) {
         firebaseAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(mainHandler::post, task -> {
+                .addOnCompleteListener(application.getMainExecutor(), task -> {
                     if (task.isSuccessful()) {
                         checkCurrentUser();
                     } else {
