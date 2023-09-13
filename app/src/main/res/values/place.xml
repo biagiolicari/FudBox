@@ -61,4 +61,6 @@
 
     <string name="autocomplete_reset_button" translatable="false">reset address</string>
 
+    <string name="set_address">Address successfully set</string>
+
 </resources>

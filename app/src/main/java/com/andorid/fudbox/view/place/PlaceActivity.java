@@ -77,7 +77,6 @@ public class PlaceActivity extends AppCompatActivity implements OnMapReadyCallba
                     Intent intent = result.getData();
                     if (intent != null) {
                         Place place = Autocomplete.getPlaceFromIntent(intent);
-
                         // Write a method to read the address components from the Place
                         // and populate the form with the address components
                         Log.d(TAG, place.getAddressComponents().toString());
@@ -88,18 +87,10 @@ public class PlaceActivity extends AppCompatActivity implements OnMapReadyCallba
                     Log.i(TAG, "User canceled autocomplete");
                 }
             });
-    // [END maps_solutions_android_autocomplete_define]
     View.OnClickListener startAutocompleteIntentListener = view -> {
         view.setOnClickListener(null);
         startAutocompleteIntent();
     };
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent intent) {
-        super.onActivityResult(requestCode, resultCode, intent);
-        binding.autocompleteAddress.setOnClickListener(startAutocompleteIntentListener);
-    }
-
     @SuppressLint("MissingPermission")
     private final ActivityResultLauncher<String[]> requestPermissionLauncher =
             registerForActivityResult(new ActivityResultContracts.RequestMultiplePermissions(), isGranted -> {
@@ -113,12 +104,18 @@ public class PlaceActivity extends AppCompatActivity implements OnMapReadyCallba
             });
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent intent) {
+        super.onActivityResult(requestCode, resultCode, intent);
+        binding.autocompleteAddress.setOnClickListener(startAutocompleteIntentListener);
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initView();
         initPlacesClient();
         setupAutocompleteAddress();
-        setupGeolocalizationButton();
+        setupMyLastKnownLocationButton();
         setupSetAddressButton();
     }
 
@@ -136,7 +133,7 @@ public class PlaceActivity extends AppCompatActivity implements OnMapReadyCallba
         binding.autocompleteAddress.setOnClickListener(startAutocompleteIntentListener);
     }
 
-    private void setupGeolocalizationButton() {
+    private void setupMyLastKnownLocationButton() {
         Button geolocalizationButton = findViewById(R.id.geolocalize_button);
         geolocalizationButton.setOnClickListener(l -> checkLocationPermissions());
     }
@@ -166,8 +163,6 @@ public class PlaceActivity extends AppCompatActivity implements OnMapReadyCallba
     public void onMapReady(@NonNull GoogleMap googleMap) {
         map = googleMap;
         try {
-            // Customise the styling of the base map using a JSON object defined
-            // in a string resource.
             boolean success = map.setMapStyle(
                     MapStyleOptions.loadRawResourceStyle(this, R.raw.style_json));
 
@@ -228,7 +223,6 @@ public class PlaceActivity extends AppCompatActivity implements OnMapReadyCallba
         mapFragment = (SupportMapFragment)
                 getSupportFragmentManager().findFragmentByTag(MAP_FRAGMENT_TAG);
 
-
         // We only create a fragment if it doesn't already exist.
         if (mapFragment == null) {
             mapPanel = ((ViewStub) findViewById(R.id.stub_map)).inflate();
@@ -262,13 +256,10 @@ public class PlaceActivity extends AppCompatActivity implements OnMapReadyCallba
 
     private void setAddressAndStartActivity() {
         Intent intent = new Intent(this, MainScreenActivity.class);
-        //intent.putExtra("address", this.address);
-        intent.putExtra("lat", Double.toString(coordinates.latitude));
-        intent.putExtra("lng", Double.toString(coordinates.longitude));
-        CuteToast.ct(this, "Address successfully set", CuteToast.LENGTH_SHORT, CuteToast.SUCCESS, true).show();
-        // Start the new activity
+        intent.putExtra("lat", coordinates.latitude);
+        intent.putExtra("lng", coordinates.longitude);
+        CuteToast.ct(this, getString(R.string.set_address), CuteToast.LENGTH_SHORT, CuteToast.SUCCESS, true).show();
         startActivity(intent);
-
     }
 
     @SuppressLint("MissingPermission")
@@ -277,7 +268,8 @@ public class PlaceActivity extends AppCompatActivity implements OnMapReadyCallba
                 == PackageManager.PERMISSION_GRANTED) {
             findCurrentPlaceWithPermissions();
         } else {
-            requestPermissionLauncher.launch(new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_WIFI_STATE});
+            requestPermissionLauncher.launch(
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_WIFI_STATE});
         }
     }
 
@@ -291,7 +283,7 @@ public class PlaceActivity extends AppCompatActivity implements OnMapReadyCallba
                 placesClient.findCurrentPlace(currentPlaceRequest);
 
         currentPlaceTask.addOnSuccessListener(
-                (response) ->{
+                (response) -> {
                     Place place = response.getPlaceLikelihoods().get(0).getPlace();
                     // Access the latitude and longitude
                     double latitude = place.getLatLng().latitude;

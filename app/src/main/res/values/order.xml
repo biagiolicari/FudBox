@@ -20,7 +20,7 @@
     <string name="overlay_content_description" translatable="false">Overlay for the Google Pay button</string>
     <!-- Checkout -->
     <string name="google_pay_status_unavailable">Unfortunately, Google Pay is not available on this device.</string>
-    <string name="google_wallet_status_unavailable" translatable="false">Unfortunately, Google Wallet is not available on this phone.</string>
+    <string name="google_wallet_status_unavailable">Unfortunately, Google Wallet is not available on this phone.</string>
     <string name="gateway_replace_name_example" translatable="false">"Gateway name set to \"example\" - please modify Constants.java and replace it with your own gateway."</string>
     <string name="add_google_wallet_success" translatable="false">The pass was added successfully!</string>
     <string name="payment_deleted">Your payment was deleted</string>

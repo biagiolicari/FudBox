@@ -41,4 +41,5 @@
     <string name="recent_order">Ordine completato</string>
     <string name="user_info">Informazioni Utente</string>
     <string name="logged_in_user">Benvenuto,</string>
+    <string name="set_address">Indirizzo impostato</string>
 </resources>
