@@ -10,6 +10,7 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 
 import com.andorid.fudbox.R;
+import com.andorid.fudbox.utils.Constants;
 import com.andorid.fudbox.viewmodel.mainscreen.shared.SharedLatLng;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -29,22 +30,23 @@ public class MainScreenActivity extends AppCompatActivity {
         // Get latitude and longitude from intent
         Intent intent = getIntent();
         LatLng latLng = getGeocodeDataFromIntent(intent);
+        sharedLatLng.setLatLngMutableLiveData(latLng);
 
         // Configure navigation
         setupNavigation(latLng);
     }
 
     private LatLng getGeocodeDataFromIntent(Intent intent) {
+
         return new LatLng(
-                Double.parseDouble(Objects.requireNonNull(intent.getStringExtra("lat"))),
-                Double.parseDouble(Objects.requireNonNull(intent.getStringExtra("lng")))
-        );
+                intent.getDoubleExtra("lat", Constants.MILAN_DEFAULT_LAT),
+                intent.getDoubleExtra("lng", Constants.MILAN_DEFAULT_LNG)
+                        );
     }
 
     private void setupNavigation(LatLng latLng) {
         NavHostFragment navHost = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.activity_home_navHost);
         NavController navController = navHost.getNavController();
-        sharedLatLng.setLatLngMutableLiveData(latLng);
         // Set the navigation graph and pass arguments
         navController.setGraph(R.navigation.home_nav_graph);
         // Attach the BottomNavigationView to the NavController

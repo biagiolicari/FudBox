@@ -56,7 +56,16 @@ public class UserFragment extends Fragment {
 
     private void setUpViewModel() {
         loggedInViewModel = new ViewModelProvider(this).get(LoggedInViewModel.class);
-        loggedInViewModel.getUserLiveData().observe(getViewLifecycleOwner(), firebaseUser -> updateUI(firebaseUser));
+        loggedInViewModel.getUserLiveData().observe(getViewLifecycleOwner(), firebaseUser -> {
+            switch (firebaseUser.status){
+                case SUCCESS:
+                    updateUI(firebaseUser.data);
+                    break;
+                case ERROR:
+                    CuteToast.ct(getContext(), firebaseUser.message, CuteToast.LENGTH_LONG, CuteToast.SAD).show();
+            }
+
+        });
     }
 
     private void setClickListeners() {

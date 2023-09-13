@@ -10,4 +10,5 @@
     <string name="register">or Sign Up</string>
     <string name="logout" translatable="false">Logout</string>
     <string name="logout_message">User Logged Out</string>
+    <string name="email_password_not_inserted">Email Address and Password Must Be Entered</string>
 </resources>

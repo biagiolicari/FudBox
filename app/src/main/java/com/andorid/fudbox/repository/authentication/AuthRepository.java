@@ -2,18 +2,20 @@ package com.andorid.fudbox.repository.authentication;
 
 import android.app.Application;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.andorid.fudbox.utils.Resource;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 public class AuthRepository {
 
     private final FirebaseAuth firebaseAuth;
-    private final MutableLiveData<FirebaseUser> userLiveData;
+    private final MutableLiveData<Resource<FirebaseUser>> userLiveData;
     private final MutableLiveData<Boolean> loggedOutLiveData;
-    private final MutableLiveData<String> errorMessageLiveData;
     private final Application application;
 
     public AuthRepository(Application application) {
@@ -21,62 +23,48 @@ public class AuthRepository {
         this.userLiveData = new MutableLiveData<>();
         this.loggedOutLiveData = new MutableLiveData<>();
         this.application = application;
-        this.errorMessageLiveData = new MutableLiveData<>();
-        checkCurrentUser();
-    }
-
-    public MutableLiveData<String> getErrorMessageLiveData() {
-        return errorMessageLiveData;
-    }
-
-    private void checkCurrentUser() {
         FirebaseUser currentUser = firebaseAuth.getCurrentUser();
         if (currentUser != null) {
-            postUser(currentUser);
-            postLoggedOut(false);
+            userLiveData.setValue(Resource.success(currentUser));
+            setLoggedOut(false);
         }
     }
 
     public void signIn(String email, String password) {
         firebaseAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(application.getMainExecutor(), task -> {
-                    if (task.isSuccessful()) {
-                        checkCurrentUser();
-                    } else {
-                        handleAuthFailure(task.getException());
-                    }
+                .addOnSuccessListener(application.getMainExecutor(), data -> {
+                    userLiveData.setValue(Resource.success(firebaseAuth.getCurrentUser()));
+                    loggedOutLiveData.setValue(false);
+        })
+                .addOnFailureListener(e -> {
+                    userLiveData.setValue(Resource.error(e.getLocalizedMessage().toString(), null));
+                    loggedOutLiveData.setValue(true);
                 });
     }
 
     public void signUP(String email, String password) {
-        firebaseAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(application.getMainExecutor(), task -> {
-                    if (task.isSuccessful()) {
-                        checkCurrentUser();
-                    } else {
-                        handleAuthFailure(task.getException());
-                    }
+        firebaseAuth.createUserWithEmailAndPassword(email, password).
+                addOnSuccessListener(application.getMainExecutor(), data -> {
+                    userLiveData.setValue(Resource.success(firebaseAuth.getCurrentUser()));
+                    loggedOutLiveData.setValue(false);
+                })
+                .addOnFailureListener(e -> {
+                    userLiveData.setValue(Resource.error(e.getLocalizedMessage().toString(), null));
+                    loggedOutLiveData.setValue(true);
                 });
     }
 
     public void signOut() {
         firebaseAuth.signOut();
-        postLoggedOut(true);
+        setLoggedOut(true);
     }
 
-    private void handleAuthFailure(Exception exception) {
-        this.errorMessageLiveData.setValue(exception.getMessage());
-    }
 
-    private void postUser(FirebaseUser user) {
-        userLiveData.postValue(user);
-    }
-
-    private void postLoggedOut(boolean loggedOut) {
+    private void setLoggedOut(boolean loggedOut) {
         loggedOutLiveData.postValue(loggedOut);
     }
 
-    public LiveData<FirebaseUser> getUserLiveData() {
+    public LiveData<Resource<FirebaseUser>> getUserLiveData() {
         return userLiveData;
     }
 

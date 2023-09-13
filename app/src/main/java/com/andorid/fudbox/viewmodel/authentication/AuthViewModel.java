@@ -7,22 +7,17 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.andorid.fudbox.repository.authentication.AuthRepository;
+import com.andorid.fudbox.utils.Resource;
 import com.google.firebase.auth.FirebaseUser;
 
 public class AuthViewModel extends AndroidViewModel {
     private final AuthRepository authRepository;
-    private final LiveData<FirebaseUser> userLiveData;
-    private final LiveData<String> errorMessageLiveData;
+    private final LiveData<Resource<FirebaseUser>> userLiveData;
 
     public AuthViewModel(Application application) {
         super(application);
         authRepository = new AuthRepository(application);
         userLiveData = authRepository.getUserLiveData();
-        errorMessageLiveData = authRepository.getErrorMessageLiveData();
-    }
-
-    public LiveData<String> getErrorMessageLiveData() {
-        return errorMessageLiveData;
     }
 
     public void login(String email, String password) {
@@ -33,7 +28,7 @@ public class AuthViewModel extends AndroidViewModel {
         authRepository.signUP(email, password);
     }
 
-    public LiveData<FirebaseUser> getUserLiveData() {
+    public LiveData<Resource<FirebaseUser>> getUserLiveData() {
         return userLiveData;
     }
 }

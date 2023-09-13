@@ -158,4 +158,7 @@ public class Constants {
     public static final String PRICE = "price";
     public static final String DESCRIPTION = "description";
     public static final String TYPE = "type";
+
+    public static final Double MILAN_DEFAULT_LAT = 45.4642;
+    public static final Double MILAN_DEFAULT_LNG = 9.1900;
 }

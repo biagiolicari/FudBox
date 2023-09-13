@@ -1,6 +1,7 @@
 package com.andorid.fudbox.view.authentication;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,8 +46,17 @@ public class AuthFragment extends Fragment {
     public void onStart() {
         super.onStart();
         authViewModel.getUserLiveData().observe(this, firebaseUser -> {
+            /**
             if (firebaseUser != null) {
                 navigateToHomeActivity();
+            }
+             **/
+            switch (firebaseUser.status){
+                case SUCCESS:
+                    navigateToHomeActivity();
+                    break;
+                case ERROR:
+                    CuteToast.ct(requireContext(), firebaseUser.message, CuteToast.LENGTH_LONG, CuteToast.SAD).show();
             }
         });
     }
@@ -65,11 +75,10 @@ public class AuthFragment extends Fragment {
         loginButton.setOnClickListener(viewLogin -> {
             String email = emailInputText.getEditText().getText().toString();
             String password = passwordInputText.getEditText().getText().toString();
-
-            if (email.length() > 0 && password.length() > 0) {
+            if (checkEmailAndPasswordText(email, password)) {
                 authViewModel.login(email, password);
             } else {
-                CuteToast.ct(getContext(), "Email Address and Password Must Be Entered", CuteToast.LENGTH_SHORT, CuteToast.ERROR, true).show();
+                CuteToast.ct(getContext(), getString(R.string.email_password_not_inserted), CuteToast.LENGTH_SHORT, CuteToast.ERROR, true).show();
             }
         });
 
@@ -77,15 +86,18 @@ public class AuthFragment extends Fragment {
             String email = emailInputText.getEditText().getText().toString();
             String password = passwordInputText.getEditText().getText().toString();
 
-            if (email.length() > 0 && password.length() > 0) {
+            if (checkEmailAndPasswordText(email, password)) {
                 authViewModel.register(email, password);
             } else {
-                CuteToast.ct(getContext(), "Email Address and Password Must Be Entered", CuteToast.LENGTH_SHORT, CuteToast.ERROR, true).show();
+                CuteToast.ct(getContext(), getString(R.string.email_password_not_inserted), CuteToast.LENGTH_SHORT, CuteToast.ERROR, true).show();
             }
         });
 
-        authViewModel.getErrorMessageLiveData().observe(getViewLifecycleOwner(), e -> CuteToast.ct(getContext(), e, CuteToast.LENGTH_SHORT, CuteToast.ERROR, true).show());
         return view;
+    }
+
+    private boolean checkEmailAndPasswordText(String email, String password){
+        return !TextUtils.isEmpty(email) && !TextUtils.isEmpty(password);
     }
 
 
