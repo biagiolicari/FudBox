@@ -20,8 +20,6 @@
     <string name="complete_order">Paga con la carta</string>
     <string name="checkout">Procedi al checkout</string>
     <string name="order_completed">Pagamento confermato! L\'ordine verrà spedito il prima possibile</string>
-    <string name="buy_with_googlepay_button_content_description">Compra con Google Pay</string>
-    <string name="pay_with_googlepay_button_content_description">Paga con Google Pay</string>
     <string name="google_pay_status_unavailable">Google Pay non è disponibile su questo dispositivo</string>
     <string name="google_wallet_status_unavailable">Google Wallet non è disponibile su questo dispositivo</string>
     <string name="payment_deleted">Il pagamento è stato cancellato</string>

@@ -13,9 +13,9 @@
     <string name="order_completed">Payment accepted! Order will be delivered ASAP</string>
 
     <string name="googlepay_button_content_description" translatable="false">Google Pay</string>
-    <string name="buy_with_googlepay_button_content_description">Buy with Google Pay</string>
+    <string name="buy_with_googlepay_button_content_description" translatable="false">Buy with Google Pay</string>
     <string name="checkout_with_googlepay_button_content_description" translatable="false">Checkout With Google Pay</string>
-    <string name="pay_with_googlepay_button_content_description">Pay With Google Pay</string>
+    <string name="pay_with_googlepay_button_content_description" translatable="false">Pay With Google Pay</string>
     <string name="text_content_description" translatable="false">Text for the Google Pay button</string>
     <string name="overlay_content_description" translatable="false">Overlay for the Google Pay button</string>
     <!-- Checkout -->

@@ -82,12 +82,6 @@ public class OrderPaymentFragment extends Fragment {
         binding = FragmentOrderPaymentBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
 
-        binding.payButton.setOnClickListener(l -> {
-            if(isPaymentDetailsValid()) {
-                handlePaymentCompleted();
-            }
-        });
-
         googlePayButton = binding.googlePayButton;
         try {
             googlePayButton.initialize(
@@ -96,8 +90,15 @@ public class OrderPaymentFragment extends Fragment {
             );
             googlePayButton.setOnClickListener(this::requestPayment);
         } catch (JSONException e) {
+            Log.wtf("PAYG", e.getMessage());
             googlePayButton.setVisibility(View.INVISIBLE);
         }
+
+        binding.payButton.setOnClickListener(l -> {
+            if(isPaymentDetailsValid()) {
+                handlePaymentCompleted();
+            }
+        });
 
         return view;
     }
