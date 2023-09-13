@@ -57,7 +57,7 @@ public class UserFragment extends Fragment {
     private void setUpViewModel() {
         loggedInViewModel = new ViewModelProvider(this).get(LoggedInViewModel.class);
         loggedInViewModel.getUserLiveData().observe(getViewLifecycleOwner(), firebaseUser -> {
-            switch (firebaseUser.status){
+            switch (firebaseUser.status) {
                 case SUCCESS:
                     updateUI(firebaseUser.data);
                     break;

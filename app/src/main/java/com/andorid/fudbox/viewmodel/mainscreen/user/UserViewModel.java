@@ -6,18 +6,19 @@ import androidx.lifecycle.ViewModel;
 import com.andorid.fudbox.model.Cart;
 import com.andorid.fudbox.model.Order;
 import com.andorid.fudbox.repository.mainscreen.user.UserRepository;
+import com.andorid.fudbox.utils.Resource;
 
 import java.util.List;
 
 public class UserViewModel extends ViewModel {
     private UserRepository repository;
-    private LiveData<List<Order>> recentOrdersLiveData;
+    private LiveData<Resource<List<Order>>> recentOrdersLiveData;
 
     public UserViewModel() {
 
     }
 
-    public LiveData<List<Order>> getRecentOrdersLiveData() {
+    public LiveData<Resource<List<Order>>> getRecentOrdersLiveData() {
         return recentOrdersLiveData;
     }
 
@@ -28,6 +29,4 @@ public class UserViewModel extends ViewModel {
             recentOrdersLiveData = repository.getRecentOrderLiveData();
         }
     }
-
-
 }

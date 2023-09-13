@@ -10,8 +10,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.andorid.fudbox.databinding.ItemMenuBinding;
 import com.andorid.fudbox.model.Dish;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MenuHolder> {
 
@@ -19,9 +21,11 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MenuHolder> {
     private List<Dish> menuItems = new ArrayList<>();
 
     private OnAddToCartClickListener addToCartClickListener;
+    private final NumberFormat currencyFormatter;
 
     public MenuAdapter(Context context) {
         inflater = LayoutInflater.from(context);
+        currencyFormatter = NumberFormat.getCurrencyInstance(Locale.getDefault());
     }
 
     public void setOnAddToCartClickListener(OnAddToCartClickListener listener) {
@@ -79,7 +83,7 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MenuHolder> {
         public void bind(Dish menuItem) {
             binding.itemNameTextView.setText(menuItem.getName());
             binding.itemDescriptionTextView.setText(menuItem.getDescription());
-            binding.itemPriceTextView.setText(EURO_SYMBOL + " " + menuItem.getPrice());
+            binding.itemPriceTextView.setText(currencyFormatter.format(menuItem.getPrice()));
         }
     }
 }

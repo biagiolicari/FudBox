@@ -2,5 +2,5 @@
 <resources>
     <string name="recent_order">Orders completed</string>
     <string name="user_info">User details</string>
-    <string name="logged_in_user">"Welcome, %1$s</string>
+    <string name="logged_in_user">"Welcome, %s</string>
 </resources>

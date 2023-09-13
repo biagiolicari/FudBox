@@ -29,6 +29,7 @@ import com.andorid.fudbox.model.DishOrder;
 import com.andorid.fudbox.model.DishType;
 import com.andorid.fudbox.model.Order;
 import com.andorid.fudbox.model.Restaurant;
+import com.andorid.fudbox.utils.Resource;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -40,7 +41,7 @@ import java.util.Map;
 
 public class UserRepository {
     private final FirebaseFirestore firestore;
-    private final MutableLiveData<List<Order>> ordersLiveData;
+    private final MutableLiveData<Resource<List<Order>>> ordersLiveData;
     private final FirebaseAuth firebaseAuth;
     private final MutableLiveData<FirebaseUser> userLiveData;
 
@@ -70,8 +71,8 @@ public class UserRepository {
                             Order order = deserializeOrder(orderDocument, uid);
                             orders.add(order);
                         }
-                        ordersLiveData.setValue(orders);
-                    }).addOnFailureListener(e -> Log.wtf("FIREBASE", e.getMessage()));
+                        ordersLiveData.setValue(Resource.success(orders));
+                    }).addOnFailureListener(e -> ordersLiveData.setValue(Resource.error(e.getLocalizedMessage(), null)));
         }
     }
 
@@ -122,7 +123,7 @@ public class UserRepository {
     }
 
 
-    public LiveData<List<Order>> getRecentOrderLiveData() {
+    public LiveData<Resource<List<Order>>> getRecentOrderLiveData() {
         return this.ordersLiveData;
     }
 

@@ -10,20 +10,16 @@ import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.andorid.fudbox.databinding.FragmentRecentOrdersBinding;
-import com.andorid.fudbox.model.Order;
 import com.andorid.fudbox.viewmodel.mainscreen.user.UserViewModel;
-
-import java.util.List;
+import com.rejowan.cutetoast.CuteToast;
 
 public class UserRecentOrderFragment extends Fragment {
-    private LiveData<List<Order>> recentOrdersLiveData;
     private UserViewModel userViewModel;
     private RecyclerView recyclerView;
     private UserRecentOrderAdapter userRecentOrderAdapter;
@@ -47,11 +43,16 @@ public class UserRecentOrderFragment extends Fragment {
         userRecentOrderAdapter = new UserRecentOrderAdapter(requireContext());
         recyclerView.setAdapter(userRecentOrderAdapter);
 
-        recentOrdersLiveData = userViewModel.getRecentOrdersLiveData();
-
-        userViewModel.getRecentOrdersLiveData().observe(getViewLifecycleOwner(), dishes -> {
-            userRecentOrderAdapter.setOrders(dishes);
-            hideLoadingProgressBar();
+        userViewModel.getRecentOrdersLiveData().observe(getViewLifecycleOwner(), orderData -> {
+            switch (orderData.status) {
+                case SUCCESS:
+                    userRecentOrderAdapter.setOrders(orderData.data);
+                    hideLoadingProgressBar();
+                    break;
+                case ERROR:
+                    CuteToast.ct(requireContext(), orderData.message, CuteToast.LENGTH_LONG, CuteToast.SAD).show();
+                    break;
+            }
         });
 
         loadingProgressBar = binding.loadingProgressBar;
