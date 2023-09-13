@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="geoapi_key">7537b2a7bce846d7b1b21210d7d3f773</string>
+    <string name="geoapi_key" translatable="false">7537b2a7bce846d7b1b21210d7d3f773</string>
 </resources>

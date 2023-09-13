@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Hint for the autocomplete form's first address line field. -->
-    <string name="autocomplete_address1_hint" translatable="false">Enter the address</string>
+    <string name="autocomplete_address1_hint">Enter the address</string>
 
     <!-- Label for the address form's first address line field. -->
-    <string name="autocomplete_address1_label" translatable="false">Address</string>
+    <string name="autocomplete_address1_label">Address</string>
 
     <!-- Label for the address form's state field. -->
 
@@ -13,16 +13,16 @@
     <!-- Label for the address form's country field. -->
 
     <!-- Label for the address form's proximity check setting. -->
-    <string name="geolocalization" translatable="false">..Or use my position</string>
+    <string name="geolocalization">..Or use my position</string>
 
     <!-- Label for the address form's confirmation map. -->
-    <string name="autocomplete_map_label" translatable="false">Map view of the selected address</string>
+    <string name="autocomplete_map_label">Map view of the selected address</string>
 
     <!-- Text for the address form submit button. -->
-    <string name="autocomplete_save_button" translatable="false">Set address</string>
+    <string name="autocomplete_save_button">Set address</string>
 
     <!-- Text for the toast message for permissions denied. -->
-    <string name="autocomplete_denied_message" translatable="false">User denied location permission. Cannot check proximity to entered address.</string>
+    <string name="autocomplete_denied_message">User denied location permission. Cannot check proximity to entered address.</string>
 
     <!-- Text for the toast message for proximity match in progress. -->
     <string name="autocomplete_progress_message" translatable="false">Checking proximity</string>
@@ -36,25 +36,25 @@
     <!-- Text for the toast message for a skilled proximity match. -->
     <string name="autocomplete_skipped_message" translatable="false">Address accepted without checking proximity</string>
 
-    <string name="google_key">AIzaSyA9lAgWMIKYTYuwE0_N8q3W5AYAZnZPHNk</string>
+    <string name="google_key" translatable="false">AIzaSyA9lAgWMIKYTYuwE0_N8q3W5AYAZnZPHNk</string>
 
     <!-- Label for the autocomplete form's heading. -->
-    <string name="autocomplete_address_heading_label" translatable="false">Delivery Address</string>
+    <string name="autocomplete_address_heading_label">Delivery Address</string>
 
     <!-- Label for the address form's second address line field. -->
-    <string name="autocomplete_address2_label" translatable="false">Street number</string>
+    <string name="autocomplete_address2_label">Street number</string>
 
     <!-- Label for the address form's city field. -->
-    <string name="autocomplete_city_label" translatable="false">City</string>
+    <string name="autocomplete_city_label">City</string>
 
     <!-- Label for the address form's state field. -->
-    <string name="autocomplete_state_label" translatable="false">State/Province</string>
+    <string name="autocomplete_state_label">State/Province</string>
 
     <!-- Label for the address form's postal code field. -->
-    <string name="autocomplete_postal_label" translatable="false">Postal code</string>
+    <string name="autocomplete_postal_label">Postal code</string>
 
     <!-- Label for the address form's country field. -->
-    <string name="autocomplete_country_label" translatable="false">Country/Region</string>
+    <string name="autocomplete_country_label">Country/Region</string>
 
     <!-- Label for the address form's proximity check setting. -->
     <string name="autocomplete_proximity_check" translatable="false">Check device proximity</string>

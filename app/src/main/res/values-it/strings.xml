@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">FudBox</string>
+    <string name="email_hint">Inserisci email</string>
+    <string name="password_hint">Inserisci password</string>
+    <string name="username_hint">Inserisci username</string>
+    <string name="register">o Registrati</string>
+    <string name="logout_message">Sessione utente terminata</string>
+    <string name="add_to_cart">Aggiungi</string>
+    <string name="price">Prezzo</string>
+    <string name="user">Utente</string>
+    <string name="order">Ordine</string>
+    <string name="completeOrder">Completa Ordine</string>
+    <string name="history_order">Ordine composta da: %1$d piatti</string>
+    <string name="empty_field">Il campo non può essere vuoto</string>
+    <string name="card_number">Inserisci il numero della carta</string>
+    <string name="name">Nome</string>
+    <string name="surname">Cognome</string>
+    <string name="expire">Anno scadenza</string>
+    <string name="complete_order">Paga con la carta</string>
+    <string name="checkout">Procedi al checkout</string>
+    <string name="order_completed">Pagamento confermato! L\'ordine verrà spedito il prima possibile</string>
+    <string name="buy_with_googlepay_button_content_description">Compra con Google Pay</string>
+    <string name="pay_with_googlepay_button_content_description">Paga con Google Pay</string>
+    <string name="google_pay_status_unavailable">Google Pay non è disponibile su questo dispositivo</string>
+    <string name="google_wallet_status_unavailable">Google Wallet non è disponibile su questo dispositivo</string>
+    <string name="payment_deleted">Il pagamento è stato cancellato</string>
+    <string name="autocomplete_address1_hint">Inserisci indirizzo</string>
+    <string name="autocomplete_address1_label">Indirizzo</string>
+    <string name="geolocalization">..O usa la tua posizione</string>
+    <string name="autocomplete_map_label">Visualizzazione della posizione selezionata</string>
+    <string name="autocomplete_save_button">Imposta indirizzo</string>
+    <string name="autocomplete_denied_message">L\'utente non ha acconsentito ai permessi di locazione</string>
+    <string name="autocomplete_address_heading_label">Indirizzo di consegna</string>
+    <string name="autocomplete_address2_label">Numero civico</string>
+    <string name="autocomplete_city_label">Città</string>
+    <string name="autocomplete_state_label">Provincia</string>
+    <string name="autocomplete_postal_label">Codice Postale</string>
+    <string name="autocomplete_country_label">Regione</string>
+    <string name="total_price">Costo</string>
+    <string name="recent_order">Ordine completato</string>
+    <string name="user_info">Informazioni Utente</string>
+    <string name="logged_in_user">Benvenuto,</string>
+</resources>
