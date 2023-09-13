@@ -31,7 +31,8 @@
                 android:layout_height="wrap_content"
                 android:autofillHints=""
                 android:imeOptions="actionNext"
-                android:inputType="text" />
+                android:inputType="text"
+                android:maxWidth="488dp" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -51,7 +52,8 @@
                 android:layout_height="wrap_content"
                 android:autofillHints=""
                 android:imeOptions="actionNext"
-                android:inputType="text" />
+                android:inputType="text"
+                android:maxWidth="488dp" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
