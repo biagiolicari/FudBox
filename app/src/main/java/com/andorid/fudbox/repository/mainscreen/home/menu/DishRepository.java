@@ -49,7 +49,6 @@ public class DishRepository {
                             .map(this::getRandomDish)
                             .collect(Collectors.toList());
 
-                    randomDishes.forEach(dish -> Log.wtf("DISH", dish.toString()));
                     dishListLiveData.setValue(Resource.success(randomDishes));
                 })
                 .addOnFailureListener(e -> dishListLiveData.setValue(Resource.error(e.getMessage(), null)));

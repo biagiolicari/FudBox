@@ -36,7 +36,8 @@ public class RestaurantRepository {
     }
 
     public void searchRestaurant(String categories, String filter, int limit, String apiKey) {
-        iPlacesAPI.getPlaces(categories, filter, limit, apiKey).enqueue(new Callback<RestaurantJsonObject>() {
+        iPlacesAPI.getPlaces(categories, filter, limit, apiKey)
+                .enqueue(new Callback<RestaurantJsonObject>() {
             @Override
             public void onResponse(Call<RestaurantJsonObject> call, Response<RestaurantJsonObject> response) {
                 if (response.isSuccessful()) {
