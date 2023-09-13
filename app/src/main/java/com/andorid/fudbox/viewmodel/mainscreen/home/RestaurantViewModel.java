@@ -8,6 +8,7 @@ import androidx.lifecycle.LiveData;
 
 import com.andorid.fudbox.model.Restaurant;
 import com.andorid.fudbox.repository.mainscreen.home.restaurant.RestaurantRepository;
+import com.andorid.fudbox.utils.Resource;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.util.List;
@@ -20,13 +21,13 @@ public class RestaurantViewModel extends AndroidViewModel {
 
     private static final String CIRCLE = "circle:";
     private RestaurantRepository restaurantRepository;
-    private LiveData<List<Restaurant>> restaurantsLiveData;
+    private LiveData<Resource<List<Restaurant>>> restaurantsLiveData;
 
     public RestaurantViewModel(@NonNull Application application) {
         super(application);
     }
 
-    public LiveData<List<Restaurant>> getRestaurantsLiveData() {
+    public LiveData<Resource<List<Restaurant>>> getRestaurantsLiveData() {
         return restaurantsLiveData;
     }
 

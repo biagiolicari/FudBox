@@ -6,5 +6,4 @@
     <string name="x" translatable="false">x</string>
     <string name="total_price">Total Price</string>
     <string name="euro" translatable="false">€ %1$s</string>
-    <string name="google_pay_status_unavailable">Unfortunately, Google Wallet is not available on this phone.</string>
 </resources>

@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.andorid.fudbox.model.Restaurant;
 import com.andorid.fudbox.model.restaurant.RestaurantFeature;
 import com.andorid.fudbox.model.restaurant.RestaurantJsonObject;
+import com.andorid.fudbox.utils.Resource;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -18,15 +19,11 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RestaurantRepository {
     private static final String BASE_URL = "https://api.geoapify.com/";
     private final IPlacesAPI iPlacesAPI;
-    private final MutableLiveData<List<Restaurant>> restaurantMutableLiveData;
+    private final MutableLiveData<Resource<List<Restaurant>>> restaurantMutableLiveData;
 
     public RestaurantRepository() {
         restaurantMutableLiveData = new MutableLiveData<>();
-        /**
-         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
-         interceptor.level(HttpLoggingInterceptor.Level.BODY);
-         OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
-         **/
+
         iPlacesAPI = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -34,7 +31,7 @@ public class RestaurantRepository {
                 .create(IPlacesAPI.class);
     }
 
-    public MutableLiveData<List<Restaurant>> getRestaurantMutableLiveData() {
+    public MutableLiveData<Resource<List<Restaurant>>> getRestaurantMutableLiveData() {
         return restaurantMutableLiveData;
     }
 
@@ -54,13 +51,13 @@ public class RestaurantRepository {
                                     .setLng(item.getProperties().getLon())
                                     .build())
                             .collect(Collectors.toList());
-                    restaurantMutableLiveData.setValue(restaurants);
+                    restaurantMutableLiveData.setValue(Resource.success(restaurants));
                 }
             }
 
             @Override
             public void onFailure(Call<RestaurantJsonObject> call, Throwable t) {
-                restaurantMutableLiveData.setValue(null);
+                restaurantMutableLiveData.setValue(Resource.error(t.getLocalizedMessage().toString(), null));
             }
         });
     }

@@ -19,6 +19,7 @@ import com.andorid.fudbox.model.Restaurant;
 import com.andorid.fudbox.viewmodel.mainscreen.home.RestaurantViewModel;
 import com.andorid.fudbox.viewmodel.mainscreen.shared.SharedLatLng;
 import com.andorid.fudbox.viewmodel.mainscreen.shared.SharedRestaurantViewModel;
+import com.rejowan.cutetoast.CuteToast;
 
 
 public class HomeFragment extends Fragment implements RestaurantSearchResultAdapter.OnItemClickListener {
@@ -61,9 +62,20 @@ public class HomeFragment extends Fragment implements RestaurantSearchResultAdap
         });
 
 
-        viewModel.getRestaurantsLiveData().observe(getViewLifecycleOwner(), restaurantFeatures -> {
+        viewModel.getRestaurantsLiveData().observe(getViewLifecycleOwner(), restaurant -> {
+            /**
             adapter.setRestaurants(restaurantFeatures);
             hideLoadingProgressBar();
+             **/
+            switch (restaurant.status){
+                case SUCCESS:
+                    adapter.setRestaurants(restaurant.data);
+                    hideLoadingProgressBar();
+                    break;
+                case ERROR:
+                    hideLoadingProgressBar();
+                    CuteToast.ct(requireContext(), restaurant.message, CuteToast.LENGTH_LONG, CuteToast.CONFUSE).show();
+            }
         });
 
         progressBar = binding.loadingProgressBar;
