@@ -41,17 +41,16 @@ public class DishRepository {
                 .get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
                     List<Dish> completeDishListFromFirestore = new ArrayList<>();
+
                     for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
                         completeDishListFromFirestore.add(this.createDishFromDocumentSnapshot(documentSnapshot));
                     }
-
-                    completeDishListFromFirestore.forEach(dish -> Log.wtf("DISH", dish.getName()));
 
                     List<Dish> tmp = completeDishListFromFirestore.stream()
                             .collect(Collectors.groupingBy(Dish::getType))
                             .values()
                             .stream()
-                            .flatMap(sublist -> pickRandom(sublist).stream()) // Cambia 3 con il numero desiderato di piatti casuali per ogni chiave
+                            .flatMap(sublist -> pickRandom(sublist).stream())
                             .collect(Collectors.toList());
 
                     Collections.sort(tmp, Comparator.comparing(Dish::getType));
