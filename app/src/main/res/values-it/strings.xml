@@ -41,4 +41,5 @@
     <string name="logged_in_user">Benvenuto,</string>
     <string name="set_address">Indirizzo impostato</string>
     <string name="email_password_not_inserted">Email e Password devono essere inserite</string>
+    <string name="no_address">Inserisci un indirizzo prima</string>
 </resources>

@@ -68,7 +68,6 @@ public class PlaceActivity extends AppCompatActivity implements OnMapReadyCallba
     private Marker marker;
     private PlacesClient placesClient;
     private View mapPanel;
-    private String address;
     private ActivityPlaceBinding binding;
     private final ActivityResultLauncher<Intent> startAutocomplete = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
@@ -134,13 +133,18 @@ public class PlaceActivity extends AppCompatActivity implements OnMapReadyCallba
     }
 
     private void setupMyLastKnownLocationButton() {
-        Button geolocalizationButton = findViewById(R.id.geolocalize_button);
-        geolocalizationButton.setOnClickListener(l -> checkLocationPermissions());
+        binding.geolocalizeButton.setOnClickListener(l -> checkLocationPermissions());
     }
 
     private void setupSetAddressButton() {
-        Button saveButton = findViewById(R.id.autocomplete_save_button);
-        saveButton.setOnClickListener(v -> setAddressAndStartActivity());
+        binding.autocompleteSaveButton.setOnClickListener(v -> {
+            if(coordinates != null) {
+                setAddressAndStartActivity();
+            }else {
+                CuteToast.ct(this, getString(R.string.no_address), CuteToast.LENGTH_SHORT, CuteToast.ERROR).show();
+        }
+
+        });
     }
 
     private void startAutocompleteIntent() {
@@ -211,7 +215,6 @@ public class PlaceActivity extends AppCompatActivity implements OnMapReadyCallba
         }
         // Add a map for visual confirmation of the address
         showMap(place.getLatLng());
-        this.address = addressBuilder.toString();
         binding.autocompleteAddress.setText(addressBuilder);
     }
 
