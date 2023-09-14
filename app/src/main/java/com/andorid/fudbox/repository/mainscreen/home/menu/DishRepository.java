@@ -69,28 +69,13 @@ public class DishRepository {
                 .build();
     }
 
-    private Dish getRandomDish(List<Dish> dishes) {
-        Random random = new Random();
-        int randomIndex = random.nextInt(dishes.size());
-        return dishes.get(randomIndex);
-    }
-
-    private int generateRandomIndexNumber(List itemList){
-        // Generate a random index between 1 and list.size()
-        return new Random().nextInt(itemList.size());
-    }
-
-    private static <E> List<E> pickRandom(@NonNull List<E> list, int n) {
-        return new Random().ints(n, 0, list.size()).mapToObj(list::get).collect(Collectors.toList());
-    }
-
     private static <E> List<E> pickRandom(List<E> list) {
         if (list == null || list.isEmpty()) {
             return new ArrayList<>();
         }
 
         Random random = new Random();
-        int n = random.nextInt(list.size()) + 1; // Genera un numero casuale tra 1 e la dimensione della lista
+        int n = random.nextInt(list.size()) + 1;
 
         return random.ints(0, list.size()).distinct().limit(n)
                 .mapToObj(list::get)
