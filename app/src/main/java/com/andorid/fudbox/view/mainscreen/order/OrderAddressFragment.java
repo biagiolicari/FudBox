@@ -5,6 +5,9 @@ import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -54,7 +57,7 @@ public class OrderAddressFragment extends Fragment {
                     }
                 } else if (result.getResultCode() == Activity.RESULT_CANCELED) {
                     // The user canceled the operation.
-                    Log.i(TAG, "User canceled autocomplete");
+                    Log.i(TAG, "User deleted autocomplete");
                 }
             });
     View.OnClickListener startAutocompleteIntentListener = view -> startAutocompleteIntent();
@@ -76,6 +79,7 @@ public class OrderAddressFragment extends Fragment {
         View view = binding.getRoot();
         // Attach an Autocomplete intent to the Address 1 EditText field
         binding.autocompleteAddress1.setOnClickListener(startAutocompleteIntentListener);
+        binding.autocompleteAddress2.setOnClickListener(startAutocompleteIntentListener);
         // Submit
         Button saveButton = binding.autocompleteSaveButton;
         saveButton.setEnabled(Boolean.FALSE);
@@ -121,6 +125,7 @@ public class OrderAddressFragment extends Fragment {
                 String type = component.getTypes().get(0);
                 switch (type) {
                     case "street_number": {
+                        Log.wtf("STREET", component.getShortName());
                         binding.autocompleteAddress2.setText(component.getName());
                         break;
                     }
@@ -159,7 +164,7 @@ public class OrderAddressFragment extends Fragment {
         binding.autocompleteAddress1.setText(address1.toString());
         binding.autocompletePostal.setText(postcode.toString());
 
-        if (binding.autocompleteAddress2.getText().toString().isEmpty()) {
+        if (TextUtils.isEmpty(binding.autocompleteAddress2.getText())) {
             binding.autocompleteAddress2Layout.requestFocus();
             binding.autocompleteAddress2Layout.setError(getString(R.string.empty_field));
             binding.autocompleteAddress2Layout.setErrorTextColor(ColorStateList.valueOf(Color.RED));
@@ -171,8 +176,10 @@ public class OrderAddressFragment extends Fragment {
     }
 
     private void saveForm() {
-        String addressBuilder = binding.autocompleteAddress1.getText().toString() +
-                binding.autocompleteAddress2.getText().toString();
+        String addressBuilder = new StringBuilder(binding.autocompleteAddress1.getText())
+                .append(",")
+                .append(binding.autocompleteAddress2.getText())
+                .toString();
         Cart cart = cartViewModel.getOrderLiveData().getValue();
         orderViewModel.buildOrder(cart, addressBuilder);
         NavController navController = Navigation.findNavController(requireView());

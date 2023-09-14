@@ -94,7 +94,7 @@ public class MenuFragment extends Fragment implements MenuAdapter.OnAddToCartCli
         dishOrderViewModel.getDishOrderLiveData().observe(getViewLifecycleOwner(), dishQuantity -> {
             if (sharedRestaurantViewModel.getRestaurantMutableLiveData().getValue() != null) {
                 Restaurant restaurant = sharedRestaurantViewModel.getRestaurantMutableLiveData().getValue();
-                cartViewModel.buildOrder(dishQuantity, restaurant);
+                cartViewModel.buildCart(dishQuantity, restaurant);
             }
         });
     }

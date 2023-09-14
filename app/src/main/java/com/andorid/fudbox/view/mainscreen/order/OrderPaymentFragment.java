@@ -25,6 +25,7 @@ import androidx.navigation.Navigation;
 import com.andorid.fudbox.R;
 import com.andorid.fudbox.databinding.FragmentOrderPaymentBinding;
 import com.andorid.fudbox.utils.PaymentsUtil;
+import com.andorid.fudbox.viewmodel.mainscreen.order.CartViewModel;
 import com.andorid.fudbox.viewmodel.mainscreen.order.CheckoutViewModel;
 import com.andorid.fudbox.viewmodel.mainscreen.order.OrderViewModel;
 import com.google.android.gms.common.api.ApiException;
@@ -43,6 +44,7 @@ import java.util.Locale;
 
 public class OrderPaymentFragment extends Fragment {
     private OrderViewModel orderViewModel;
+    private CartViewModel cartViewModel;
     private FragmentOrderPaymentBinding binding;
     private CheckoutViewModel checkoutViewModel;
     private PayButton googlePayButton;
@@ -72,6 +74,7 @@ public class OrderPaymentFragment extends Fragment {
         super.onCreate(savedInstanceState);
         orderViewModel = new ViewModelProvider(requireActivity()).get(OrderViewModel.class);
         checkoutViewModel = new ViewModelProvider(requireActivity()).get(CheckoutViewModel.class);
+        cartViewModel = new ViewModelProvider(requireActivity()).get(CartViewModel.class);
         orderViewModel.init();
         checkoutViewModel.canUseGooglePay.observe(this, this::setGooglePayAvailable);
     }
@@ -153,6 +156,7 @@ public class OrderPaymentFragment extends Fragment {
 
     private void handlePaymentCompleted() {
         orderViewModel.uploadOrderToFirestore();
+        cartViewModel.clearCart();
         CuteToast.ct(requireContext(), getString(R.string.order_completed), CuteToast.LENGTH_SHORT, CuteToast.HAPPY, true).show();
         NavController navController = Navigation.findNavController(requireView());
         navController.navigate(R.id.action_return_to_home);

@@ -19,11 +19,11 @@ public class CartViewModel extends ViewModel {
         return orderLiveData;
     }
 
-    public void buildOrder(DishOrder dishes, Restaurant restaurant) {
+    public void buildCart(DishOrder dishes, Restaurant restaurant) {
         cartRepository.buildCart(dishes, restaurant);
     }
 
-    public void clearOrder() {
+    public void clearCart() {
         cartRepository.clearCart();
     }
 

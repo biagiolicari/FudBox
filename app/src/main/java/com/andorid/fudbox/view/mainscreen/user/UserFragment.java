@@ -8,11 +8,13 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 
 import com.andorid.fudbox.MainActivity;
 import com.andorid.fudbox.R;
@@ -46,6 +48,13 @@ public class UserFragment extends Fragment {
         initializeViews();
         setUpViewModel();
         setClickListeners();
+
+        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                navigateBack();
+            }
+        });
     }
 
     private void initializeViews() {
@@ -94,4 +103,10 @@ public class UserFragment extends Fragment {
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
     }
+
+    public void navigateBack() {
+        // Navigate back to the previous fragment
+        NavHostFragment.findNavController(this).popBackStack();
+    }
+
 }

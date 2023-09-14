@@ -6,10 +6,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.activity.OnBackPressedCallback;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -62,20 +66,29 @@ public class CartFragment extends Fragment implements CartAdapter.OnRemoveDishCl
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                navigateBack();
+            }
+        });
+
         binding.completeOrderButton.setOnClickListener(l -> {
             if (cartViewModel.getOrderLiveData().getValue() != null) {
                 Log.wtf("CLICK", "TO SET");
-                //orderViewModel.uploadToFireStore();
                 NavController navController = Navigation.findNavController(requireView());
-                // Navigate to the MenuFragment using the action defined in the navigation graph
                 navController.navigate(R.id.action_order_to_orderaddress);
             } else {
                 CuteToast.ct(getContext(), "Please, order something before confirm.", CuteToast.LENGTH_SHORT, CuteToast.SAD, true).show();
             }
         });
+    }
 
+    public void navigateBack() {
+        // Navigate back to the previous fragment
+        NavHostFragment.findNavController(this).popBackStack();
     }
 
     @Override
