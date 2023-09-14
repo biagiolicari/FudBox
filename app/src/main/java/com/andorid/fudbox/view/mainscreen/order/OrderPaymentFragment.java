@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.IntentSenderRequest;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -21,6 +22,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 
 import com.andorid.fudbox.R;
 import com.andorid.fudbox.databinding.FragmentOrderPaymentBinding;
@@ -105,6 +107,17 @@ public class OrderPaymentFragment extends Fragment {
         binding.payButton.setOnClickListener(l -> {
             if(isPaymentDetailsValid()) {
                 handlePaymentCompleted();
+            }
+        });
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                navigateBack();
             }
         });
     }
@@ -202,5 +215,11 @@ public class OrderPaymentFragment extends Fragment {
         Log.e("loadPaymentData failed",
                 String.format(Locale.getDefault(), "Error code: %d, Message: %s", statusCode, message));
     }
+
+    public void navigateBack() {
+        // Navigate back to the previous fragment
+        NavHostFragment.findNavController(this).popBackStack();
+    }
+
 
 }
