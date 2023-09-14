@@ -31,7 +31,8 @@
                 android:layout_height="wrap_content"
                 android:autofillHints=""
                 android:imeOptions="actionNext"
-                android:inputType="text" />
+                android:inputType="number"
+                android:maxLength="12"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -123,7 +124,8 @@
                         android:layout_height="wrap_content"
                         android:autofillHints=""
                         android:imeOptions="actionNext"
-                        android:inputType="textCapCharacters" />
+                        android:inputType="number"
+                        android:maxLength="3"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
             </LinearLayout>
