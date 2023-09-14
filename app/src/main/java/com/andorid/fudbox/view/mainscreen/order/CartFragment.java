@@ -85,7 +85,6 @@ public class CartFragment extends Fragment implements CartAdapter.OnRemoveDishCl
 
         binding.completeOrderButton.setOnClickListener(l -> {
             if (cartViewModel.getOrderLiveData().getValue() != null) {
-                Log.wtf("CLICK", "TO SET");
                 NavController navController = Navigation.findNavController(requireView());
                 navController.navigate(R.id.action_order_to_orderaddress);
             } else {
