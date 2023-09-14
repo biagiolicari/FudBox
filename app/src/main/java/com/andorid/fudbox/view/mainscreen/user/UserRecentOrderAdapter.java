@@ -12,6 +12,7 @@ import com.andorid.fudbox.model.Order;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Currency;
 import java.util.List;
 import java.util.Locale;
 
@@ -23,6 +24,7 @@ public class UserRecentOrderAdapter extends RecyclerView.Adapter<UserRecentOrder
     public UserRecentOrderAdapter(Context context) {
         inflater = LayoutInflater.from(context);
         currencyFormatter = NumberFormat.getCurrencyInstance(Locale.getDefault());
+        currencyFormatter.setCurrency(Currency.getInstance("EUR"));
 
     }
 

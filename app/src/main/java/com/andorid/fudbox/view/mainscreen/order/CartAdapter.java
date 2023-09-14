@@ -102,7 +102,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
             binding.itemNameTextView.setText(dishOrder.getDish().getName());
             binding.itemDescriptionTextView.setText(dishOrder.getDish().getDescription());
             binding.quantityEditText.setText(String.valueOf(dishOrder.getQuantity()));
-            binding.priceTextView.setText(dishOrder.getDish().getPrice().toString());
+            binding.priceTextView.setText(String.valueOf(dishOrder.getDish().getPrice()));
         }
     }
 }

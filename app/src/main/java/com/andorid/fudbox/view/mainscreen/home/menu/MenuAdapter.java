@@ -12,6 +12,7 @@ import com.andorid.fudbox.model.Dish;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Currency;
 import java.util.List;
 import java.util.Locale;
 
@@ -26,6 +27,7 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MenuHolder> {
     public MenuAdapter(Context context) {
         inflater = LayoutInflater.from(context);
         currencyFormatter = NumberFormat.getCurrencyInstance(Locale.getDefault());
+        currencyFormatter.setCurrency(Currency.getInstance("EUR"));
     }
 
     public void setOnAddToCartClickListener(OnAddToCartClickListener listener) {
