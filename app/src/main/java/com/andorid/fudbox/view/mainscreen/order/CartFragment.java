@@ -45,7 +45,12 @@ public class CartFragment extends Fragment implements CartAdapter.OnRemoveDishCl
         // Inflate the layout for this fragment
         binding = FragmentCartBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
+        return view;
+    }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         // Initialize the RecyclerView and its adapter
         orderRecyclerView = binding.orderRecyclerView;
         orderRecyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
@@ -53,21 +58,24 @@ public class CartFragment extends Fragment implements CartAdapter.OnRemoveDishCl
         orderRecyclerView.setAdapter(cartAdapter);
         cartAdapter.setOnRemoveDishClickListener(this);
         // Observe the order data from the ViewModel and update the adapter
-        cartViewModel.getOrderLiveData().observe(getViewLifecycleOwner(), order -> {
-            if (order != null) {
-                cartAdapter.setDishes(order);
-                binding.totalPriceTextView.setText(order.getTotalPrice().toString());
+        cartViewModel.getOrderLiveData().observe(getViewLifecycleOwner(), cart -> {
+            cartAdapter.setDishes(cart);
+            if (cart != null && cart.getNumberOfDishOrdered() > 0) {
+                binding.totalPriceTextView.setText(getString(R.string.euro, cart.getTotalPrice().toString()));
                 binding.completeOrderButton.setVisibility(View.VISIBLE);
                 binding.priceLayout.setVisibility(View.VISIBLE);
+            }else {
+                binding.completeOrderButton.setVisibility(View.INVISIBLE);
+                binding.totalPriceTextView.setVisibility(View.INVISIBLE);
+                binding.priceLayout.setVisibility(View.INVISIBLE);
             }
         });
 
-        return view;
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    public void onStart() {
+        super.onStart();
         requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
