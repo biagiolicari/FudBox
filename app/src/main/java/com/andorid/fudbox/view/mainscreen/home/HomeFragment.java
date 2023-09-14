@@ -6,6 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
@@ -50,6 +52,12 @@ public class HomeFragment extends Fragment implements RestaurantSearchResultAdap
         // Inflate the layout for this fragment using View Binding
         binding = FragmentHomePageBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
+        return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
         // Initialize RecyclerView and Adapter
         recyclerView = binding.fragmentRestaurantSearchResultsRecyclerView;
@@ -63,10 +71,6 @@ public class HomeFragment extends Fragment implements RestaurantSearchResultAdap
 
 
         viewModel.getRestaurantsLiveData().observe(getViewLifecycleOwner(), restaurant -> {
-            /**
-            adapter.setRestaurants(restaurantFeatures);
-            hideLoadingProgressBar();
-             **/
             switch (restaurant.status){
                 case SUCCESS:
                     adapter.setRestaurants(restaurant.data);
@@ -80,7 +84,6 @@ public class HomeFragment extends Fragment implements RestaurantSearchResultAdap
 
         progressBar = binding.loadingProgressBar;
         showLoadingProgressBar();
-        return view;
     }
 
     @Override

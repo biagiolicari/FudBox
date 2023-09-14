@@ -10,7 +10,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.activity.result.ActivityResultLauncher;
@@ -74,8 +73,7 @@ public class OrderAddressFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = FragmentOrderAddressBinding.inflate(getLayoutInflater());
-        View view = binding.getRoot();
-        return view;
+        return binding.getRoot();
     }
 
     @Override
@@ -85,9 +83,8 @@ public class OrderAddressFragment extends Fragment {
         binding.autocompleteAddress1.setOnClickListener(startAutocompleteIntentListener);
         binding.autocompleteAddress2.setOnClickListener(startAutocompleteIntentListener);
         // Submit
-        Button saveButton = binding.autocompleteSaveButton;
-        saveButton.setEnabled(Boolean.FALSE);
-        saveButton.setOnClickListener(v -> saveForm());
+        binding.buttonSetAddress.setEnabled(Boolean.FALSE);
+        binding.buttonSetAddress.setOnClickListener(v -> saveForm());
     }
 
     @Override
@@ -171,10 +168,10 @@ public class OrderAddressFragment extends Fragment {
             binding.autocompleteAddress2Layout.requestFocus();
             binding.autocompleteAddress2Layout.setError(getString(R.string.empty_field));
             binding.autocompleteAddress2Layout.setErrorTextColor(ColorStateList.valueOf(Color.RED));
-            binding.autocompleteSaveButton.setEnabled(Boolean.FALSE);
+            binding.buttonSetAddress.setEnabled(Boolean.FALSE);
         } else {
             binding.autocompleteAddress2Layout.setError(null);
-            binding.autocompleteSaveButton.setEnabled(Boolean.TRUE);
+            binding.buttonSetAddress.setEnabled(Boolean.TRUE);
         }
     }
 

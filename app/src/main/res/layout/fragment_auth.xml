@@ -7,16 +7,25 @@
     <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
         <ImageView
-                android:src="@drawable/logo"
-                android:layout_width="385dp"
-                android:layout_height="204dp" android:id="@+id/logo"
-                app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="13dp"
-                app:layout_constraintTop_toTopOf="parent" android:layout_marginTop="8dp"
-                android:layout_marginEnd="13dp" app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent" android:layout_marginBottom="481dp"
-                android:cropToPadding="true" android:allowClickWhenDisabled="false" android:adjustViewBounds="false"
-                app:layout_constraintHorizontal_bias="1.0" app:layout_constraintVertical_bias="0.0"/>
+            android:id="@+id/logo"
+            android:layout_width="0dp"
+            android:layout_height="204dp"
+            android:layout_marginStart="13dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="13dp"
+            android:layout_marginBottom="481dp"
+            android:adjustViewBounds="false"
+            android:allowClickWhenDisabled="false"
+            android:cropToPadding="true"
+            android:src="@drawable/logo"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
 
         <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="325dp"

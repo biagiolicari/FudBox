@@ -24,6 +24,7 @@ public class UserRecentOrderFragment extends Fragment {
     private RecyclerView recyclerView;
     private UserRecentOrderAdapter userRecentOrderAdapter;
     private ProgressBar loadingProgressBar;
+    private FragmentRecentOrdersBinding binding;
 
 
     @Override
@@ -35,8 +36,14 @@ public class UserRecentOrderFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        FragmentRecentOrdersBinding binding = FragmentRecentOrdersBinding.inflate(inflater, container, false);
+        binding = FragmentRecentOrdersBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
+        return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         recyclerView = binding.recentOrdersRecyclerView;
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
 
@@ -57,13 +64,11 @@ public class UserRecentOrderFragment extends Fragment {
 
         loadingProgressBar = binding.loadingProgressBar;
         showLoadingProgressBar();
-
-        return view;
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    public void onStart() {
+        super.onStart();
         requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {

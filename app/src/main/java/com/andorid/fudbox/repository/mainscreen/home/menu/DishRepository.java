@@ -11,6 +11,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -41,15 +42,7 @@ public class DishRepository {
                     for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
                         dishList.add(this.createDishFromDocumentSnapshot(documentSnapshot));
                     }
-
-                    Map<DishType, List<Dish>> dishesByType = dishList.stream()
-                            .collect(Collectors.groupingBy(Dish::getType));
-
-                    List<Dish> randomDishes = dishesByType.values().stream()
-                            .map(this::getRandomDish)
-                            .collect(Collectors.toList());
-
-                    dishListLiveData.setValue(Resource.success(randomDishes));
+                    dishListLiveData.setValue(Resource.success(dishList));
                 })
                 .addOnFailureListener(e -> dishListLiveData.setValue(Resource.error(e.getMessage(), null)));
     }
@@ -67,6 +60,11 @@ public class DishRepository {
         Random random = new Random();
         int randomIndex = random.nextInt(dishes.size());
         return dishes.get(randomIndex);
+    }
+
+    private int generateRandomIndexNumber(List itemList){
+        // Generate a random index between 1 and list.size()
+        return new Random().nextInt(itemList.size());
     }
 
 }

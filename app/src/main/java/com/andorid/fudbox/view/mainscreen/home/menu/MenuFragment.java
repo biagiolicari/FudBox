@@ -49,7 +49,12 @@ public class MenuFragment extends Fragment implements MenuAdapter.OnAddToCartCli
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentMenuBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
+        return view;
+    }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         sharedRestaurantViewModel.getRestaurantMutableLiveData()
                 .observe(getViewLifecycleOwner(), restaurant -> binding.restaurantNameTextView.setText(restaurant.getName()));
 
@@ -75,14 +80,11 @@ public class MenuFragment extends Fragment implements MenuAdapter.OnAddToCartCli
 
         progressBar = binding.loadingProgressBar;
         showLoadingProgressBar();
-
-        return view;
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        //Imposta il comportamento del pulsante indietro
+    public void onStart() {
+        super.onStart();
         requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {

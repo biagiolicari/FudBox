@@ -26,6 +26,7 @@ public class AuthFragment extends Fragment {
     private TextInputLayout emailInputText;
     private TextInputLayout passwordInputText;
     private AuthViewModel authViewModel;
+    private FragmentAuthBinding binding;
 
     public AuthFragment() {
         // Required empty public constructor
@@ -46,11 +47,6 @@ public class AuthFragment extends Fragment {
     public void onStart() {
         super.onStart();
         authViewModel.getUserLiveData().observe(this, firebaseUser -> {
-            /**
-            if (firebaseUser != null) {
-                navigateToHomeActivity();
-            }
-             **/
             switch (firebaseUser.status){
                 case SUCCESS:
                     navigateToHomeActivity();
@@ -64,8 +60,13 @@ public class AuthFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        FragmentAuthBinding binding = FragmentAuthBinding.inflate(inflater, container, false);
-        View view = binding.getRoot();
+        binding = FragmentAuthBinding.inflate(inflater, container, false);
+        return binding.getRoot();
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
         emailInputText = binding.fragmentLoginregisterEmail;
         passwordInputText = binding.fragmentLoginregisterPassword;
@@ -93,7 +94,6 @@ public class AuthFragment extends Fragment {
             }
         });
 
-        return view;
     }
 
     private boolean checkEmailAndPasswordText(String email, String password){

@@ -16,13 +16,14 @@
 
         <ImageView
             android:id="@+id/logo"
-            android:layout_width="385dp"
-            android:layout_height="204dp"
+            android:layout_width="match_parent"
+            android:layout_height="230dp"
             android:layout_marginStart="13dp"
             android:layout_marginTop="8dp"
             android:adjustViewBounds="false"
             android:allowClickWhenDisabled="false"
             android:cropToPadding="true"
+            android:scaleType="fitCenter"
             android:src="@drawable/logo" />
 
         <com.google.android.material.textfield.TextInputLayout
@@ -54,7 +55,7 @@
             android:text="@string/geolocalization" />
 
         <Button
-            android:id="@+id/autocomplete_save_button"
+            android:id="@+id/button_set_address"
             style="@style/Widget.MaterialComponents.Button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

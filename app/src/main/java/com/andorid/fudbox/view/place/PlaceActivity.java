@@ -137,7 +137,7 @@ public class PlaceActivity extends AppCompatActivity implements OnMapReadyCallba
     }
 
     private void setupSetAddressButton() {
-        binding.autocompleteSaveButton.setOnClickListener(v -> {
+        binding.buttonSetAddress.setOnClickListener(v -> {
             if(coordinates != null) {
                 setAddressAndStartActivity();
             }else {
