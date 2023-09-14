@@ -2,6 +2,8 @@ package com.andorid.fudbox.model;
 
 
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,7 +40,8 @@ public class Cart implements Serializable {
             Double dishPrice = dq.getDish().getPrice() * dq.getQuantity();
             totalPrice += dishPrice;
         }
-        return totalPrice;
+
+        return new BigDecimal(totalPrice).setScale(2, BigDecimal.ROUND_UP).doubleValue();
     }
 
     public void addDishAndQuantity(DishOrder dishOrder) {

@@ -84,7 +84,12 @@ public class OrderPaymentFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = FragmentOrderPaymentBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
+        return view;
+    }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         googlePayButton = binding.googlePayButton;
         try {
             googlePayButton.initialize(
@@ -102,13 +107,6 @@ public class OrderPaymentFragment extends Fragment {
                 handlePaymentCompleted();
             }
         });
-
-        return view;
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
     }
 
     private boolean isPaymentDetailsValid(){

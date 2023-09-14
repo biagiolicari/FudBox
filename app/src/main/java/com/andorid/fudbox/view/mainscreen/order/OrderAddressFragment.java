@@ -5,9 +5,7 @@ import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.text.Editable;
 import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -77,6 +75,12 @@ public class OrderAddressFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = FragmentOrderAddressBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
+        return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         // Attach an Autocomplete intent to the Address 1 EditText field
         binding.autocompleteAddress1.setOnClickListener(startAutocompleteIntentListener);
         binding.autocompleteAddress2.setOnClickListener(startAutocompleteIntentListener);
@@ -84,12 +88,11 @@ public class OrderAddressFragment extends Fragment {
         Button saveButton = binding.autocompleteSaveButton;
         saveButton.setEnabled(Boolean.FALSE);
         saveButton.setOnClickListener(v -> saveForm());
-        return view;
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    public void onStart() {
+        super.onStart();
         requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
@@ -176,10 +179,9 @@ public class OrderAddressFragment extends Fragment {
     }
 
     private void saveForm() {
-        String addressBuilder = new StringBuilder(binding.autocompleteAddress1.getText())
-                .append(",")
-                .append(binding.autocompleteAddress2.getText())
-                .toString();
+        String addressBuilder = binding.autocompleteAddress1.getText() +
+                "," +
+                binding.autocompleteAddress2.getText();
         Cart cart = cartViewModel.getOrderLiveData().getValue();
         orderViewModel.buildOrder(cart, addressBuilder);
         NavController navController = Navigation.findNavController(requireView());
