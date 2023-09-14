@@ -36,7 +36,7 @@
 
   - Import the project in Android Studio
 
-  -Build Gradle and Run the project 😎😎
+  - Build Gradle and Run the project 😎😎
 
 
 ## Devices Used to Test 👀
