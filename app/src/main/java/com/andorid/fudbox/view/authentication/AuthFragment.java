@@ -23,6 +23,7 @@ public class AuthFragment extends Fragment {
 
     private Button loginButton;
     private Button signUpButton;
+    private Button resetPassword;
     private TextInputLayout emailInputText;
     private TextInputLayout passwordInputText;
     private AuthViewModel authViewModel;
@@ -49,6 +50,7 @@ public class AuthFragment extends Fragment {
         authViewModel.getUserLiveData().observe(this, firebaseUser -> {
             switch (firebaseUser.status){
                 case SUCCESS:
+                    CuteToast.ct(requireContext(), firebaseUser.message, CuteToast.LENGTH_LONG, CuteToast.SAD).show();
                     navigateToHomeActivity();
                     break;
                 case ERROR:
@@ -72,6 +74,7 @@ public class AuthFragment extends Fragment {
         passwordInputText = binding.fragmentLoginregisterPassword;
         loginButton = binding.fragmentLoginregisterLogin;
         signUpButton = binding.fragmentLoginregisterRegister;
+        resetPassword = binding.fragmentLoginregisterReset;
 
         loginButton.setOnClickListener(viewLogin -> {
             String email = emailInputText.getEditText().getText().toString();
@@ -91,6 +94,13 @@ public class AuthFragment extends Fragment {
                 authViewModel.register(email, password);
             } else {
                 CuteToast.ct(getContext(), getString(R.string.email_password_not_inserted), CuteToast.LENGTH_SHORT, CuteToast.ERROR, true).show();
+            }
+        });
+
+        resetPassword.setOnClickListener(viewReset -> {
+            String email = emailInputText.getEditText().getText().toString();
+            if(!email.isEmpty()) {
+                authViewModel.resetPassword(email);
             }
         });
 

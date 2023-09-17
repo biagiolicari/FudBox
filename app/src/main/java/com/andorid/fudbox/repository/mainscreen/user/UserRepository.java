@@ -72,7 +72,7 @@ public class UserRepository {
                             Order order = deserializeOrder(orderDocument, uid);
                             orders.add(order);
                         }
-                        ordersLiveData.setValue(Resource.success(orders));
+                        ordersLiveData.setValue(Resource.success(orders, null));
                     }).addOnFailureListener(e -> ordersLiveData.setValue(Resource.error(e.getLocalizedMessage(), null)));
         }
     }

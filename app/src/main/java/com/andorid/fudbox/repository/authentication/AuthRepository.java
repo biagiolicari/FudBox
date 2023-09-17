@@ -25,7 +25,7 @@ public class AuthRepository {
         this.application = application;
         FirebaseUser currentUser = firebaseAuth.getCurrentUser();
         if (currentUser != null) {
-            userLiveData.setValue(Resource.success(currentUser));
+            userLiveData.setValue(Resource.success(currentUser, "Already logged!"));
             setLoggedOut(false);
         }
     }
@@ -33,7 +33,7 @@ public class AuthRepository {
     public void signIn(String email, String password) {
         firebaseAuth.signInWithEmailAndPassword(email, password)
                 .addOnSuccessListener(application.getMainExecutor(), data -> {
-                    userLiveData.setValue(Resource.success(firebaseAuth.getCurrentUser()));
+                    userLiveData.setValue(Resource.success(firebaseAuth.getCurrentUser(), "User loggedIn correctly"));
                     loggedOutLiveData.setValue(false);
         })
                 .addOnFailureListener(e -> {
@@ -45,7 +45,7 @@ public class AuthRepository {
     public void signUP(String email, String password) {
         firebaseAuth.createUserWithEmailAndPassword(email, password).
                 addOnSuccessListener(application.getMainExecutor(), data -> {
-                    userLiveData.setValue(Resource.success(firebaseAuth.getCurrentUser()));
+                    userLiveData.setValue(Resource.success(firebaseAuth.getCurrentUser(), "SignUp phase Completed, Welcome!"));
                     loggedOutLiveData.setValue(false);
                 })
                 .addOnFailureListener(e -> {
@@ -57,6 +57,17 @@ public class AuthRepository {
     public void signOut() {
         firebaseAuth.signOut();
         setLoggedOut(true);
+    }
+
+    public void resetPassword(String email){
+        firebaseAuth.sendPasswordResetEmail(email)
+                .addOnSuccessListener(application.getMainExecutor(), data -> {
+                    userLiveData.setValue(Resource.loading(null, "Correctly sent an email to reset your password"));
+                })
+                .addOnFailureListener(e -> {
+            userLiveData.setValue(Resource.error(e.getLocalizedMessage().toString(), null));
+            loggedOutLiveData.setValue(true);
+        });
     }
 
 

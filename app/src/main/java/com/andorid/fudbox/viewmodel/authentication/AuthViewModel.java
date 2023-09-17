@@ -28,6 +28,8 @@ public class AuthViewModel extends AndroidViewModel {
         authRepository.signUP(email, password);
     }
 
+    public void resetPassword(String email){authRepository.resetPassword(email);}
+
     public LiveData<Resource<FirebaseUser>> getUserLiveData() {
         return userLiveData;
     }

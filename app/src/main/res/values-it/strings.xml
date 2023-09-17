@@ -5,6 +5,7 @@
     <string name="password_hint">Inserisci password</string>
     <string name="username_hint">Inserisci username</string>
     <string name="register">o Registrati</string>
+    <string name="password_reset">Hai dimenticato la tua password? Reimpostala!</string>
     <string name="logout_message">Sessione utente terminata</string>
     <string name="add_to_cart">Aggiungi</string>
     <string name="price">Prezzo</string>

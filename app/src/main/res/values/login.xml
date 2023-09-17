@@ -8,6 +8,7 @@
     <string name="username_hint">Insert a username</string>
     <string name="login" translatable="false">Login</string>
     <string name="register">or Sign Up</string>
+    <string name="password_reset">Did you forgot your password? Reset It!</string>
     <string name="logout" translatable="false">Logout</string>
     <string name="logout_message">User Logged Out</string>
     <string name="email_password_not_inserted">Email Address and Password Must Be Entered</string>

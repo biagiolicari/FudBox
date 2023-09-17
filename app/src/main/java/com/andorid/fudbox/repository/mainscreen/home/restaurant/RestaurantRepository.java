@@ -56,7 +56,7 @@ public class RestaurantRepository {
                                     .setLng(item.getProperties().getLon())
                                     .build())
                             .collect(Collectors.toList());
-                    restaurantMutableLiveData.setValue(Resource.success(restaurants));
+                    restaurantMutableLiveData.setValue(Resource.success(restaurants, null));
                 }
             }
 

@@ -54,7 +54,7 @@ public class DishRepository {
                             .collect(Collectors.toList());
 
                     Collections.sort(tmp, Comparator.comparing(Dish::getType));
-                    dishListLiveData.setValue(Resource.success(tmp));
+                    dishListLiveData.setValue(Resource.success(tmp, null));
                 })
                 .addOnFailureListener(e -> dishListLiveData.setValue(Resource.error(e.getMessage(), null)));
     }

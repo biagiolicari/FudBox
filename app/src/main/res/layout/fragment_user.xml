@@ -10,10 +10,12 @@
         android:id="@+id/fragment_logout_button"
         android:layout_width="203dp"
         android:layout_height="57dp"
-        android:layout_marginBottom="96dp"
+        android:layout_marginBottom="132dp"
         android:text="@string/logout"
         app:layout_constraintBottom_toBottomOf="parent"
-        tools:layout_editor_absoluteX="104dp" />
+        app:layout_constraintEnd_toEndOf="@+id/recent_orders_button"
+        app:layout_constraintHorizontal_bias="0.513"
+        app:layout_constraintStart_toStartOf="@+id/recent_orders_button" />
 
     <TextView
         android:id="@+id/fragment_loggedin_user"
