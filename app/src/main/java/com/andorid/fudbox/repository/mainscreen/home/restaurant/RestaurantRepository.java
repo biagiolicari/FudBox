@@ -18,6 +18,10 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RestaurantRepository {
     private static final String BASE_URL = "https://api.geoapify.com/";
+
+    private static final String CATEGORIES = "catering.restaurant,catering.fast_food";
+    private static final int LIMIT = 30;
+    private static final String API = "7537b2a7bce846d7b1b21210d7d3f773";
     private final IPlacesAPI iPlacesAPI;
     private final MutableLiveData<Resource<List<Restaurant>>> restaurantMutableLiveData;
 
@@ -35,8 +39,8 @@ public class RestaurantRepository {
         return restaurantMutableLiveData;
     }
 
-    public void searchRestaurant(String categories, String filter, int limit, String apiKey) {
-        iPlacesAPI.getPlaces(categories, filter, limit, apiKey)
+    public void searchRestaurant(String filter) {
+        iPlacesAPI.getPlaces(CATEGORIES, filter, LIMIT, API)
                 .enqueue(new Callback<RestaurantJsonObject>() {
             @Override
             public void onResponse(Call<RestaurantJsonObject> call, Response<RestaurantJsonObject> response) {
